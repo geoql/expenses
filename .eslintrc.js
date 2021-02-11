@@ -17,7 +17,6 @@ module.exports = {
     'plugin:nuxt/recommended',
   ],
   plugins: ['prettier', 'vue'],
-  // add your custom rules here
   rules: {
     'vue/no-v-html': 'off',
   },
