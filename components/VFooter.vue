@@ -12,7 +12,7 @@
     >
       <span class="text-xs opacity-50">(v{{ state.appVersion }})</span>
       <a
-        href="https://github.com/vinayakkulkarni/map-my-expenses"
+        href="https://github.com/geoql/expenses"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="GitHub"
@@ -48,7 +48,7 @@
         </svg>
       </a>
       <a
-        href="https://app.netlify.com/sites/nuxt-hasura-mapbox/deploys"
+        href="https://app.netlify.com/sites/map-my-expenses/deploys"
         target="_blank"
         rel="noreferrer noopener"
         aria-label="Deploys via Netlify"
@@ -89,12 +89,12 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive } from '@vue/composition-api';
-
+  import { defineComponent, reactive } from '@nuxtjs/composition-api';
+  import { getRuntimeVM } from '@/utils/runtime';
   export default defineComponent({
     name: 'Footer',
-    setup(_, { root }) {
-      const { $config } = root;
+    setup() {
+      const { $config } = getRuntimeVM();
       const state = reactive({
         date: new Date().getFullYear(),
         appVersion: $config.appVersion,
