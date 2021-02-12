@@ -71,7 +71,7 @@
           :showed="false"
           :close-button="false"
           :close-on-click="true"
-          :close-on-move="true"
+          :close-on-move="false"
           class-name="expense-popup-card"
         >
           <div
