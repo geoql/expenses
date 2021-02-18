@@ -11,6 +11,8 @@
       :fail-if-major-performance-caveat="false"
       :preserve-drawing-buffer="true"
       :hash="false"
+      :min-pitch="0"
+      :max-pitch="60"
       @load="mapLoaded"
       @moveend="mapMoved"
       @click="mapClicked"
