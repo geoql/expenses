@@ -109,7 +109,18 @@ export default {
     typeCheck: {
       eslint: {
         enabled: true,
-        files: './**/*.{ts,js,vue}',
+        files: [
+          // 'assets/**/*.{ts,js}',
+          'components/**/*.{ts,js,vue}',
+          'config/**/*.{ts,js}',
+          'hooks/**/*.{ts,js}',
+          'layouts/**/*.{ts,js,vue}',
+          'pages/**/*.{ts,js,vue}',
+          'plugins/**/*.{ts,js}',
+          'shims/**/*.{ts,js}',
+          'types/**/*.{ts,js}',
+          'utils/**/*.{ts,js}',
+        ],
       },
     },
   },
