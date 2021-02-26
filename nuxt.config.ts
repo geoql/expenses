@@ -46,6 +46,8 @@ export default {
     '@nuxtjs/tailwindcss',
     // https://color-mode.nuxtjs.org/#setup
     '@nuxtjs/color-mode',
+    // https://github.com/nuxt/vite
+    'nuxt-vite',
   ],
   // Tailwind Config
   tailwindcss: {
