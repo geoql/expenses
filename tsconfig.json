@@ -25,16 +25,28 @@
     "types": [
       "@types/node",
       "@nuxt/types",
-      "@nuxtjs/axios",
       "@types/geojson",
-      "@types/mapbox-gl"
+      "@types/mapbox-gl",
+      "@nuxtjs/axios"
     ]
   },
-  "include": ["@types/modules/**/*"],
+  "include": [
+    "@types/modules/**/*.ts",
+    "components/**/*.vue",
+    "config/**/*.{ts,js}",
+    "layouts/**/*.vue",
+    "pages/**/*.vue",
+    "plugins/**/*.{js,ts}",
+    "utils/**/*.js",
+    "nuxt.config.js",
+    // TypeScript
+    "plugins/**/*.ts",
+    "nuxt.config.ts"
+  ],
   "exclude": [
     "node_modules",
     ".nuxt",
     "dist",
     "static"
-  ],
+  ]
 }
