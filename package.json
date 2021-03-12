@@ -20,7 +20,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.2",
     "@nuxtjs/axios": "^5.12.5",
-    "@nuxtjs/composition-api": "^0.21.0",
+    "@nuxtjs/composition-api": "^0.22.1",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.2.1",
@@ -38,17 +38,17 @@
   },
   "devDependencies": {
     "@babel/core": "^7.13.8",
-    "@babel/preset-env": "^7.13.8",
+    "@babel/preset-env": "^7.13.10",
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
     "@nuxt/types": "^2.15.2",
-    "@nuxt/typescript-build": "^2.0.6",
+    "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/color-mode": "^2.0.4",
-    "@nuxtjs/eslint-config-typescript": "^5.0.0",
+    "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/stylelint-module": "^4.0.0",
-    "@nuxtjs/tailwindcss": "^3.4.2",
-    "@types/node": "^14.14.31",
+    "@nuxtjs/tailwindcss": "^3.4.3",
+    "@types/node": "^14.14.33",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
@@ -59,9 +59,9 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "shipjs": "^0.23.0",
-    "stylelint": "^13.11.0",
+    "stylelint": "^13.12.0",
     "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^20.0.0",
+    "stylelint-config-standard": "^21.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   }
 }
