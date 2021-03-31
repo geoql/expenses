@@ -24,7 +24,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.3.2",
-    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@tailwindcss/postcss7-compat": "^2.0.4",
     "@tailwindcss/typography": "^0.4.0",
     "@types/geojson": "^7946.0.7",
     "@types/mapbox-gl": "^1.13.0",
