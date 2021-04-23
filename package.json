@@ -32,7 +32,7 @@
     "core-js": "^3.10.1",
     "mapbox-gl": "1.13.1",
     "nuxt": "^2.15.4",
-    "postcss": "7.0.35",
+    "postcss": "8.2.12",
     "v-click-outside": "^3.1.2",
     "v-mapbox": "^1.7.0"
   },
