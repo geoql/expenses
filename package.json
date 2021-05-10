@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.14.1",
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
-    "@nuxt/types": "^2.15.4",
+    "@nuxt/types": "^2.15.5",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/color-mode": "^2.0.5",
     "@nuxtjs/eslint-config-typescript": "^6.0.0",
