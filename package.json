@@ -34,7 +34,7 @@
     "nuxt": "^2.15.6",
     "postcss": "7.0.35",
     "v-click-outside": "^3.1.2",
-    "v-mapbox": "^1.7.0"
+    "v-mapbox": "^1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",
