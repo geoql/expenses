@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.2",
-    "@nuxtjs/axios": "^5.12.5",
+    "@nuxtjs/axios": "^5.13.4",
     "@nuxtjs/composition-api": "^0.22.4",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.2.0",
@@ -34,11 +34,11 @@
     "nuxt": "^2.15.6",
     "postcss": "7.0.35",
     "v-click-outside": "^3.1.2",
-    "v-mapbox": "^1.7.0"
+    "v-mapbox": "^1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.2",
-    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-env": "^7.14.2",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@nuxt/types": "^2.15.6",
