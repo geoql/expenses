@@ -29,7 +29,7 @@
     "@types/geojson": "^7946.0.7",
     "@types/mapbox-gl": "^1.13.1",
     "autoprefixer": "^9.8.6",
-    "core-js": "^3.12.1",
+    "core-js": "^3.13.1",
     "mapbox-gl": "1.13.1",
     "nuxt": "^2.15.6",
     "postcss": "8.3.0",
