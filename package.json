@@ -20,7 +20,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.2",
     "@nuxtjs/axios": "^5.13.4",
-    "@nuxtjs/composition-api": "^0.22.4",
+    "@nuxtjs/composition-api": "^0.24.3",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.3.2",
