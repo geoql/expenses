@@ -20,7 +20,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.2",
     "@nuxtjs/axios": "^5.13.4",
-    "@nuxtjs/composition-api": "^0.22.4",
+    "@nuxtjs/composition-api": "^0.24.6",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/aspect-ratio": "^0.2.0",
     "@tailwindcss/forms": "^0.3.2",
@@ -31,7 +31,7 @@
     "autoprefixer": "^9.8.6",
     "core-js": "^3.14.0",
     "mapbox-gl": "1.13.1",
-    "nuxt": "^2.15.6",
+    "nuxt": "^2.15.7",
     "postcss": "8.3.0",
     "v-click-outside": "^3.1.2",
     "v-mapbox": "^1.7.1"
