@@ -16,7 +16,7 @@ jobs:
           ref: dev
 
       - name: Setup Node environment 🤙
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.3.1
         with:
           registry-url: 'https://registry.npmjs.org'
 
