@@ -31,7 +31,7 @@
     "autoprefixer": "^9.8.6",
     "core-js": "^3.14.0",
     "mapbox-gl": "1.13.1",
-    "nuxt": "^2.15.6",
+    "nuxt": "^2.15.8",
     "postcss": "8.3.0",
     "v-click-outside": "^3.1.2",
     "v-mapbox": "^1.7.1"
@@ -56,7 +56,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.9.0",
     "husky": "^4.3.8",
-    "lint-staged": "^11.0.0",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.2.1",
     "shipjs": "^0.23.2",
     "stylelint": "^13.13.1",
