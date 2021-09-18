@@ -1,6 +1,7 @@
 <template>
   <client-only>
     <mgl-map
+      container="map"
       :mapbox-gl="state.mapboxgl"
       :access-token="state.mapOptions.accessToken"
       :map-style.sync="state.mapOptions.style"
