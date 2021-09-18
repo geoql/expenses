@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/geoql/expenses/compare/v1.1.1...v1.2.0) (2021-09-18)
+
+
+### Features
+
+* enable robots.txt to crawl the site ([80bc432](https://github.com/geoql/expenses/commit/80bc432ffeab365bfdd0e95466e3d69e4cc4a4b7))
+
+
+
 ## [1.1.1](https://github.com/geoql/expenses/compare/v1.1.0...v1.1.1) (2021-09-18)
 
 
