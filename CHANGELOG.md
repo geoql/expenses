@@ -1,3 +1,20 @@
+# [1.3.0](https://github.com/geoql/expenses/compare/v1.2.0...v1.3.0) (2021-09-18)
+
+
+### Bug Fixes
+
+* null check for `map` ([087c0c2](https://github.com/geoql/expenses/commit/087c0c2ef5af918dab7f9ba7eadb5be76a490e92))
+* set the required prop ([11fa318](https://github.com/geoql/expenses/commit/11fa3181e260b2c8daddcaa7ea44de45aeb59cb7))
+* update events in CI workflow ([ea1e532](https://github.com/geoql/expenses/commit/ea1e532649a56327a8559dafddb7579f9f5bfd69))
+* use `GITHUB_TOKEN` as `NPM_AUTH_TOKEN` ([87c0057](https://github.com/geoql/expenses/commit/87c0057dc815b33df11df8282c737b8544337c73))
+
+
+### Features
+
+* add `lgtm` config file ([b5c7795](https://github.com/geoql/expenses/commit/b5c77955cbd08ca9e30a1455131cc9048c00ad23))
+
+
+
 # [1.2.0](https://github.com/geoql/expenses/compare/v1.1.1...v1.2.0) (2021-09-18)
 
 
