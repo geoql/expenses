@@ -447,8 +447,10 @@
        * @returns {void}
        */
       function mapZoomIn(): void {
-        const currentZoom = map?.getZoom();
-        map.zoomTo(currentZoom + 1);
+        if (map !== null) {
+          const currentZoom = map.getZoom();
+          map.zoomTo(currentZoom + 1);
+        }
       }
       /**
        * Zooms the map out by currentZoom - 1
@@ -456,8 +458,10 @@
        * @returns {void}
        */
       function mapZoomOut(): void {
-        const currentZoom = map?.getZoom();
-        map.zoomTo(currentZoom - 1);
+        if (map !== null) {
+          const currentZoom = map.getZoom();
+          map.zoomTo(currentZoom - 1);
+        }
       }
       /**
        * Eases the map to given pitch
