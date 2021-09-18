@@ -22,6 +22,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           check-latest: true
           cache: 'npm'
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger automated release 🥳
         run: npx shipjs trigger
