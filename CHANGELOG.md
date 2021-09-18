@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/geoql/expenses/compare/v1.3.0...v1.3.1) (2021-09-18)
+
+
+### Bug Fixes
+
+* shipjs trigger `NPM_AUTH_TOKEN` ([cbbed11](https://github.com/geoql/expenses/commit/cbbed115b51101050077c6c03dc3fc82e37af7e0))
+
+
+
 # [1.3.0](https://github.com/geoql/expenses/compare/v1.2.0...v1.3.0) (2021-09-18)
 
 
