@@ -3,7 +3,16 @@
     <!-- Loading indicator -->
     <div
       v-if="loading"
-      class="fixed z-10 flex items-center justify-center w-full h-full opacity-75"
+      class="
+        fixed
+        z-10
+        flex
+        items-center
+        justify-center
+        w-full
+        h-full
+        opacity-75
+      "
     >
       <svg
         class="w-5 h-5 text-white animate-spin"
@@ -43,11 +52,7 @@
         <svg
           slot="marker"
           class="w-8 h-8 cursor-pointer"
-          :class="[
-            $colorMode.preference !== 'light'
-              ? 'text-indigo-500'
-              : 'text-indigo-600',
-          ]"
+          :class="getMarkerColor"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -75,17 +80,49 @@
           class-name="expense-popup-card"
         >
           <div
-            class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-700 to-gray-800"
+            class="
+              flex flex-col
+              items-start
+              justify-center
+              text-white
+              border border-gray-700
+              rounded-md
+              shadow-lg
+              bg-gradient-to-tr
+              from-gray-700
+              to-gray-800
+            "
           >
             <div
-              class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-600"
+              class="
+                flex
+                items-center
+                justify-between
+                w-full
+                px-4
+                py-2
+                border-b border-gray-600
+              "
             >
               <div class="capitalize">
                 {{ state.expense.form.type }}
               </div>
               <button
                 type="button"
-                class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
+                class="
+                  relative
+                  inline-flex
+                  flex-shrink-0
+                  h-6
+                  transition-colors
+                  duration-200
+                  ease-in-out
+                  border-2 border-transparent
+                  rounded-full
+                  cursor-pointer
+                  w-11
+                  focus:outline-none focus:ring-1 focus:ring-offset-1
+                "
                 :class="{
                   'bg-green-600 focus:ring-green-500':
                     state.expense.form.type === 'credit',
@@ -106,7 +143,21 @@
                     'translate-x-5': state.expense.form.type === 'debit',
                     'translate-x-0': state.expense.form.type === 'credit',
                   }"
-                  class="inline-block w-5 h-5 transition duration-200 ease-in-out transform translate-x-0 bg-white rounded-full shadow pointer-events-none ring-0"
+                  class="
+                    inline-block
+                    w-5
+                    h-5
+                    transition
+                    duration-200
+                    ease-in-out
+                    transform
+                    translate-x-0
+                    bg-white
+                    rounded-full
+                    shadow
+                    pointer-events-none
+                    ring-0
+                  "
                 />
               </button>
             </div>
@@ -115,13 +166,27 @@
               <div class="rounded-md shadow-sm">
                 <label
                   for="expense"
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  class="
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    dark:text-gray-200
+                  "
                 >
                   Amount
                 </label>
                 <div class="relative mt-1 rounded-md shadow-sm">
                   <div
-                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                    class="
+                      absolute
+                      inset-y-0
+                      left-0
+                      flex
+                      items-center
+                      pl-3
+                      pointer-events-none
+                    "
                   >
                     <svg
                       class="w-5 h-5 text-gray-400"
@@ -145,7 +210,15 @@
                     name="expense"
                     autofocus="true"
                     required="true"
-                    class="block w-full pl-10 border-gray-300 rounded-md dark:text-gray-800 sm:text-sm"
+                    class="
+                      block
+                      w-full
+                      pl-10
+                      border-gray-300
+                      rounded-md
+                      dark:text-gray-800
+                      sm:text-sm
+                    "
                     :class="{
                       'focus:ring-green-500 focus:border-green-500':
                         state.expense.form.type === 'credit',
@@ -163,7 +236,13 @@
               <div class="rounded-md shadow-sm">
                 <label
                   for="description"
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  class="
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    dark:text-gray-200
+                  "
                 >
                   Description
                 </label>
@@ -178,7 +257,15 @@
                     'focus:ring-red-500 focus:border-red-500':
                       state.expense.form.type === 'debit',
                   }"
-                  class="block w-full mt-1 border-gray-300 rounded-md dark:text-gray-800 sm:text-sm"
+                  class="
+                    block
+                    w-full
+                    mt-1
+                    border-gray-300
+                    rounded-md
+                    dark:text-gray-800
+                    sm:text-sm
+                  "
                   :placeholder="
                     state.expense.form.type === 'credit'
                       ? 'eg. refund Rs. 100'
@@ -195,7 +282,24 @@
                     'bg-green-600 hover:bg-green-700 focus:ring-green-500':
                       state.expense.form.type === 'credit',
                   }"
-                  class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  class="
+                    inline-flex
+                    items-center
+                    justify-center
+                    w-full
+                    px-4
+                    py-1
+                    text-sm
+                    font-medium
+                    text-white
+                    transition-colors
+                    duration-200
+                    ease-in-out
+                    border border-transparent
+                    rounded-md
+                    shadow-sm
+                    focus:outline-none focus:ring-2 focus:ring-offset-2
+                  "
                 >
                   Add
                 </button>
@@ -250,10 +354,29 @@
             class-name="expense-popup-card"
           >
             <div
-              class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-700 to-gray-800"
+              class="
+                flex flex-col
+                items-start
+                justify-center
+                text-white
+                border border-gray-700
+                rounded-md
+                shadow-lg
+                bg-gradient-to-tr
+                from-gray-700
+                to-gray-800
+              "
             >
               <div
-                class="flex items-center justify-between w-full px-3 py-1 border-b border-gray-600"
+                class="
+                  flex
+                  items-center
+                  justify-between
+                  w-full
+                  px-3
+                  py-1
+                  border-b border-gray-600
+                "
               >
                 <div class="capitalize">
                   {{ marker.properties.expense.type }}
@@ -269,7 +392,14 @@
                 </div>
               </div>
               <div
-                class="flex flex-col items-start justify-between px-3 py-1 space-y-1"
+                class="
+                  flex flex-col
+                  items-start
+                  justify-between
+                  px-3
+                  py-1
+                  space-y-1
+                "
               >
                 <div
                   v-if="marker.properties.expense.amount"
@@ -334,10 +464,11 @@
     defineComponent,
     onMounted,
     reactive,
+    useContext,
   } from '@nuxtjs/composition-api';
   import { MglMarker, MglPopup } from 'v-mapbox';
-  import { Feature, FeatureCollection, Point } from 'geojson';
-  import { EventData } from 'mapbox-gl';
+  import type { EventData } from 'mapbox-gl';
+  import type { Feature, FeatureCollection, Point } from 'geojson';
   import CommonMap from '@/components/CommonMap.vue';
 
   export default defineComponent({
@@ -348,6 +479,9 @@
       CommonMap,
     },
     setup() {
+      // @ts-ignore
+      const { $colorMode } = useContext();
+
       const state = reactive({
         map: {
           loaded: false as boolean,
@@ -379,15 +513,28 @@
         ) as FeatureCollection<Point>;
       });
 
+      const getMarkerColor = computed(() => {
+        return [
+          $colorMode.preference !== 'light'
+            ? 'text-indigo-500'
+            : 'text-indigo-600',
+        ];
+      });
+
       /**
        * Adds a temp marker to store
+       *
+       * @param {EventData} e - Mapbox Event
        */
-      function mapClicked(e: any): void {
+      function mapClicked(e: EventData): void {
         // eslint-disable-next-line no-console
         console.log('map clicked event :', e);
       }
       /**
        * Update the marker center
+       *
+       * @param {Record<string,EventData>} e - Event data
+       * @param {EventData} e.mapboxEvent - Mapbox Event
        */
       function markerDragged(e: { mapboxEvent: EventData }): void {
         state.map.marker.center = [
@@ -397,7 +544,8 @@
       }
       /**
        * Adds the expense to map
-       * @returns void
+       *
+       * @returns {void}
        */
       function add(): void {
         // Build a Feature of Type Point
@@ -440,6 +588,8 @@
       return {
         state,
         loading,
+        // computed:
+        getMarkerColor,
         // methods:
         mapClicked,
         markerDragged,

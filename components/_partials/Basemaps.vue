@@ -11,10 +11,20 @@
       class="select-none"
     >
       <div
-        class="flex items-center justify-between p-2 rounded shadow cursor-pointer hover:shadow-md"
+        class="
+          flex
+          items-center
+          justify-between
+          p-2
+          rounded
+          shadow
+          cursor-pointer
+          hover:shadow-md
+        "
         :class="{
           'text-white bg-purple-800': basemap.enabled,
-          'text-gray-800 bg-gray-400 dark:text-white dark:bg-gray-600': !basemap.enabled,
+          'text-gray-800 bg-gray-400 dark:text-white dark:bg-gray-600':
+            !basemap.enabled,
         }"
         @click="updateBasemap(basemap)"
       >
@@ -28,21 +38,24 @@
 
 <script lang="ts">
   import { defineComponent } from '@nuxtjs/composition-api';
+  import type { SetupContext, PropType } from '@nuxtjs/composition-api';
+  import type { Basemaps, Basemap } from '~/@types/map';
 
   export default defineComponent({
     name: 'Basemaps',
     props: {
       data: {
-        type: Object,
-        default: () => {},
+        type: Object as PropType<Basemaps>,
         required: true,
       },
     },
-    setup(_, { emit }) {
-      function updateBasemap(basemap: {
-        enabled: boolean;
-        style: string;
-      }): void {
+    setup(_, { emit }: SetupContext) {
+      /**
+       * Updates the basemap
+       *
+       * @param {Basemap} basemap - The basemap to update
+       */
+      function updateBasemap(basemap: Basemap): void {
         if (!basemap.enabled) {
           emit('update-map-style', basemap.style);
         }

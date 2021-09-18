@@ -1,6 +1,14 @@
 <template>
   <div
-    class="w-screen h-screen text-gray-900 transition-colors duration-150 bg-gray-100 dark:text-gray-100 dark:bg-gray-900"
+    class="
+      w-screen
+      h-screen
+      text-gray-900
+      transition-colors
+      duration-150
+      bg-gray-100
+      dark:text-gray-100 dark:bg-gray-900
+    "
   >
     <v-header />
     <nuxt class="-mt-20 -mb-20 pt-20 pb-20" />

@@ -1,11 +1,27 @@
 <template>
   <div
-    class="flex items-center justify-between w-full h-20 px-4 border-b border-gray-300 dark:border-gray-700"
+    class="
+      flex
+      items-center
+      justify-between
+      w-full
+      h-20
+      px-4
+      border-b border-gray-300
+      dark:border-gray-700
+    "
   >
     <div title="Dashboard">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="w-12 h-12 transition-colors duration-300 cursor-pointer fill-current"
+        class="
+          w-12
+          h-12
+          transition-colors
+          duration-300
+          cursor-pointer
+          fill-current
+        "
         data-name="Layer 1"
         viewBox="0 0 512 512"
         :class="[
@@ -27,7 +43,16 @@
     </div>
     <select
       v-model="$colorMode.preference"
-      class="w-32 px-4 text-base text-gray-800 bg-gray-200 border border-gray-700 rounded dark:text-gray-300 dark:bg-gray-900 form-select"
+      class="
+        w-32
+        px-4
+        text-base text-gray-800
+        bg-gray-200
+        border border-gray-700
+        rounded
+        dark:text-gray-300 dark:bg-gray-900
+        form-select
+      "
     >
       <option value="system">System</option>
       <option value="light">Light</option>

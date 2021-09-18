@@ -22,17 +22,49 @@
         <mgl-scale-control position="bottom-left" />
         <!-- Search, Zoom in, Zoom out & Basemaps-->
         <div
-          class="absolute top-0 right-0 invisible p-2 m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+          class="
+            absolute
+            top-0
+            right-0
+            invisible
+            p-2
+            m-2
+            text-gray-800
+            bg-opacity-50
+            rounded-md
+            dark:text-white
+          "
         >
           <div class="relative flex flex-col space-y-2">
             <!-- Zoom in & out -->
             <div
-              class="flex flex-col items-center justify-center visible w-10 h-20"
+              class="
+                flex flex-col
+                items-center
+                justify-center
+                visible
+                w-10
+                h-20
+              "
               title="Zoom In/Out"
             >
               <!-- Zoom In -->
               <div
-                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-b-0 border-gray-100 rounded-md rounded-b-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                class="
+                  w-10
+                  h-10
+                  p-2
+                  text-sm text-gray-600
+                  bg-gray-200
+                  border border-b-0 border-gray-100
+                  rounded-md rounded-b-none
+                  cursor-pointer
+                  hover:bg-gray-300
+                  dark:bg-gray-800
+                  dark:border-gray-700
+                  dark:text-white
+                  dark:hover:bg-gray-800
+                "
                 title="Zoom In"
                 @click="mapZoomIn"
               >
@@ -53,7 +85,21 @@
               </div>
               <!-- Zoom Out -->
               <div
-                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-t-0 border-gray-100 rounded-md rounded-t-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                class="
+                  w-10
+                  h-10
+                  p-2
+                  text-sm text-gray-600
+                  bg-gray-200
+                  border border-t-0 border-gray-100
+                  rounded-md rounded-t-none
+                  cursor-pointer
+                  hover:bg-gray-300
+                  dark:bg-gray-800
+                  dark:border-gray-700
+                  dark:text-white
+                  dark:hover:bg-gray-800
+                "
                 title="Zoom Out"
                 @click="mapZoomOut"
               >
@@ -75,7 +121,21 @@
             </div>
             <!-- Basemaps -->
             <div
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="
+                relative
+                visible
+                w-10
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
+              "
               title="Basemaps"
               :class="{
                 'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
@@ -103,7 +163,19 @@
               >
                 <div
                   v-if="state.utils.basemaps.shown"
-                  class="absolute top-0 right-0 w-64 mr-12 origin-right bg-gray-300 rounded-md shadow-lg dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
+                  class="
+                    absolute
+                    top-0
+                    right-0
+                    w-64
+                    mr-12
+                    origin-right
+                    bg-gray-300
+                    rounded-md
+                    shadow-lg
+                    dark:bg-gray-700
+                    ring-1 ring-white ring-opacity-5
+                  "
                 >
                   <basemaps
                     :data="state.utils.basemaps.data"
@@ -115,7 +187,21 @@
             </div>
             <!-- Bearing -->
             <div
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="
+                relative
+                visible
+                w-10
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
+              "
               title="Locate Me"
               :class="{
                 'bg-gray-300 dark:bg-gray-800': state.utils.compass.shown,
@@ -123,7 +209,15 @@
             >
               <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
                 <svg
-                  class="w-5 h-5 transition-all duration-100 ease-linear transform fill-current"
+                  class="
+                    w-5
+                    h-5
+                    transition-all
+                    duration-100
+                    ease-linear
+                    transform
+                    fill-current
+                  "
                   :style="{
                     transform:
                       'rotate(' + state.utils.compass.data.bearing + 'deg)',
@@ -141,7 +235,21 @@
             </div>
             <!-- Locate -->
             <div
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="
+                relative
+                visible
+                w-10
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
+              "
               title="Locate Me"
             >
               <div class="p-2 cursor-pointer" @click="toggleTool('locate')">
@@ -170,10 +278,13 @@
     reactive,
     readonly,
     ref,
+    useContext,
   } from '@nuxtjs/composition-api';
   import { MglMap, MglScaleControl } from 'v-mapbox';
-  import mapboxgl, { EventData } from 'mapbox-gl';
-  import { getRuntimeVM } from '@/utils/runtime';
+  import mapboxgl from 'mapbox-gl';
+  import type { PropType, SetupContext } from '@nuxtjs/composition-api';
+  import type { EventData, Map } from 'mapbox-gl';
+  import type { Basemaps } from '~/@types/map';
 
   export default defineComponent({
     components: {
@@ -186,29 +297,30 @@
     },
     props: {
       center: {
-        default: () => [73.8567, 18.5204],
+        type: Array as PropType<number[]>,
         required: true,
-        type: Array,
+        default: () => [73.8567, 18.5204],
       },
       loaded: {
-        default: false as boolean,
+        type: Boolean as PropType<boolean>,
         required: true,
-        type: Boolean,
+        default: false,
       },
       styleChanged: {
-        default: false as boolean,
+        type: Boolean as PropType<boolean>,
         required: true,
-        type: Boolean,
+        default: false,
       },
     },
-    setup(props, { emit }) {
-      const { $config } = getRuntimeVM();
+    setup(props, { emit }: SetupContext) {
+      const { $config } = useContext();
       const state = reactive({
         mapOptions: {
           accessToken: $config.mapToken,
           style: 'mapbox://styles/mapbox/dark-v10?optimize=true',
           center: ref(props.center),
           zoom: 11,
+          maxZoom: 22,
         },
         mapboxgl,
         utils: {
@@ -237,7 +349,7 @@
                   style: 'mapbox://styles/mapbox/dark-v10?optimize=true',
                 },
               ],
-            },
+            } as Basemaps,
           },
           compass: {
             shown: false as boolean,
@@ -252,10 +364,12 @@
       /**
        * This function syncs the loaded & style-changed
        * variables in parent components
-       * @argument e
-       * @returns void
+       *
+       * @param {Record<string, Map>} e - Payload when map is loaded
+       * @param {Map} e.map - Mapbox GL Map object
+       * @returns {void}
        */
-      function mapLoaded(e: any): void {
+      function mapLoaded(e: { map: Map }): void {
         map = e.map;
         emit('update:loaded', true);
         emit('update:style-changed', true);
@@ -278,7 +392,8 @@
         /**
          * Watch the pitchend event
          * This is required to rotate svg
-         * @returns void
+         *
+         * @returns {void}
          */
         map.on('pitchend', () => {
           state.utils.compass.data.bearing = parseInt(
@@ -290,20 +405,31 @@
       /**
        * This function emits a click event to the
        * parent component
-       * @argument e: { mapboxEvent }
-       * @returns void
+       *
+       * @param {Record<string,EventData>} e - Event data
+       * @param {EventData} e.mapboxEvent - Mapbox Event
+       * @returns {void}
        */
       function mapClicked(e: { mapboxEvent: EventData }): void {
         emit('click', e.mapboxEvent);
       }
-      function mapMoved(e: any) {
+
+      /**
+       * When the map is moved
+       *
+       * @param {Record<string, Map>} e - Payload when map is loaded
+       * @param {Map} e.map - Mapbox GL Map object
+       * @returns {void}
+       */
+      function mapMoved(e: { map: Map }): void {
         const coords = e.map.getCenter();
         emit('update:center', [coords.lng, coords.lat]);
       }
       /**
        * Updates the current map style
-       * @argument {string} e
-       * @returns void
+       *
+       * @param {string} e - String of the new style
+       * @returns {void} - Returns void
        */
       function updateBasemap(e: string): void {
         state.utils.basemaps.data.basemaps.forEach((basemap) => {
@@ -317,7 +443,8 @@
       }
       /**
        * Zooms the map in by currentZoom + 1
-       * @returns void
+       *
+       * @returns {void}
        */
       function mapZoomIn(): void {
         const currentZoom = map?.getZoom();
@@ -325,7 +452,8 @@
       }
       /**
        * Zooms the map out by currentZoom - 1
-       * @returns void
+       *
+       * @returns {void}
        */
       function mapZoomOut(): void {
         const currentZoom = map?.getZoom();
@@ -334,8 +462,11 @@
       /**
        * Eases the map to given pitch
        * and bearing
-       * @argument {number, number} { pitch, bearing }
-       * @returns void
+       *
+       * @param {Record<string,number>} root0 - Pitch & Bearing
+       * @param {number} root0.pitch - Pitch
+       * @param {number} root0.bearing - Bearing
+       * @returns {void}
        */
       function mapEaseTo({
         pitch,
@@ -351,8 +482,12 @@
       }
       /**
        * Fly the map to the specific location
-       * @argument {number, number, number} { lng, lat, zoom }
-       * @returns void
+       *
+       * @param {Record<string, number>} root0 - Lat, Lng & zoom of the location
+       * @param {number} root0.lng – Lat
+       * @param {number} root0.lat - Lng
+       * @param {number} root0.zoom - Zoom
+       * @returns {void}
        */
       function mapFlyTo({
         lng,
@@ -372,7 +507,8 @@
       }
       /**
        * Toggles the tool enabled on the map
-       * @argument {String} type
+       *
+       * @param {string} type - Toggle the tool type
        * @returns {void} void
        */
       function toggleTool(type: string): void {

@@ -16,16 +16,19 @@ jobs:
           ref: dev
 
       - name: Setup Node environment 🤙
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.4.0
         with:
+          node-version: ${{ matrix.node }}
           registry-url: 'https://registry.npmjs.org'
+          check-latest: true
+          cache: 'npm'
 
-      - name: Install dependencies 📦
-        run: npm i
+      - name: Upgrade npm ✨
+        run: npm i -g npm@latest
 
       - name: Trigger automated release 🥳
         run: npx shipjs trigger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           SLACK_INCOMING_HOOK: ${{ secrets.SLACK_INCOMING_HOOK }}

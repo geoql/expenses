@@ -1,4 +1,6 @@
-export default {
+import type { NuxtOptionsHead } from '@nuxt/types/config/head';
+
+const head: NuxtOptionsHead = {
   title: 'Map My Expenses :: Dashboard',
   meta: [
     { charset: 'utf-8' },
@@ -11,3 +13,5 @@ export default {
   ],
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 };
+
+export { head };
