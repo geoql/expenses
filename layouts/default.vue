@@ -18,8 +18,8 @@
 
 <script lang="ts">
   import { defineComponent } from '@nuxtjs/composition-api';
-  import VHeader from '@/components/VHeader.vue';
-  import VFooter from '@/components/VFooter.vue';
+  import VHeader from '@/components/common/ui/VHeader.vue';
+  import VFooter from '@/components/common/ui/VFooter.vue';
 
   export default defineComponent({
     name: 'DefaultLayout',

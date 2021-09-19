@@ -7,11 +7,12 @@
       w-full
       h-20
       px-4
+      invisible
       border-b border-gray-300
       dark:border-gray-700
     "
   >
-    <div title="Dashboard">
+    <div title="Dashboard" class="visible">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="
@@ -41,23 +42,92 @@
         />
       </svg>
     </div>
-    <select
-      v-model="$colorMode.preference"
-      class="
-        w-32
-        px-4
-        text-base text-gray-800
-        bg-gray-200
-        border border-gray-700
-        rounded
-        dark:text-gray-300 dark:bg-gray-900
-        form-select
-      "
-    >
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
+    <div tile="Theme Picker" class="visible">
+      <span class="relative z-0 inline-flex shadow rounded-full">
+        <button
+          type="button"
+          class="
+            relative
+            inline-flex
+            items-center
+            px-3
+            py-1.5
+            rounded-l-full
+            border border-gray-300
+            bg-transparent
+            text-sm
+            font-medium
+            focus:z-10
+            focus:outline-none
+            focus:ring-1
+            focus:ring-gray-500
+            focus:border-gray-500
+            active:ring-0
+          "
+          :class="{
+            'bg-gray-500 text-white': $colorMode.preference === 'system',
+          }"
+          @click="$colorMode.preference = 'system'"
+        >
+          System
+        </button>
+        <button
+          type="button"
+          class="
+            -ml-px
+            relative
+            inline-flex
+            items-center
+            px-3
+            py-1.5
+            border border-gray-300
+            bg-transparent
+            text-sm
+            font-medium
+            focus:z-10
+            focus:outline-none
+            focus:ring-1
+            focus:ring-blueGray-500
+            focus:border-blueGray-500
+            active:ring-0
+          "
+          :class="{
+            'bg-blueGray-800 text-gray-50': $colorMode.preference === 'dark',
+          }"
+          @click="$colorMode.preference = 'dark'"
+        >
+          Dark
+        </button>
+        <button
+          type="button"
+          class="
+            -ml-px
+            relative
+            inline-flex
+            items-center
+            px-3
+            py-1.5
+            rounded-r-full
+            border border-gray-300
+            bg-transparent
+            text-sm
+            font-medium
+            focus:z-10
+            focus:outline-none
+            focus:ring-1
+            focus:ring-yellow-500
+            focus:border-yellow-500
+            active:ring-0
+          "
+          :class="{
+            'bg-yellow-500 text-gray-700': $colorMode.preference === 'light',
+          }"
+          @click="$colorMode.preference = 'light'"
+        >
+          Light
+        </button>
+      </span>
+    </div>
   </div>
 </template>
 

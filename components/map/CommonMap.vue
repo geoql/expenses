@@ -21,7 +21,7 @@
       <div v-if="loaded && styleChanged">
         <slot />
         <mgl-scale-control position="bottom-left" />
-        <!-- Search, Zoom in, Zoom out & Basemaps-->
+        <!-- Search, Basemaps & Heatmap / Cluster / Markers toggler -->
         <div
           class="
             absolute
@@ -37,38 +37,30 @@
           "
         >
           <div class="relative flex flex-col space-y-2">
-            <!-- Zoom in & out -->
+            <!-- Search -->
             <div
+              v-click-outside="() => (state.utils.geocoder.shown = false)"
               class="
-                flex flex-col
-                items-center
-                justify-center
+                relative
                 visible
                 w-10
-                h-20
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
               "
-              title="Zoom In/Out"
+              title="Search"
+              :class="{
+                'bg-gray-300 dark:bg-gray-800': state.utils.geocoder.shown,
+              }"
             >
-              <!-- Zoom In -->
-              <div
-                class="
-                  w-10
-                  h-10
-                  p-2
-                  text-sm text-gray-600
-                  bg-gray-200
-                  border border-b-0 border-gray-100
-                  rounded-md rounded-b-none
-                  cursor-pointer
-                  hover:bg-gray-300
-                  dark:bg-gray-800
-                  dark:border-gray-700
-                  dark:text-white
-                  dark:hover:bg-gray-800
-                "
-                title="Zoom In"
-                @click="mapZoomIn"
-              >
+              <div class="p-2 cursor-pointer" @click="toggleTool('geocoder')">
                 <svg
                   class="w-5 h-5"
                   fill="none"
@@ -80,48 +72,43 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
               </div>
-              <!-- Zoom Out -->
-              <div
-                class="
-                  w-10
-                  h-10
-                  p-2
-                  text-sm text-gray-600
-                  bg-gray-200
-                  border border-t-0 border-gray-100
-                  rounded-md rounded-t-none
-                  cursor-pointer
-                  hover:bg-gray-300
-                  dark:bg-gray-800
-                  dark:border-gray-700
-                  dark:text-white
-                  dark:hover:bg-gray-800
-                "
-                title="Zoom Out"
-                @click="mapZoomOut"
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-class="transform scale-95 translate-x-4 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in translate-x-4"
+                leave-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
               >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  v-if="state.utils.geocoder.shown"
+                  class="
+                    absolute
+                    top-0
+                    right-0
+                    h-full
+                    mr-12
+                    origin-right
+                    bg-gray-200
+                    dark:bg-gray-700 dark:text-gray-50
+                    text-gray-900
+                    rounded-md
+                    shadow-lg
+                    w-80
+                    ring-1 ring-white ring-opacity-5
+                  "
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M20 12H4"
-                  />
-                </svg>
-              </div>
+                  <geocoder :bbox="state.map.bbox" @fly-to="mapFlyTo" />
+                </div>
+              </transition>
             </div>
             <!-- Basemaps -->
             <div
+              v-click-outside="() => (state.utils.basemaps.shown = false)"
               class="
                 relative
                 visible
@@ -142,7 +129,15 @@
                 'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
               }"
             >
-              <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
+              <div
+                v-tooltip.left="{
+                  content: 'Click here to update basemap',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
+                class="p-2 cursor-pointer"
+                @click="toggleTool('basemaps')"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 17.784 19.117"
@@ -186,8 +181,124 @@
                 </div>
               </transition>
             </div>
+          </div>
+        </div>
+        <!-- Zoom in, Zoom out, Bearing & Locate Me -->
+        <div
+          class="
+            absolute
+            bottom-6
+            right-0
+            invisible
+            p-2
+            m-2
+            text-gray-800
+            bg-opacity-50
+            rounded-md
+            dark:text-white
+          "
+        >
+          <div class="relative flex flex-col space-y-2">
+            <!-- Zoom in & out -->
+            <div
+              class="
+                flex flex-col
+                items-center
+                justify-center
+                visible
+                w-10
+                h-20
+              "
+              title="Zoom In/Out"
+            >
+              <!-- Zoom In -->
+              <div
+                v-tooltip.left="{
+                  content: 'Click here to Zoom in',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
+                class="
+                  w-10
+                  h-10
+                  p-2
+                  text-sm text-gray-600
+                  bg-gray-200
+                  border border-b-0 border-gray-100
+                  rounded-md rounded-b-none
+                  cursor-pointer
+                  hover:bg-gray-300
+                  dark:bg-gray-800
+                  dark:border-gray-700
+                  dark:text-white
+                  dark:hover:bg-gray-800
+                "
+                title="Zoom In"
+                @click="mapZoomIn"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </div>
+              <!-- Zoom Out -->
+              <div
+                v-tooltip.left="{
+                  content: 'Click here to Zoom out',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
+                class="
+                  w-10
+                  h-10
+                  p-2
+                  text-sm text-gray-600
+                  bg-gray-200
+                  border border-t-0 border-gray-100
+                  rounded-md rounded-t-none
+                  cursor-pointer
+                  hover:bg-gray-300
+                  dark:bg-gray-800
+                  dark:border-gray-700
+                  dark:text-white
+                  dark:hover:bg-gray-800
+                "
+                title="Zoom Out"
+                @click="mapZoomOut"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 12H4"
+                  />
+                </svg>
+              </div>
+            </div>
             <!-- Bearing -->
             <div
+              v-tooltip.left="{
+                content: 'Click here to reset pitch / bearing',
+                offset: 4,
+                boundariesElement: 'viewport',
+              }"
               class="
                 relative
                 visible
@@ -236,6 +347,11 @@
             </div>
             <!-- Locate -->
             <div
+              v-tooltip.left="{
+                content: 'Click here to get your location',
+                offset: 4,
+                boundariesElement: 'viewport',
+              }"
               class="
                 relative
                 visible
@@ -291,9 +407,13 @@
     components: {
       MglMap,
       MglScaleControl,
+      Geocoder: () =>
+        import(
+          /* webpackChunkName: "GeocoderComponent" */ '@/components/map/_partials/Geocoder.vue'
+        ),
       Basemaps: () =>
         import(
-          /* webpackChunkName: "BasemapsComponent" */ '@/components/_partials/Basemaps.vue'
+          /* webpackChunkName: "BasemapsComponent" */ '@/components/map/_partials/Basemaps.vue'
         ),
     },
     props: {
@@ -323,8 +443,16 @@
           zoom: 11,
           maxZoom: 22,
         },
+        map: {
+          bbox: [] as number[][],
+        },
         mapboxgl,
         utils: {
+          geocoder: {
+            shown: false as boolean,
+            disabled: false as boolean,
+            data: {},
+          },
           basemaps: {
             shown: false as boolean,
             data: {
@@ -372,8 +500,10 @@
        */
       function mapLoaded(e: { map: Map }): void {
         map = e.map;
+        state.map.bbox = map.getBounds().toArray();
         emit('update:loaded', true);
         emit('update:style-changed', true);
+        emit('update:bounds', state.map.bbox);
         /**
          * This is required because we want
          * to persist the layers on the map
@@ -424,7 +554,9 @@
        */
       function mapMoved(e: { map: Map }): void {
         const coords = e.map.getCenter();
+        state.map.bbox = map.getBounds().toArray();
         emit('update:center', [coords.lng, coords.lat]);
+        emit('update:bounds', state.map.bbox);
       }
       /**
        * Updates the current map style
@@ -518,6 +650,9 @@
        */
       function toggleTool(type: string): void {
         switch (type) {
+          case 'geocoder':
+            state.utils.geocoder.shown = !state.utils.geocoder.shown;
+            break;
           case 'basemaps':
             state.utils.basemaps.shown = !state.utils.basemaps.shown;
             break;
@@ -545,11 +680,13 @@
 
       return {
         state,
+        map,
         mapLoaded,
         mapClicked,
         mapMoved,
         mapZoomIn,
         mapZoomOut,
+        mapFlyTo,
         toggleTool,
         updateBasemap,
       };
