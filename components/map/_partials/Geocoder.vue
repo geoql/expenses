@@ -54,7 +54,6 @@
 </template>
 
 <script lang="ts">
-  /* eslint-disable camelcase */
   import {
     defineComponent,
     reactive,
@@ -62,19 +61,7 @@
   } from '@nuxtjs/composition-api';
   import type { PropType } from '@nuxtjs/composition-api';
   import type { AxiosError } from 'axios';
-
-  type SearchResult = {
-    lat: number;
-    lng: number;
-    zoom: number;
-    label: string;
-  };
-
-  type GeocodedFeature = {
-    place_name: string;
-    center: number[];
-    place_type: string;
-  };
+  import type { SearchResult, GeocodedFeature } from '@/@types/map';
 
   export default defineComponent({
     name: 'Geocoder',
