@@ -121,7 +121,7 @@
           } catch (error: unknown) {
             const { response } = error as AxiosError;
             state.loading = false;
-            console.log('response: ', response!.data);
+            alert(response!.data.message);
           } finally {
             state.loading = false;
           }
