@@ -37,11 +37,6 @@
         >
           <!-- Basemaps -->
           <div
-            v-tooltip.left="{
-              content: 'Click here to update basemap',
-              offset: 4,
-              boundariesElement: 'viewport',
-            }"
             class="
               relative
               visible
@@ -62,7 +57,15 @@
               'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
             }"
           >
-            <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
+            <div
+              v-tooltip.left="{
+                content: 'Click here to update basemap',
+                offset: 4,
+                boundariesElement: 'viewport',
+              }"
+              class="p-2 cursor-pointer"
+              @click="toggleTool('basemaps')"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 17.784 19.117"
