@@ -1,3 +1,24 @@
+# [1.4.0](https://github.com/geoql/expenses/compare/v1.3.1...v1.4.0) (2021-09-19)
+
+
+### Bug Fixes
+
+* add buttons for switching theme ([7f01550](https://github.com/geoql/expenses/commit/7f01550c2576122ad7fac0ceeabfc6e35f673e9f)), closes [#229](https://github.com/geoql/expenses/issues/229)
+* show tooltip only on the icon ([13cfcd4](https://github.com/geoql/expenses/commit/13cfcd48af2e34d0d94b59d227a2d0a1d56fad7b))
+
+
+### Features
+
+* add Geocoder to search for location ([67598f2](https://github.com/geoql/expenses/commit/67598f2db57e5346d884a62b850ce434883d32da))
+* integrate `tooltip` plugin ([5e13332](https://github.com/geoql/expenses/commit/5e1333202ea8b468928a290bfbb4c5b9934c49ba))
+
+
+### Performance Improvements
+
+* generate `.br` static assets ([85301e6](https://github.com/geoql/expenses/commit/85301e6bb5bcfbd59546b6345aff5419abd3d5df)), closes [#227](https://github.com/geoql/expenses/issues/227)
+
+
+
 ## [1.3.1](https://github.com/geoql/expenses/compare/v1.3.0...v1.3.1) (2021-09-18)
 
 
