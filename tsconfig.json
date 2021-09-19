@@ -33,7 +33,8 @@
       "@nuxtjs/axios",
       "@types/geojson",
       "@types/mapbox-gl",
-      "@types/webpack"
+      "@types/webpack",
+      "v-tooltip"
     ]
   },
   "include": [

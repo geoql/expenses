@@ -34,10 +34,12 @@ const css: string[] = [
   'v-mapbox/dist/v-mapbox.css',
   '~/assets/css/global.css',
   '~/assets/css/fonts.css',
+  '~/assets/css/tooltip.css',
 ];
 
 const plugins: NuxtOptionsPlugin[] = [
   { src: '~/plugins/click-outside', mode: 'client' },
+  { src: '~/plugins/tooltip', mode: 'client' },
 ];
 
 const loading: NuxtOptionsLoading = { color: '#cccccc' };

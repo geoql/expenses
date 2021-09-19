@@ -21,11 +21,97 @@
       <div v-if="loaded && styleChanged">
         <slot />
         <mgl-scale-control position="bottom-left" />
-        <!-- Search, Zoom in, Zoom out & Basemaps-->
         <div
           class="
             absolute
             top-0
+            right-0
+            invisible
+            p-2
+            m-2
+            text-gray-800
+            bg-opacity-50
+            rounded-md
+            dark:text-white
+          "
+        >
+          <!-- Basemaps -->
+          <div
+            v-tooltip.left="{
+              content: 'Click here to update basemap',
+              offset: 4,
+              boundariesElement: 'viewport',
+            }"
+            class="
+              relative
+              visible
+              w-10
+              h-10
+              text-sm text-gray-600
+              bg-gray-200
+              border border-gray-100
+              rounded-md
+              hover:bg-gray-300
+              dark:bg-gray-800
+              dark:border-gray-700
+              dark:text-white
+              dark:hover:bg-gray-800
+            "
+            title="Basemaps"
+            :class="{
+              'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
+            }"
+          >
+            <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 17.784 19.117"
+                class="w-5 h-5"
+              >
+                <path
+                  d="M9.534 16.496a1.067 1.067 0 01-1.306 0l-6.527-5.07a1.055 1.055 0 00-1.295 1.666l7.175 5.583a2.135 2.135 0 002.611 0l7.175-5.583a1.058 1.058 0 000-1.666l-.011-.011a1.052 1.052 0 00-1.295 0l-6.527 5.081zm.669-3.206l7.175-5.583a1.069 1.069 0 000-1.677L10.203.447a2.135 2.135 0 00-2.611 0L.416 6.04a1.069 1.069 0 000 1.677L7.591 13.3a2.12 2.12 0 002.611-.011z"
+                  fill="currentColor"
+                />
+              </svg>
+            </div>
+            <transition
+              enter-active-class="transition duration-100 ease-out"
+              enter-class="transform scale-95 translate-x-4 opacity-0"
+              enter-to-class="transform scale-100 opacity-100"
+              leave-active-class="transition duration-75 ease-in translate-x-4"
+              leave-class="transform scale-100 opacity-100"
+              leave-to-class="transform scale-95 opacity-0"
+            >
+              <div
+                v-if="state.utils.basemaps.shown"
+                class="
+                  absolute
+                  top-0
+                  right-0
+                  w-64
+                  mr-12
+                  origin-right
+                  bg-gray-300
+                  rounded-md
+                  shadow-lg
+                  dark:bg-gray-700
+                  ring-1 ring-white ring-opacity-5
+                "
+              >
+                <basemaps
+                  :data="state.utils.basemaps.data"
+                  @update-map-style="updateBasemap"
+                  @close="state.utils.basemaps.shown = false"
+                />
+              </div>
+            </transition>
+          </div>
+        </div>
+        <!-- Zoom in, Zoom out, Bearing & Locate Me -->
+        <div
+          class="
+            absolute
+            bottom-6
             right-0
             invisible
             p-2
@@ -51,6 +137,11 @@
             >
               <!-- Zoom In -->
               <div
+                v-tooltip.left="{
+                  content: 'Click here to Zoom in',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
                 class="
                   w-10
                   h-10
@@ -86,6 +177,11 @@
               </div>
               <!-- Zoom Out -->
               <div
+                v-tooltip.left="{
+                  content: 'Click here to Zoom out',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
                 class="
                   w-10
                   h-10
@@ -120,74 +216,13 @@
                 </svg>
               </div>
             </div>
-            <!-- Basemaps -->
-            <div
-              class="
-                relative
-                visible
-                w-10
-                h-10
-                text-sm text-gray-600
-                bg-gray-200
-                border border-gray-100
-                rounded-md
-                hover:bg-gray-300
-                dark:bg-gray-800
-                dark:border-gray-700
-                dark:text-white
-                dark:hover:bg-gray-800
-              "
-              title="Basemaps"
-              :class="{
-                'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
-              }"
-            >
-              <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 17.784 19.117"
-                  class="w-5 h-5"
-                >
-                  <path
-                    d="M9.534 16.496a1.067 1.067 0 01-1.306 0l-6.527-5.07a1.055 1.055 0 00-1.295 1.666l7.175 5.583a2.135 2.135 0 002.611 0l7.175-5.583a1.058 1.058 0 000-1.666l-.011-.011a1.052 1.052 0 00-1.295 0l-6.527 5.081zm.669-3.206l7.175-5.583a1.069 1.069 0 000-1.677L10.203.447a2.135 2.135 0 00-2.611 0L.416 6.04a1.069 1.069 0 000 1.677L7.591 13.3a2.12 2.12 0 002.611-.011z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </div>
-              <transition
-                enter-active-class="transition duration-100 ease-out"
-                enter-class="transform scale-95 translate-x-4 opacity-0"
-                enter-to-class="transform scale-100 opacity-100"
-                leave-active-class="transition duration-75 ease-in translate-x-4"
-                leave-class="transform scale-100 opacity-100"
-                leave-to-class="transform scale-95 opacity-0"
-              >
-                <div
-                  v-if="state.utils.basemaps.shown"
-                  class="
-                    absolute
-                    top-0
-                    right-0
-                    w-64
-                    mr-12
-                    origin-right
-                    bg-gray-300
-                    rounded-md
-                    shadow-lg
-                    dark:bg-gray-700
-                    ring-1 ring-white ring-opacity-5
-                  "
-                >
-                  <basemaps
-                    :data="state.utils.basemaps.data"
-                    @update-map-style="updateBasemap"
-                    @close="state.utils.basemaps.shown = false"
-                  />
-                </div>
-              </transition>
-            </div>
             <!-- Bearing -->
             <div
+              v-tooltip.left="{
+                content: 'Click here to reset pitch / bearing',
+                offset: 4,
+                boundariesElement: 'viewport',
+              }"
               class="
                 relative
                 visible
@@ -236,6 +271,11 @@
             </div>
             <!-- Locate -->
             <div
+              v-tooltip.left="{
+                content: 'Click here to get your location',
+                offset: 4,
+                boundariesElement: 'viewport',
+              }"
               class="
                 relative
                 visible
