@@ -13,6 +13,8 @@ const buildModules: NuxtOptionsModule[] = [
   ['@nuxtjs/color-mode', colorMode],
   // https://composition-api.nuxtjs.org/getting-started/setup#quick-start
   '@nuxtjs/composition-api/module',
+  // https://github.com/robcresswell/nuxt-compress
+  'nuxt-compress',
 ];
 
 export { buildModules };
