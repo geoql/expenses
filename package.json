@@ -67,6 +67,7 @@
     "nuxt-compress": "^5.0.0",
     "postcss": "^8.3.6",
     "prettier": "^2.4.1",
+    "sass": "^1.41.1",
     "shipjs": "^0.23.3",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",

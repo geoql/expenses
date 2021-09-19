@@ -469,7 +469,7 @@
   import { MglMarker, MglPopup } from 'v-mapbox';
   import type { EventData } from 'mapbox-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import CommonMap from '@/components/CommonMap.vue';
+  import CommonMap from '@/components/map/CommonMap.vue';
 
   export default defineComponent({
     name: 'Dashboard',
@@ -599,7 +599,7 @@
   });
 </script>
 
-<style>
+<style lang="scss">
   .expense-popup-card .mapboxgl-popup-tip {
     display: none;
   }

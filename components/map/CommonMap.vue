@@ -21,6 +21,7 @@
       <div v-if="loaded && styleChanged">
         <slot />
         <mgl-scale-control position="bottom-left" />
+        <!-- Search, Basemaps & Heatmap / Cluster / Markers toggler -->
         <div
           class="
             absolute
@@ -35,79 +36,151 @@
             dark:text-white
           "
         >
-          <!-- Basemaps -->
-          <div
-            class="
-              relative
-              visible
-              w-10
-              h-10
-              text-sm text-gray-600
-              bg-gray-200
-              border border-gray-100
-              rounded-md
-              hover:bg-gray-300
-              dark:bg-gray-800
-              dark:border-gray-700
-              dark:text-white
-              dark:hover:bg-gray-800
-            "
-            title="Basemaps"
-            :class="{
-              'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
-            }"
-          >
+          <div class="relative flex flex-col space-y-2">
+            <!-- Search -->
             <div
-              v-tooltip.left="{
-                content: 'Click here to update basemap',
-                offset: 4,
-                boundariesElement: 'viewport',
+              v-click-outside="() => (state.utils.geocoder.shown = false)"
+              class="
+                relative
+                visible
+                w-10
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
+              "
+              title="Search"
+              :class="{
+                'bg-gray-300 dark:bg-gray-800': state.utils.geocoder.shown,
               }"
-              class="p-2 cursor-pointer"
-              @click="toggleTool('basemaps')"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 17.784 19.117"
-                class="w-5 h-5"
+              <div class="p-2 cursor-pointer" @click="toggleTool('geocoder')">
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-class="transform scale-95 translate-x-4 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in translate-x-4"
+                leave-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
               >
-                <path
-                  d="M9.534 16.496a1.067 1.067 0 01-1.306 0l-6.527-5.07a1.055 1.055 0 00-1.295 1.666l7.175 5.583a2.135 2.135 0 002.611 0l7.175-5.583a1.058 1.058 0 000-1.666l-.011-.011a1.052 1.052 0 00-1.295 0l-6.527 5.081zm.669-3.206l7.175-5.583a1.069 1.069 0 000-1.677L10.203.447a2.135 2.135 0 00-2.611 0L.416 6.04a1.069 1.069 0 000 1.677L7.591 13.3a2.12 2.12 0 002.611-.011z"
-                  fill="currentColor"
-                />
-              </svg>
+                <div
+                  v-if="state.utils.geocoder.shown"
+                  class="
+                    absolute
+                    top-0
+                    right-0
+                    h-full
+                    mr-12
+                    origin-right
+                    bg-gray-200
+                    dark:bg-gray-700 dark:text-gray-50
+                    text-gray-900
+                    rounded-md
+                    shadow-lg
+                    w-80
+                    ring-1 ring-white ring-opacity-5
+                  "
+                >
+                  <geocoder :bbox="state.map.bbox" @fly-to="mapFlyTo" />
+                </div>
+              </transition>
             </div>
-            <transition
-              enter-active-class="transition duration-100 ease-out"
-              enter-class="transform scale-95 translate-x-4 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in translate-x-4"
-              leave-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
+            <!-- Basemaps -->
+            <div
+              v-click-outside="() => (state.utils.basemaps.shown = false)"
+              class="
+                relative
+                visible
+                w-10
+                h-10
+                text-sm text-gray-600
+                bg-gray-200
+                border border-gray-100
+                rounded-md
+                hover:bg-gray-300
+                dark:bg-gray-800
+                dark:border-gray-700
+                dark:text-white
+                dark:hover:bg-gray-800
+              "
+              title="Basemaps"
+              :class="{
+                'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
+              }"
             >
               <div
-                v-if="state.utils.basemaps.shown"
-                class="
-                  absolute
-                  top-0
-                  right-0
-                  w-64
-                  mr-12
-                  origin-right
-                  bg-gray-300
-                  rounded-md
-                  shadow-lg
-                  dark:bg-gray-700
-                  ring-1 ring-white ring-opacity-5
-                "
+                v-tooltip.left="{
+                  content: 'Click here to update basemap',
+                  offset: 4,
+                  boundariesElement: 'viewport',
+                }"
+                class="p-2 cursor-pointer"
+                @click="toggleTool('basemaps')"
               >
-                <basemaps
-                  :data="state.utils.basemaps.data"
-                  @update-map-style="updateBasemap"
-                  @close="state.utils.basemaps.shown = false"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 17.784 19.117"
+                  class="w-5 h-5"
+                >
+                  <path
+                    d="M9.534 16.496a1.067 1.067 0 01-1.306 0l-6.527-5.07a1.055 1.055 0 00-1.295 1.666l7.175 5.583a2.135 2.135 0 002.611 0l7.175-5.583a1.058 1.058 0 000-1.666l-.011-.011a1.052 1.052 0 00-1.295 0l-6.527 5.081zm.669-3.206l7.175-5.583a1.069 1.069 0 000-1.677L10.203.447a2.135 2.135 0 00-2.611 0L.416 6.04a1.069 1.069 0 000 1.677L7.591 13.3a2.12 2.12 0 002.611-.011z"
+                    fill="currentColor"
+                  />
+                </svg>
               </div>
-            </transition>
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-class="transform scale-95 translate-x-4 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in translate-x-4"
+                leave-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <div
+                  v-if="state.utils.basemaps.shown"
+                  class="
+                    absolute
+                    top-0
+                    right-0
+                    w-64
+                    mr-12
+                    origin-right
+                    bg-gray-300
+                    rounded-md
+                    shadow-lg
+                    dark:bg-gray-700
+                    ring-1 ring-white ring-opacity-5
+                  "
+                >
+                  <basemaps
+                    :data="state.utils.basemaps.data"
+                    @update-map-style="updateBasemap"
+                    @close="state.utils.basemaps.shown = false"
+                  />
+                </div>
+              </transition>
+            </div>
           </div>
         </div>
         <!-- Zoom in, Zoom out, Bearing & Locate Me -->
@@ -334,9 +407,13 @@
     components: {
       MglMap,
       MglScaleControl,
+      Geocoder: () =>
+        import(
+          /* webpackChunkName: "GeocoderComponent" */ '@/components/map/_partials/Geocoder.vue'
+        ),
       Basemaps: () =>
         import(
-          /* webpackChunkName: "BasemapsComponent" */ '@/components/_partials/Basemaps.vue'
+          /* webpackChunkName: "BasemapsComponent" */ '@/components/map/_partials/Basemaps.vue'
         ),
     },
     props: {
@@ -366,8 +443,16 @@
           zoom: 11,
           maxZoom: 22,
         },
+        map: {
+          bbox: [] as number[][],
+        },
         mapboxgl,
         utils: {
+          geocoder: {
+            shown: false as boolean,
+            disabled: false as boolean,
+            data: {},
+          },
           basemaps: {
             shown: false as boolean,
             data: {
@@ -415,8 +500,10 @@
        */
       function mapLoaded(e: { map: Map }): void {
         map = e.map;
+        state.map.bbox = map.getBounds().toArray();
         emit('update:loaded', true);
         emit('update:style-changed', true);
+        emit('update:bounds', state.map.bbox);
         /**
          * This is required because we want
          * to persist the layers on the map
@@ -467,7 +554,9 @@
        */
       function mapMoved(e: { map: Map }): void {
         const coords = e.map.getCenter();
+        state.map.bbox = map.getBounds().toArray();
         emit('update:center', [coords.lng, coords.lat]);
+        emit('update:bounds', state.map.bbox);
       }
       /**
        * Updates the current map style
@@ -561,6 +650,9 @@
        */
       function toggleTool(type: string): void {
         switch (type) {
+          case 'geocoder':
+            state.utils.geocoder.shown = !state.utils.geocoder.shown;
+            break;
           case 'basemaps':
             state.utils.basemaps.shown = !state.utils.basemaps.shown;
             break;
@@ -588,11 +680,13 @@
 
       return {
         state,
+        map,
         mapLoaded,
         mapClicked,
         mapMoved,
         mapZoomIn,
         mapZoomOut,
+        mapFlyTo,
         toggleTool,
         updateBasemap,
       };
