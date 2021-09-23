@@ -65,7 +65,7 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "nuxt-compress": "^5.0.0",
-    "postcss": "^8.3.6",
+    "postcss": "^8.3.7",
     "prettier": "^2.4.1",
     "sass": "^1.41.1",
     "shipjs": "^0.23.3",
