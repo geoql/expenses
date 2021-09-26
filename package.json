@@ -68,7 +68,7 @@
     "postcss": "^8.3.7",
     "prettier": "^2.4.1",
     "sass": "^1.42.1",
-    "shipjs": "^0.23.3",
+    "shipjs": "^0.24.0",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
