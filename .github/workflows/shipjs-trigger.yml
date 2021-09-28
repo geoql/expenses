@@ -16,7 +16,7 @@ jobs:
           ref: dev
 
       - name: Setup Node environment 🤙
-        uses: actions/setup-node@v2.4.0
+        uses: actions/setup-node@v2.4.1
         with:
           node-version: ${{ matrix.node }}
           registry-url: 'https://registry.npmjs.org'
