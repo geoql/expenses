@@ -1,3 +1,19 @@
+## [1.4.1](https://github.com/geoql/expenses/compare/v1.4.0...v1.4.1) (2021-09-29)
+
+
+### Bug Fixes
+
+* add `color-mode` typings ([eadd044](https://github.com/geoql/expenses/commit/eadd044957e390ee65bfd0b16bc7c09dff59c22f))
+* add `tiles-loaded` event ([3b99da0](https://github.com/geoql/expenses/commit/3b99da0b88ef1b6ba863087397b02f59219d9c4a))
+* failing build ([a2d9b03](https://github.com/geoql/expenses/commit/a2d9b037f4f2961ebb2350e105f56a63c01b559f))
+* remove volar plugin cause new update available ([e2c9c90](https://github.com/geoql/expenses/commit/e2c9c90087007a6d3d2a5b9c673e9bfbfb0e5203))
+* type errors & add marker on map click ([f102e8d](https://github.com/geoql/expenses/commit/f102e8dc0d6ef957ae07750ae0666b7953a37f55)), closes [#226](https://github.com/geoql/expenses/issues/226)
+* **deps:** bump @nuxtjs/composition-api from 0.29.0 to 0.29.2 ([4e56d1f](https://github.com/geoql/expenses/commit/4e56d1fecb7866f9f6c3b951c9b71d90ab738c34))
+* **deps:** bump actions/setup-node from 2.4.0 to 2.4.1 ([efe92c3](https://github.com/geoql/expenses/commit/efe92c3561446a685d4e3d69ef6854d6a8556128))
+* **deps:** bump core-js from 3.17.3 to 3.18.0 ([6aa0c31](https://github.com/geoql/expenses/commit/6aa0c313e24c72402d466331d7dfb60600d4ea68))
+
+
+
 # [1.4.0](https://github.com/geoql/expenses/compare/v1.3.1...v1.4.0) (2021-09-19)
 
 
