@@ -1,5 +1,5 @@
 {
-  "name": "map-my-expenses",
+  "name": "@geoql/expenses",
   "version": "1.4.0",
   "private": true,
   "scripts": {
