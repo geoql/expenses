@@ -44,6 +44,7 @@
     >
       <!-- Form to add debit or credit -->
       <mgl-marker
+        v-if="state.map.loaded && state.map.marker.center.length"
         :coordinates="state.map.marker.center"
         :draggable="true"
         @dragend="markerDragged"
@@ -319,14 +320,12 @@
           v-for="(marker, idx) in state.expense.geojson.features"
           :key="idx"
           :coordinates="marker.geometry.coordinates"
+          @click="state.expense.popup.shown = true"
         >
           <svg
             slot="marker"
             class="w-6 h-6 cursor-pointer"
-            :class="{
-              'text-green-600': marker.properties.expense.type === 'credit',
-              'text-red-600': marker.properties.expense.type === 'debit',
-            }"
+            :class="getExpenseMarkerColor(marker)"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -352,6 +351,7 @@
             :close-on-click="true"
             :close-on-move="true"
             class-name="expense-popup-card"
+            @close="state.expense.popup.shown = false"
           >
             <div
               class="
@@ -378,7 +378,7 @@
                   border-b border-gray-600
                 "
               >
-                <div class="capitalize">
+                <div v-if="marker.properties" class="capitalize">
                   {{ marker.properties.expense.type }}
                   <span v-if="marker.properties.date">
                     -
@@ -402,7 +402,7 @@
                 "
               >
                 <div
-                  v-if="marker.properties.expense.amount"
+                  v-if="marker.properties && marker.properties.expense.amount"
                   class="flex items-center space-x-2"
                 >
                   <div class="w-auto text-sm">
@@ -426,7 +426,9 @@
                   </div>
                 </div>
                 <div
-                  v-if="marker.properties.expense.description"
+                  v-if="
+                    marker.properties && marker.properties.expense.description
+                  "
                   class="flex items-center space-x-2"
                 >
                   <div class="w-auto text-sm">
@@ -479,16 +481,14 @@
       CommonMap,
     },
     setup() {
-      // @ts-ignore
       const { $colorMode } = useContext();
-
       const state = reactive({
         map: {
           loaded: false as boolean,
           styleChanged: false as boolean,
           center: [73.8567, 18.5204],
           marker: {
-            center: [73.8267, 18.5604],
+            center: [] as number[],
           },
         },
         expense: {
@@ -496,6 +496,9 @@
             amount: undefined as number | undefined,
             description: '' as string,
             type: 'debit' as 'credit' | 'debit',
+          },
+          popup: {
+            shown: false as boolean,
           },
           geojson: {
             type: 'FeatureCollection',
@@ -527,8 +530,9 @@
        * @param {EventData} e - Mapbox Event
        */
       function mapClicked(e: EventData): void {
-        // eslint-disable-next-line no-console
-        console.log('map clicked event :', e);
+        if (!state.expense.popup.shown) {
+          state.map.marker.center = [e.lngLat.lng, e.lngLat.lat];
+        }
       }
       /**
        * Update the marker center
@@ -570,19 +574,38 @@
             type: 'FeatureCollection',
             features: [feature],
           };
+          state.expense.geojson = fc;
           localStorage.setItem('expenses', JSON.stringify(fc));
         } else {
-          state.expense.geojson.features.push(feature);
           localStorage.setItem(
             'expenses',
             JSON.stringify(state.expense.geojson),
           );
         }
+        state.expense.geojson.features.push(feature);
         state.expense.form = {
           amount: undefined,
           description: '',
           type: 'debit',
         };
+      }
+      /**
+       * Gets the color for the svg
+       * marker based on the expense type
+       *
+       * @param {Feature<Point>} marker - Expense type
+       * @returns {Record<string, boolean>} - Color object
+       */
+      function getExpenseMarkerColor(
+        marker: Feature<Point>,
+      ): Record<string, boolean> | string {
+        if (marker.properties) {
+          return {
+            'text-green-600': marker.properties.expense.type === 'credit',
+            'text-red-600': marker.properties.expense.type === 'debit',
+          };
+        }
+        return 'text-blue-600';
       }
 
       return {
@@ -594,6 +617,7 @@
         mapClicked,
         markerDragged,
         add,
+        getExpenseMarkerColor,
       };
     },
   });
