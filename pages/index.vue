@@ -39,6 +39,7 @@
       :class="{ 'opacity-50': loading }"
       :loaded.sync="state.map.loaded"
       :style-changed.sync="state.map.styleChanged"
+      :tiles-loaded.sync="state.map.tilesLoaded"
       :center.sync="state.map.center"
       @click="mapClicked"
     >
@@ -486,6 +487,7 @@
         map: {
           loaded: false as boolean,
           styleChanged: false as boolean,
+          tilesLoaded: false as boolean,
           center: [73.8567, 18.5204],
           marker: {
             center: [] as number[],
@@ -507,7 +509,10 @@
         },
       });
       const loading = computed(
-        () => !state.map.loaded || !state.map.styleChanged,
+        () =>
+          !state.map.loaded ||
+          !state.map.styleChanged ||
+          !state.map.tilesLoaded,
       );
 
       onMounted(() => {

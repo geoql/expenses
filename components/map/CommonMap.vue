@@ -432,6 +432,11 @@
         required: true,
         default: false,
       },
+      tilesLoaded: {
+        type: Boolean as PropType<boolean>,
+        required: true,
+        default: false,
+      },
     },
     setup(props, { emit }: SetupContext) {
       const { $config } = useContext();
@@ -501,24 +506,44 @@
       function mapLoaded(e: { map: Map }): void {
         map = e.map;
         state.map.bbox = map.getBounds().toArray();
-        emit('update:loaded', true);
-        emit('update:style-changed', true);
         emit('update:bounds', state.map.bbox);
-        /**
-         * This is required because we want
-         * to persist the layers on the map
-         * even after the basemap is changed
-         */
-        map.on('style.load', () => {
-          const waiting = () => {
-            if (!map.isStyleLoaded()) {
-              emit('update:style-changed', false);
-              setTimeout(waiting, 200);
-            } else {
-              emit('update:style-changed', true);
+        const events: string[] = [
+          'style.load',
+          'sourcedata',
+          'sourcedataloading',
+        ];
+        events.forEach((event) => {
+          // Sets map into loading state when tiles starts loading
+          map.on(event, () => {
+            // Sets map into loaded when tiles are loaded
+            if (event === 'sourcedata' || event === 'sourcedataloading') {
+              const waiting = () => {
+                if (!map.areTilesLoaded()) {
+                  emit('update:tiles-loaded', false);
+                  setTimeout(waiting, 200);
+                } else {
+                  emit('update:tiles-loaded', true);
+                }
+              };
+              waiting();
             }
-          };
-          waiting();
+            if (event === 'style.load') {
+              /**
+               * This is required because we want
+               * to persist the layers on the map
+               * even after the basemap is changed
+               */
+              const waiting = () => {
+                if (!map.isStyleLoaded()) {
+                  emit('update:style-changed', false);
+                  setTimeout(waiting, 200);
+                } else {
+                  emit('update:style-changed', true);
+                }
+              };
+              waiting();
+            }
+          });
         });
         /**
          * Watch the pitchend event
@@ -532,6 +557,9 @@
             10,
           );
         });
+        emit('update:loaded', true);
+        emit('update:style-changed', true);
+        emit('update:tiles-loaded', true);
       }
       /**
        * This function emits a click event to the
