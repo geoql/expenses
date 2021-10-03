@@ -2,6 +2,7 @@
 export type Basemap = {
   type: string;
   enabled: boolean;
+  source: string;
   image: string;
   style: string;
 };

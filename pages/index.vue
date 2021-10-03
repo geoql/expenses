@@ -38,10 +38,12 @@
     <common-map
       :class="{ 'opacity-50': loading }"
       :loaded.sync="state.map.loaded"
+      :zoom.sync="state.map.zoom"
+      :center.sync="state.map.center"
       :style-changed.sync="state.map.styleChanged"
       :tiles-loaded.sync="state.map.tilesLoaded"
-      :center.sync="state.map.center"
-      @click="mapClicked"
+      :viz.sync="state.map.ui"
+      @click="onMapClicked"
     >
       <!-- Form to add debit or credit -->
       <mgl-marker
@@ -317,145 +319,13 @@
           state.expense.geojson.features.length > 0
         "
       >
-        <mgl-marker
-          v-for="(marker, idx) in state.expense.geojson.features"
-          :key="idx"
-          :coordinates="marker.geometry.coordinates"
-          @click="state.expense.popup.shown = true"
-        >
-          <svg
-            slot="marker"
-            class="w-6 h-6 cursor-pointer"
-            :class="getExpenseMarkerColor(marker)"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-            />
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-            />
-          </svg>
-          <!-- Form -->
-          <mgl-popup
-            :showed="false"
-            :close-button="false"
-            :close-on-click="true"
-            :close-on-move="true"
-            class-name="expense-popup-card"
-            @close="state.expense.popup.shown = false"
-          >
-            <div
-              class="
-                flex flex-col
-                items-start
-                justify-center
-                text-white
-                border border-gray-700
-                rounded-md
-                shadow-lg
-                bg-gradient-to-tr
-                from-gray-700
-                to-gray-800
-              "
-            >
-              <div
-                class="
-                  flex
-                  items-center
-                  justify-between
-                  w-full
-                  px-3
-                  py-1
-                  border-b border-gray-600
-                "
-              >
-                <div v-if="marker.properties" class="capitalize">
-                  {{ marker.properties.expense.type }}
-                  <span v-if="marker.properties.date">
-                    -
-                    {{
-                      new Date(marker.properties.date).toLocaleDateString(
-                        'en',
-                        { year: 'numeric', month: 'short', day: 'numeric' },
-                      )
-                    }}
-                  </span>
-                </div>
-              </div>
-              <div
-                class="
-                  flex flex-col
-                  items-start
-                  justify-between
-                  px-3
-                  py-1
-                  space-y-1
-                "
-              >
-                <div
-                  v-if="marker.properties && marker.properties.expense.amount"
-                  class="flex items-center space-x-2"
-                >
-                  <div class="w-auto text-sm">
-                    <svg
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="w-24 text-base break-all">
-                    {{ marker.properties.expense.amount }}
-                  </div>
-                </div>
-                <div
-                  v-if="
-                    marker.properties && marker.properties.expense.description
-                  "
-                  class="flex items-center space-x-2"
-                >
-                  <div class="w-auto text-sm">
-                    <svg
-                      class="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <div class="text-base break-words w-36">
-                    {{ marker.properties.expense.description }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mgl-popup>
-        </mgl-marker>
+        <markers
+          v-if="marker"
+          :features="state.expense.geojson.features"
+          :visibility.sync="state.expense.popup.shown"
+        />
+        <clusters :data="state.expense.geojson" :visibility="cluster" />
+        <heatmap :data="state.expense.geojson" :visibility="heatmap" />
       </template>
     </common-map>
   </div>
@@ -473,6 +343,9 @@
   import type { EventData } from 'mapbox-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
   import CommonMap from '@/components/map/CommonMap.vue';
+  import Markers from '@/components/map/layers/Markers.vue';
+  import Clusters from '@/components/map/layers/Clusters.vue';
+  import Heatmap from '@/components/map/layers/Heatmap.vue';
 
   export default defineComponent({
     name: 'Dashboard',
@@ -480,6 +353,9 @@
       MglMarker,
       MglPopup,
       CommonMap,
+      Markers,
+      Clusters,
+      Heatmap,
     },
     setup() {
       const { $colorMode } = useContext();
@@ -489,8 +365,14 @@
           styleChanged: false as boolean,
           tilesLoaded: false as boolean,
           center: [73.8567, 18.5204],
+          zoom: 11,
           marker: {
             center: [] as number[],
+          },
+          ui: {
+            isMarker: true as boolean,
+            isCluster: false as boolean,
+            isHeatmap: false as boolean,
           },
         },
         expense: {
@@ -509,17 +391,8 @@
         },
       });
       const loading = computed(
-        () =>
-          !state.map.loaded ||
-          !state.map.styleChanged ||
-          !state.map.tilesLoaded,
+        () => !state.map.loaded || !state.map.styleChanged,
       );
-
-      onMounted(() => {
-        state.expense.geojson = JSON.parse(
-          localStorage.getItem('expenses') as any,
-        ) as FeatureCollection<Point>;
-      });
 
       const getMarkerColor = computed(() => {
         return [
@@ -528,13 +401,36 @@
             : 'text-indigo-600',
         ];
       });
+      const marker = computed(
+        () =>
+          !state.map.ui.isCluster &&
+          state.map.ui.isMarker &&
+          !state.map.ui.isHeatmap,
+      );
+      const heatmap = computed(
+        () =>
+          !state.map.ui.isCluster &&
+          !state.map.ui.isMarker &&
+          state.map.ui.isHeatmap,
+      );
+      const cluster = computed(
+        () =>
+          state.map.ui.isCluster &&
+          !state.map.ui.isMarker &&
+          !state.map.ui.isHeatmap,
+      );
+      onMounted(() => {
+        state.expense.geojson = JSON.parse(
+          localStorage.getItem('expenses') as any,
+        ) as FeatureCollection<Point>;
+      });
 
       /**
        * Adds a temp marker to store
        *
        * @param {EventData} e - Mapbox Event
        */
-      function mapClicked(e: EventData): void {
+      function onMapClicked(e: EventData): void {
         if (!state.expense.popup.shown) {
           state.map.marker.center = [e.lngLat.lng, e.lngLat.lat];
         }
@@ -594,35 +490,19 @@
           type: 'debit',
         };
       }
-      /**
-       * Gets the color for the svg
-       * marker based on the expense type
-       *
-       * @param {Feature<Point>} marker - Expense type
-       * @returns {Record<string, boolean>} - Color object
-       */
-      function getExpenseMarkerColor(
-        marker: Feature<Point>,
-      ): Record<string, boolean> | string {
-        if (marker.properties) {
-          return {
-            'text-green-600': marker.properties.expense.type === 'credit',
-            'text-red-600': marker.properties.expense.type === 'debit',
-          };
-        }
-        return 'text-blue-600';
-      }
 
       return {
         state,
         loading,
         // computed:
         getMarkerColor,
+        marker,
+        heatmap,
+        cluster,
         // methods:
-        mapClicked,
+        onMapClicked,
         markerDragged,
         add,
-        getExpenseMarkerColor,
       };
     },
   });

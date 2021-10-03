@@ -5,7 +5,7 @@
       items-center
       justify-between
       w-full
-      h-20
+      h-12
       px-4
       invisible
       border-b border-gray-300
@@ -16,8 +16,8 @@
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="
-          w-12
-          h-12
+          w-8
+          h-8
           transition-colors
           duration-300
           cursor-pointer
@@ -43,98 +43,65 @@
       </svg>
     </div>
     <div tile="Theme Picker" class="visible">
-      <span class="relative z-0 inline-flex shadow rounded-full">
-        <button
-          type="button"
-          class="
-            relative
-            inline-flex
-            items-center
-            px-3
-            py-1.5
-            rounded-l-full
-            border border-gray-300
-            bg-transparent
-            text-sm
-            font-medium
-            focus:z-10
-            focus:outline-none
-            focus:ring-1
-            focus:ring-gray-500
-            focus:border-gray-500
-            active:ring-0
-          "
-          :class="{
-            'bg-gray-500 text-white': $colorMode.preference === 'system',
-          }"
-          @click="$colorMode.preference = 'system'"
-        >
-          System
-        </button>
-        <button
-          type="button"
-          class="
-            -ml-px
-            relative
-            inline-flex
-            items-center
-            px-3
-            py-1.5
-            border border-gray-300
-            bg-transparent
-            text-sm
-            font-medium
-            focus:z-10
-            focus:outline-none
-            focus:ring-1
-            focus:ring-blueGray-500
-            focus:border-blueGray-500
-            active:ring-0
-          "
-          :class="{
-            'bg-blueGray-800 text-gray-50': $colorMode.preference === 'dark',
-          }"
-          @click="$colorMode.preference = 'dark'"
-        >
-          Dark
-        </button>
-        <button
-          type="button"
-          class="
-            -ml-px
-            relative
-            inline-flex
-            items-center
-            px-3
-            py-1.5
-            rounded-r-full
-            border border-gray-300
-            bg-transparent
-            text-sm
-            font-medium
-            focus:z-10
-            focus:outline-none
-            focus:ring-1
-            focus:ring-yellow-500
-            focus:border-yellow-500
-            active:ring-0
-          "
-          :class="{
-            'bg-yellow-500 text-gray-700': $colorMode.preference === 'light',
-          }"
-          @click="$colorMode.preference = 'light'"
-        >
-          Light
-        </button>
-      </span>
+      <svg
+        v-if="!isDark"
+        v-tooltip.bottom="{
+          content: 'Toggle theme',
+          offset: 4,
+          boundariesElement: 'viewport',
+        }"
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 cursor-pointer outline-none"
+        viewBox="0 0 24 24"
+        @click="toggleDark()"
+      >
+        <path
+          fill="currentColor"
+          d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z"
+          style="--darkreader-inline-fill: currentColor"
+        />
+      </svg>
+      <svg
+        v-if="isDark"
+        v-tooltip.bottom="{
+          content: 'Toggle theme',
+          offset: 4,
+          boundariesElement: 'viewport',
+        }"
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 cursor-pointer outline-none"
+        viewBox="0 0 512 512"
+        @click="toggleDark()"
+      >
+        <path
+          fill="currentColor"
+          d="M256 387c-8.5 0-15.4 6.9-15.4 15.4v46.2c0 8.5 6.9 15.4 15.4 15.4s15.4-6.9 15.4-15.4v-46.2c0-8.5-6.9-15.4-15.4-15.4zm0-339c-8.5 0-15.4 6.9-15.4 15.4v46.2c0 8.5 6.9 15.4 15.4 15.4s15.4-6.9 15.4-15.4V63.4c0-8.5-6.9-15.4-15.4-15.4zM125 256c0-8.5-6.9-15.4-15.4-15.4H63.4c-8.5 0-15.4 6.9-15.4 15.4s6.9 15.4 15.4 15.4h46.2c8.5 0 15.4-6.9 15.4-15.4zm323.6-15.4h-46.2c-8.5 0-15.4 6.9-15.4 15.4s6.9 15.4 15.4 15.4h46.2c8.5 0 15.4-6.9 15.4-15.4s-6.9-15.4-15.4-15.4zM152.5 344.1c-4.1 0-8 1.6-10.9 4.5l-32.7 32.7c-2.9 2.9-4.5 6.8-4.5 10.9s1.6 8 4.5 10.9c2.9 2.9 6.8 4.5 10.9 4.5 4.1 0 8-1.6 10.9-4.5l32.7-32.7c6-6 6-15.8 0-21.8-2.9-2.9-6.8-4.5-10.9-4.5zm207-176.2c4.1 0 8-1.6 10.9-4.5l32.7-32.7c2.9-2.9 4.5-6.8 4.5-10.9s-1.6-8-4.5-10.9c-2.9-2.9-6.8-4.5-10.9-4.5-4.1 0-8 1.6-10.9 4.5l-32.7 32.7c-2.9 2.9-4.5 6.8-4.5 10.9s1.6 8 4.5 10.9c2.9 2.9 6.8 4.5 10.9 4.5zm-228.8-59c-2.9-2.9-6.8-4.5-10.9-4.5-4.1 0-8 1.6-10.9 4.5-2.9 2.9-4.5 6.8-4.5 10.9 0 4.1 1.6 8 4.5 10.9l32.7 32.7c2.9 2.9 6.8 4.5 10.9 4.5 4.1 0 8-1.6 10.9-4.5 2.9-2.9 4.5-6.8 4.5-10.9s-1.6-8-4.5-10.9l-32.7-32.7zm239.7 239.7c-2.9-2.9-6.8-4.5-10.9-4.5-4.1 0-8 1.6-10.9 4.5-6 6-6 15.8 0 21.8l32.7 32.7c2.9 2.9 6.8 4.5 10.9 4.5 4.1 0 8-1.6 10.9-4.5 2.9-2.9 4.5-6.8 4.5-10.9s-1.6-8-4.5-10.9l-32.7-32.7zM256 160c-52.9 0-96 43.1-96 96s43.1 96 96 96 96-43.1 96-96-43.1-96-96-96z"
+        />
+      </svg>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@nuxtjs/composition-api';
+  import {
+    defineComponent,
+    useContext,
+    computed,
+  } from '@nuxtjs/composition-api';
 
   export default defineComponent({
     name: 'Header',
+    setup() {
+      const { $colorMode } = useContext();
+      const isDark = computed(() => $colorMode.preference === 'dark');
+      const toggleDark = () => {
+        $colorMode.preference =
+          $colorMode.preference === 'dark' ? 'light' : 'dark';
+      };
+      return {
+        isDark,
+        toggleDark,
+      };
+    },
   });
 </script>

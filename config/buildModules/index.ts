@@ -1,5 +1,6 @@
 import { NuxtOptionsModule } from '@nuxt/types/config/module';
 import { colorMode } from './color-mode';
+import { image } from './image';
 import { tailwindcss } from './tailwindcss';
 
 const buildModules: NuxtOptionsModule[] = [
@@ -15,6 +16,8 @@ const buildModules: NuxtOptionsModule[] = [
   '@nuxtjs/composition-api/module',
   // https://github.com/robcresswell/nuxt-compress
   'nuxt-compress',
+  // https://image.nuxtjs.org/getting-started/installation
+  ['@nuxt/image', image],
 ];
 
 export { buildModules };

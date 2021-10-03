@@ -11,7 +11,7 @@
     "
   >
     <v-header />
-    <nuxt class="-mt-20 -mb-20 pt-20 pb-20" />
+    <nuxt class="-mt-12 -mb-12 pt-12 pb-12" />
     <v-footer />
   </div>
 </template>

@@ -22,13 +22,22 @@
           hover:shadow-md
         "
         :class="{
-          'text-white bg-purple-800': basemap.enabled,
-          'text-gray-800 bg-gray-400 dark:text-white dark:bg-gray-600':
+          'text-white bg-gradient-to-l from-purple-600 to-purple-800':
+            basemap.enabled,
+          'text-gray-800 bg-gray-400 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-100':
             !basemap.enabled,
         }"
         @click="updateBasemap(basemap)"
       >
-        <div class="w-full prose-sm">
+        <div class="w-1/2">
+          <nuxt-img
+            format="webp"
+            fit="cover"
+            class="h-12 rounded-lg"
+            :src="`/images/basemaps/${basemap.image}.webp`"
+          />
+        </div>
+        <div class="w-auto prose-sm">
           {{ basemap.type }}
         </div>
       </div>
