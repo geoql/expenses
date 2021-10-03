@@ -1,23 +1,20 @@
 import { NuxtOptionsModule } from '@nuxt/types/config/module';
-import { colorMode } from './color-mode';
 import { image } from './image';
-import { tailwindcss } from './tailwindcss';
+import { windicss } from './windicss';
 
 const buildModules: NuxtOptionsModule[] = [
   // https://go.nuxtjs.dev/typescript
   '@nuxt/typescript-build',
   // https://go.nuxtjs.dev/stylelint
   '@nuxtjs/stylelint-module',
-  // https://go.nuxtjs.dev/tailwindcss
-  ['@nuxtjs/tailwindcss', tailwindcss],
-  // https://color-mode.nuxtjs.org/#setup
-  ['@nuxtjs/color-mode', colorMode],
   // https://composition-api.nuxtjs.org/getting-started/setup#quick-start
   '@nuxtjs/composition-api/module',
-  // https://github.com/robcresswell/nuxt-compress
-  'nuxt-compress',
   // https://image.nuxtjs.org/getting-started/installation
   ['@nuxt/image', image],
+  // https://windicss.org/integrations/nuxt.html
+  ['nuxt-windicss', windicss],
+  // https://github.com/robcresswell/nuxt-compress
+  'nuxt-compress',
 ];
 
 export { buildModules };

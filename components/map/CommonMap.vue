@@ -564,7 +564,6 @@
     ref,
     useContext,
   } from '@nuxtjs/composition-api';
-  import { MglMap, MglScaleControl } from 'v-mapbox';
   import mapboxgl from 'mapbox-gl';
   import type { PropType, SetupContext } from '@nuxtjs/composition-api';
   import type { EventData, Map } from 'mapbox-gl';
@@ -572,8 +571,6 @@
 
   export default defineComponent({
     components: {
-      MglMap,
-      MglScaleControl,
       Geocoder: () =>
         import(
           /* webpackChunkName: "GeocoderComponent" */ '@/components/map/_partials/Geocoder.vue'

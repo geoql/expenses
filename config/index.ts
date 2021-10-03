@@ -4,8 +4,6 @@ import {
 } from '@nuxt/types/config/loading';
 import { NuxtOptionsPlugin } from '@nuxt/types/config/plugin';
 import { NuxtOptionsRuntimeConfig } from '@nuxt/types/config/runtime';
-import { buildModules } from './buildModules';
-import { modules } from './modules';
 
 const typescript = {
   typeCheck: {
@@ -40,6 +38,7 @@ const css: string[] = [
 const plugins: NuxtOptionsPlugin[] = [
   { src: '~/plugins/click-outside', mode: 'client' },
   { src: '~/plugins/tooltip', mode: 'client' },
+  { src: '~/plugins/v-mapbox', mode: 'client' },
 ];
 
 const loading: NuxtOptionsLoading = { color: '#cccccc' };
@@ -52,7 +51,9 @@ const loadingIndicator: NuxtOptionsLoadingIndicator = {
 };
 
 export { build } from './build';
+export { buildModules } from './buildModules';
 export { head } from './head';
+export { modules } from './modules';
 export {
   css,
   loading,
@@ -60,6 +61,4 @@ export {
   plugins,
   typescript,
   publicRuntimeConfig,
-  buildModules,
-  modules,
 };

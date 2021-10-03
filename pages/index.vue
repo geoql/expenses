@@ -267,6 +267,8 @@
                     mt-1
                     border-gray-300
                     rounded-md
+                    py-2
+                    px-3
                     dark:text-gray-800
                     sm:text-sm
                   "
@@ -337,11 +339,10 @@
     defineComponent,
     onMounted,
     reactive,
-    useContext,
   } from '@nuxtjs/composition-api';
-  import { MglMarker, MglPopup } from 'v-mapbox';
   import type { EventData } from 'mapbox-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
+  import { useDark } from '@vueuse/core';
   import CommonMap from '@/components/map/CommonMap.vue';
   import Markers from '@/components/map/layers/Markers.vue';
   import Clusters from '@/components/map/layers/Clusters.vue';
@@ -350,15 +351,12 @@
   export default defineComponent({
     name: 'Dashboard',
     components: {
-      MglMarker,
-      MglPopup,
       CommonMap,
       Markers,
       Clusters,
       Heatmap,
     },
     setup() {
-      const { $colorMode } = useContext();
       const state = reactive({
         map: {
           loaded: false as boolean,
@@ -393,13 +391,10 @@
       const loading = computed(
         () => !state.map.loaded || !state.map.styleChanged,
       );
+      const isDark = useDark();
 
       const getMarkerColor = computed(() => {
-        return [
-          $colorMode.preference !== 'light'
-            ? 'text-indigo-500'
-            : 'text-indigo-600',
-        ];
+        return [!isDark ? 'text-indigo-500' : 'text-indigo-600'];
       });
       const marker = computed(
         () =>
