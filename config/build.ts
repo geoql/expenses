@@ -25,7 +25,7 @@ const build: NuxtOptionsBuild = {
     },
   },
   extend(config: Configuration) {
-    if (config && config.module) {
+    if (config !== null && config.module) {
       config.module.rules.push({
         test: /\.mjs$/,
         include: /node_modules/,
