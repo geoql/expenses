@@ -25,9 +25,7 @@
         "
         data-name="Layer 1"
         viewBox="0 0 512 512"
-        :class="[
-          $colorMode.preference !== 'light' ? 'text-white' : 'text-gray-900',
-        ]"
+        :class="[isDark ? 'text-white' : 'text-gray-900']"
         @click="$router.push({ name: 'index' })"
       >
         <defs />
@@ -83,21 +81,16 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    useContext,
-    computed,
-  } from '@nuxtjs/composition-api';
+  import { defineComponent } from '@nuxtjs/composition-api';
+  import { useDark, useToggle } from '@vueuse/core';
 
   export default defineComponent({
     name: 'Header',
     setup() {
-      const { $colorMode } = useContext();
-      const isDark = computed(() => $colorMode.preference === 'dark');
-      const toggleDark = () => {
-        $colorMode.preference =
-          $colorMode.preference === 'dark' ? 'light' : 'dark';
-      };
+      const isDark = useDark();
+
+      const toggleDark = useToggle(isDark);
+
       return {
         isDark,
         toggleDark,

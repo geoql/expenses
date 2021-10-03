@@ -143,16 +143,11 @@
 
 <script lang="ts">
   import { defineComponent } from '@nuxtjs/composition-api';
-  import { MglMarker, MglPopup } from 'v-mapbox';
   import type { PropType } from '@nuxtjs/composition-api';
   import type { Feature, Point } from 'geojson';
 
   export default defineComponent({
     name: 'ExpenseMarkers',
-    components: {
-      MglMarker,
-      MglPopup,
-    },
     props: {
       features: {
         type: Array as PropType<Feature<Point>[]>,

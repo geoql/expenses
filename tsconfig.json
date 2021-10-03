@@ -34,7 +34,6 @@
       "@types/webpack",
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@nuxtjs/color-mode",
       "@nuxt/image",
       "v-tooltip"
     ]

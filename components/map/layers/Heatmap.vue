@@ -17,15 +17,11 @@
 
 <script lang="ts">
   import { defineComponent, reactive, computed } from '@nuxtjs/composition-api';
-  import { MglGeojsonLayer } from 'v-mapbox';
   import type { PropType } from '@nuxtjs/composition-api';
   import type { FeatureCollection, Point } from 'geojson';
 
   export default defineComponent({
     name: 'Heatmap',
-    components: {
-      MglGeojsonLayer,
-    },
     props: {
       data: {
         type: Object as PropType<FeatureCollection<Point>>,

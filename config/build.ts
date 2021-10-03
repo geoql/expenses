@@ -25,6 +25,13 @@ const build: NuxtOptionsBuild = {
     },
   },
   extend(config: Configuration) {
+    if (config && config.module) {
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      });
+    }
     config.node = {
       fs: 'empty',
     };
