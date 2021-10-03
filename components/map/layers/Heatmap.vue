@@ -1,18 +1,16 @@
 <template>
-  <section v-if="data.features.length && visibility">
+  <section v-if="data.features.length">
     <mgl-geojson-layer
-      source-id="expenses-heatmap-source"
+      :source-id="heatmap.sourceId"
       :source="heatmap.source"
-      layer-id="expenses-heatmap-circle-layer"
+      :layer-id="heatmap.circleLayer.id"
       :layer="heatmap.circleLayer"
-      :clear-source="false"
     />
     <mgl-geojson-layer
-      source-id="expenses-heatmap-source"
+      :source-id="heatmap.sourceId"
       :source="heatmap.source"
-      layer-id="expenses-heatmap-point-layer"
+      :layer-id="heatmap.pointLayer.id"
       :layer="heatmap.pointLayer"
-      :clear-source="false"
     />
   </section>
 </template>
@@ -41,6 +39,7 @@
     },
     setup(props) {
       const heatmap = reactive({
+        sourceId: 'expenses-heatmap-source',
         source: computed(() => {
           return {
             type: 'geojson',
@@ -54,7 +53,7 @@
             source: 'expenses-heatmap-source',
             maxzoom: 9,
             paint: {
-              // Increase the heatmap weight based on frequency and property magnitude
+              // increase weight as diameter breast height increases
               'heatmap-weight': [
                 'interpolate',
                 ['linear'],
@@ -64,57 +63,44 @@
                 6,
                 1,
               ],
-              // Increase the heatmap color weight weight by zoom level
-              // heatmap-intensity is a multiplier on top of heatmap-weight
-              'heatmap-intensity': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                0,
-                1,
-                9,
-                3,
-              ],
-              // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-              // Begin color ramp at 0-stop with a 0-transparancy color
-              // to create a blur-like effect.
+              // increase intensity as zoom level increases
+              'heatmap-intensity': {
+                stops: [
+                  [11, 1],
+                  [15, 3],
+                ],
+              },
+              // assign color values be applied to points depending on their density
               'heatmap-color': [
                 'interpolate',
                 ['linear'],
                 ['heatmap-density'],
                 0,
-                'rgba(33,102,172,0)',
+                'rgba(236,222,239,0)',
                 0.2,
-                'rgb(103,169,207)',
+                'rgb(208,209,230)',
                 0.4,
-                'rgb(209,229,240)',
+                'rgb(166,189,219)',
                 0.6,
-                'rgb(253,219,199)',
+                'rgb(103,169,207)',
                 0.8,
-                'rgb(239,138,98)',
-                1,
-                'rgb(178,24,43)',
+                'rgb(28,144,153)',
               ],
-              // Adjust the heatmap radius by zoom level
-              'heatmap-radius': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                0,
-                2,
-                9,
-                20,
-              ],
-              // Transition from heatmap to circle layer by zoom level
-              'heatmap-opacity': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                7,
-                1,
-                9,
-                0,
-              ],
+              // increase radius as zoom increases
+              'heatmap-radius': {
+                stops: [
+                  [11, 15],
+                  [15, 20],
+                ],
+              },
+              // decrease opacity to transition into the circle layer
+              'heatmap-opacity': {
+                default: 1,
+                stops: [
+                  [14, 1],
+                  [15, 0],
+                ],
+              },
             },
             layout: {
               visibility: props.visibility ? 'visible' : 'none',

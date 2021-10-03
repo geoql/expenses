@@ -2,21 +2,17 @@
   <section v-if="data.features.length">
     <!-- Cluster Circle Layer -->
     <mgl-geojson-layer
-      v-if="visibility"
-      source-id="expenses-cluster-source"
+      :source-id="clusters.sourceId"
       :source="clusters.source"
-      layer-id="expenses-cluster-circle-layer"
+      :layer-id="clusters.circleLayer.id"
       :layer="clusters.circleLayer"
-      :clear-source="false"
     />
     <!-- Cluster Count Layer -->
     <mgl-geojson-layer
-      v-if="visibility"
-      source-id="expenses-cluster-source"
+      :source-id="clusters.sourceId"
       :source="clusters.source"
-      layer-id="expenses-cluster-count-layer"
+      :layer-id="clusters.countLayer.id"
       :layer="clusters.countLayer"
-      :clear-source="false"
     />
   </section>
 </template>
@@ -45,6 +41,7 @@
     },
     setup(props) {
       const clusters = reactive({
+        sourceId: 'expenses-cluster-source',
         source: computed(() => {
           return {
             type: 'geojson',
