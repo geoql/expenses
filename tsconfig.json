@@ -29,12 +29,13 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxtjs/color-mode",
       "@types/geojson",
       "@types/mapbox-gl",
       "@types/webpack",
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "@nuxtjs/color-mode",
+      "@nuxt/image",
       "v-tooltip"
     ]
   },
