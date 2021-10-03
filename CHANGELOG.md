@@ -1,3 +1,17 @@
+# [1.5.0](https://github.com/geoql/expenses/compare/v1.4.1...v1.5.0) (2021-10-03)
+
+
+### Bug Fixes
+
+* update heatmap & cluster layers ([2c01de6](https://github.com/geoql/expenses/commit/2c01de6519d929cdbe4f26fd5b8895ca6dcbf6b4))
+
+
+### Features
+
+* add clusters, heatmap & markers button group ([aff1bd9](https://github.com/geoql/expenses/commit/aff1bd99b75dc89456d7dcbc47ff75b01a48f015))
+
+
+
 ## [1.4.1](https://github.com/geoql/expenses/compare/v1.4.0...v1.4.1) (2021-09-29)
 
 
