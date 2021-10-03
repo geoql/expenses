@@ -48,7 +48,7 @@ jobs:
           check-latest: true
           cache: 'npm'
         env:
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upgrade npm ✨
         run: npm i -g npm@latest
