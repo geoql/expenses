@@ -166,14 +166,14 @@
                 'text-gray-800 bg-white dark:text-white dark:bg-gray-800':
                   !viz.isHeatmap,
               }"
-              @click="
+            >
+              <!-- @click="
                 $emit('update:viz', {
                   isMarker: false,
                   isCluster: false,
                   isHeatmap: !viz.isHeatmap,
                 })
-              "
-            >
+              " -->
               <span class="sm:block hidden">Heatmap</span>
               <svg
                 class="h-4 fill-current sm:hidden block"
@@ -570,18 +570,14 @@
   import mapboxgl from 'mapbox-gl';
   import type { PropType, SetupContext } from '@nuxtjs/composition-api';
   import type { EventData, Map } from 'mapbox-gl';
-  import type { Basemaps } from '~/@types/map';
+  import type { Basemaps as BaseMaps } from '~/@types/map';
+  import Geocoder from '@/components/map/_partials/Geocoder.vue';
+  import Basemaps from '@/components/map/_partials/Basemaps.vue';
 
   export default defineComponent({
     components: {
-      Geocoder: () =>
-        import(
-          /* webpackChunkName: "GeocoderComponent" */ '@/components/map/_partials/Geocoder.vue'
-        ),
-      Basemaps: () =>
-        import(
-          /* webpackChunkName: "BasemapsComponent" */ '@/components/map/_partials/Basemaps.vue'
-        ),
+      Geocoder,
+      Basemaps,
     },
     props: {
       zoom: {
@@ -630,7 +626,7 @@
           maxZoom: 22,
         },
         map: {
-          bbox: [] as number[][],
+          bbox: [] as number[] | number[][],
         },
         mapboxgl,
         utils: {
@@ -675,7 +671,7 @@
                     'https://maps-api.meteoblue.com/mapstyle/weathermap?lang=en&enableOpenlayersLicensing=true',
                 },
               ],
-            } as Basemaps,
+            } as BaseMaps,
           },
           compass: {
             shown: false as boolean,

@@ -4,7 +4,6 @@
     <input
       id="geocoder"
       v-model="state.search"
-      autofocus="autofocus"
       type="text"
       name="geocoder"
       class="
@@ -19,6 +18,7 @@
         sm:text-sm
       "
       placeholder="eg. Mumbai"
+      autofocus
       @input="geocode"
     />
     <div
@@ -67,7 +67,7 @@
     name: 'Geocoder',
     props: {
       bbox: {
-        type: Array as PropType<number[]>,
+        type: Array as PropType<number[] | number[][]>,
         required: false,
         default: () => [],
       },
