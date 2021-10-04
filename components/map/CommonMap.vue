@@ -137,7 +137,10 @@
                 boundariesElement: 'viewport',
               }"
               type="button"
+              disabled="true"
               class="
+                opacity-50
+                cursor-not-allowed
                 -ml-px
                 relative
                 visible
