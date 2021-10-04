@@ -1,3 +1,27 @@
+# [1.6.0](https://github.com/geoql/expenses/compare/v1.5.0...v1.6.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* access property after correct `null` check ([65d0b1e](https://github.com/geoql/expenses/commit/65d0b1e9345d5d8f7a20632cde078e18ac72f08e))
+* **deepscan:** `null` check ([1b7a269](https://github.com/geoql/expenses/commit/1b7a2697010ff81fa74a92ac3f44ce3195762b84))
+* disable heatmaps ([35ba9ce](https://github.com/geoql/expenses/commit/35ba9ce44c6ca3f17e1f06890d9f4183cb980aaa))
+* minor housekeeping ([629e937](https://github.com/geoql/expenses/commit/629e93783e5d7f6f03d58d1ef09bfd4b70255d24))
+* update `env` for CI workflow ([b4edb56](https://github.com/geoql/expenses/commit/b4edb567a64d68629c967024b0f6148a12b40e4a))
+* use `--unsafe-perm` ([95a60cd](https://github.com/geoql/expenses/commit/95a60cda97ddc0977667a0fb3fec8970635b5fc0)), closes [/github.com/evanw/esbuild/issues/369#issuecomment-687866119](https://github.com//github.com/evanw/esbuild/issues/369/issues/issuecomment-687866119)
+
+
+### Features
+
+* use `v-mapbox` as a plugin ([b99ae9a](https://github.com/geoql/expenses/commit/b99ae9aca53939282bd04bdd0eebe301bb8c1b04))
+
+
+### Performance Improvements
+
+* migrate to windicss ([4759150](https://github.com/geoql/expenses/commit/4759150817c98e0b38183e87ba7befe62e0f6547))
+
+
+
 # [1.5.0](https://github.com/geoql/expenses/compare/v1.4.1...v1.5.0) (2021-10-03)
 
 
