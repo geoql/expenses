@@ -93,8 +93,9 @@
               rounded-md
               shadow-lg
               bg-gradient-to-tr
-              from-gray-700
-              to-gray-800
+              from-gray-200
+              to-gray-100
+              dark:from-gray-700 dark:to-gray-800
             "
           >
             <div
@@ -105,7 +106,9 @@
                 w-full
                 px-4
                 py-2
-                border-b border-gray-600
+                border-b border-gray-300
+                dark:border-gray-600 dark:text-gray-50
+                text-gray-800
               "
             >
               <div class="capitalize">
@@ -155,7 +158,6 @@
                     duration-200
                     ease-in-out
                     transform
-                    translate-x-0
                     bg-white
                     rounded-full
                     shadow
@@ -218,10 +220,12 @@
                       block
                       w-full
                       pl-10
-                      border-gray-300
                       rounded-md
-                      dark:text-gray-800
                       sm:text-sm
+                      border-gray-300
+                      dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50
+                      text-gray-900
+                      bg-white
                     "
                     :class="{
                       'focus:ring-green-500 focus:border-green-500':
@@ -265,11 +269,13 @@
                     block
                     w-full
                     mt-1
-                    border-gray-300
                     rounded-md
+                    border-gray-300
+                    dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50
+                    text-gray-900
+                    bg-white
                     py-2
                     px-3
-                    dark:text-gray-800
                     sm:text-sm
                   "
                   :placeholder="
