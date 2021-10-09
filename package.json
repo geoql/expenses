@@ -28,7 +28,7 @@
     "@nuxtjs/composition-api": "^0.29.2",
     "@nuxtjs/pwa": "^3.3.5",
     "@vueuse/core": "^6.5.3",
-    "core-js": "^3.18.1",
+    "core-js": "^3.18.2",
     "mapbox-gl": "1.13.1",
     "nuxt": "^2.15.8",
     "v-click-outside": "^3.1.2",
