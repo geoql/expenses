@@ -62,7 +62,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^7.19.1",
     "husky": "^7.0.2",
-    "lint-staged": "^11.2.1",
+    "lint-staged": "^11.2.3",
     "nuxt-compress": "^5.0.0",
     "nuxt-windicss": "^1.2.4",
     "prettier": "^2.4.1",
