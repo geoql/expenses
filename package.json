@@ -53,7 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
-    "@vue/runtime-dom": "^3.2.20",
+    "@vue/runtime-dom": "^3.2.21",
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
