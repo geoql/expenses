@@ -142,8 +142,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@nuxtjs/composition-api';
-  import type { PropType } from '@nuxtjs/composition-api';
+  import { defineComponent } from 'vue';
+  import type { PropType } from 'vue';
   import type { Feature, Point } from 'geojson';
 
   export default defineComponent({

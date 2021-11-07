@@ -46,8 +46,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@nuxtjs/composition-api';
-  import type { SetupContext, PropType } from '@nuxtjs/composition-api';
+  import { defineComponent } from 'vue';
+  import type { SetupContext, PropType } from 'vue';
   import type { Basemaps, Basemap } from '~/@types/map';
 
   export default defineComponent({

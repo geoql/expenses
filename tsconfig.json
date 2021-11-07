@@ -1,8 +1,6 @@
 {
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
     "lib": [
       "esnext",
       "dom",
@@ -10,32 +8,14 @@
       "scripthost",
       "esnext.asynciterable"
     ],
-    "outDir": "./dist",
     "esModuleInterop": true,
-    "allowJs": true,
     "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
-    },
     "types": [
-      "@types/node",
       "@types/geojson",
       "@types/mapbox-gl",
       "@types/webpack",
-      "@nuxt/types",
-      "@nuxtjs/axios",
-      "@nuxt/image",
-      "v-tooltip"
+      "@nuxt/types"
     ]
   },
   "include": [

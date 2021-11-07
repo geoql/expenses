@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, computed } from '@nuxtjs/composition-api';
-  import type { PropType } from '@nuxtjs/composition-api';
+  import { defineComponent, reactive, computed } from 'vue';
+  import type { PropType } from 'vue';
   import type { FeatureCollection, Point } from 'geojson';
 
   export default defineComponent({

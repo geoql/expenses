@@ -560,15 +560,10 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    reactive,
-    readonly,
-    ref,
-    useContext,
-  } from '@nuxtjs/composition-api';
+  import { defineComponent, reactive, readonly, ref } from 'vue';
+  import { useNuxtApp } from '#app';
   import mapboxgl from 'mapbox-gl';
-  import type { PropType, SetupContext } from '@nuxtjs/composition-api';
+  import type { PropType, SetupContext } from 'vue';
   import type { EventData, Map } from 'mapbox-gl';
   import type { Basemaps as BaseMaps } from '~/@types/map';
   import Geocoder from '@/components/map/_partials/Geocoder.vue';
@@ -616,7 +611,7 @@
       },
     },
     setup(props, { emit }: SetupContext) {
-      const { $config } = useContext();
+      const { $config } = useNuxtApp();
       const state = reactive({
         mapOptions: {
           accessToken: $config.mapToken,

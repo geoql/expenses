@@ -2,8 +2,8 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    es6: true,
     node: true,
+    es6: true,
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',
@@ -16,16 +16,14 @@ module.exports = {
     },
     extraFileExtensions: ['.vue'],
   },
-  plugins: ['prettier', 'vue', 'jsdoc'],
+  plugins: ['prettier', 'vue', 'jsdoc', '@typescript-eslint'],
   extends: [
-    '@nuxtjs',
-    '@nuxtjs/eslint-config-typescript',
     'prettier',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
-    'plugin:jsdoc/recommended',
   ],
+  // add your custom rules here
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',

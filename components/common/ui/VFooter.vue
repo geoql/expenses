@@ -101,15 +101,12 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    reactive,
-    useContext,
-  } from '@nuxtjs/composition-api';
+  import { useNuxtApp } from '#app';
+  import { defineComponent, reactive } from 'vue';
   export default defineComponent({
     name: 'Footer',
     setup() {
-      const { $config } = useContext();
+      const { $config } = useNuxtApp();
       const state = reactive({
         date: new Date().getFullYear(),
         appVersion: $config.appVersion,

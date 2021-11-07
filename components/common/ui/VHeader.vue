@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from '@nuxtjs/composition-api';
+  import { defineComponent } from 'vue';
   import { useDark, useToggle } from '@vueuse/core';
 
   export default defineComponent({

@@ -54,12 +54,9 @@
 </template>
 
 <script lang="ts">
-  import {
-    defineComponent,
-    reactive,
-    useContext,
-  } from '@nuxtjs/composition-api';
-  import type { PropType } from '@nuxtjs/composition-api';
+  import { defineComponent, reactive } from 'vue';
+  import { useNuxtApp } from '#app';
+  import type { PropType } from 'vue';
   import type { AxiosError } from 'axios';
   import type { SearchResult, GeocodedFeature } from '@/@types/map';
 
@@ -73,7 +70,7 @@
       },
     },
     setup(props) {
-      const { $axios, $config } = useContext();
+      const { $axios, $config } = useNuxtApp();
       const state = reactive({
         search: '',
         loading: false,

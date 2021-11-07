@@ -340,12 +340,7 @@
 </template>
 
 <script lang="ts">
-  import {
-    computed,
-    defineComponent,
-    onMounted,
-    reactive,
-  } from '@nuxtjs/composition-api';
+  import { computed, defineComponent, onMounted, reactive } from 'vue';
   import type { EventData } from 'mapbox-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
   import { useDark } from '@vueuse/core';

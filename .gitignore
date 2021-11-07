@@ -83,8 +83,15 @@ dist
 # Service worker
 sw.*
 
-# macOS
+# Mac OSX
 .DS_Store
 
 # Vim swap files
 *.swp
+
+# Ignore Cypress video artifacts
+test/e2e/videos/*.mp4
+
+# Nuxt 3
+nuxt.d.ts
+.output
