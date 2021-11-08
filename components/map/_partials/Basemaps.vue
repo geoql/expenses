@@ -30,10 +30,8 @@
         @click="updateBasemap(basemap)"
       >
         <div class="w-1/2">
-          <nuxt-img
-            format="webp"
-            fit="cover"
-            class="h-12 rounded-lg"
+          <img
+            class="object-cover h-12 rounded-lg"
             :src="`/images/basemaps/${basemap.image}.webp`"
           />
         </div>
@@ -47,14 +45,13 @@
 
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import type { SetupContext, PropType } from 'vue';
-  import type { Basemaps, Basemap } from '~/@types/map';
+  import type { SetupContext } from 'vue';
 
   export default defineComponent({
     name: 'Basemaps',
     props: {
       data: {
-        type: Object as PropType<Basemaps>,
+        type: Object,
         required: true,
       },
     },
@@ -62,9 +59,14 @@
       /**
        * Updates the basemap
        *
-       * @param {Basemap} basemap - The basemap to update
+       * @param {Record<string, string>} basemap - The basemap to update
+       * @param {boolean} basemap.enabled - Whether the basemap is enabled
+       * @param {string} basemap.style - The basemap style
        */
-      function updateBasemap(basemap: Basemap): void {
+      function updateBasemap(basemap: {
+        enabled: boolean;
+        style: string;
+      }): void {
         if (!basemap.enabled) {
           emit('update-map-style', basemap.style);
         }

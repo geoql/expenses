@@ -15,7 +15,7 @@
       "
     >
       <svg
-        class="w-5 h-5 text-white animate-spin"
+        class="w-6 h-6 dark:text-white text-gray-900 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -35,16 +35,8 @@
         />
       </svg>
     </div>
-    <common-map
-      :class="{ 'opacity-50': loading }"
-      :loaded.sync="state.map.loaded"
-      :zoom.sync="state.map.zoom"
-      :center.sync="state.map.center"
-      :style-changed.sync="state.map.styleChanged"
-      :tiles-loaded.sync="state.map.tilesLoaded"
-      :viz.sync="state.map.ui"
-      @click="onMapClicked"
-    >
+
+    <common-map :class="{ 'opacity-50': loading }" @click="onMapClicked">
       <!-- Form to add debit or credit -->
       <mgl-marker
         v-if="state.map.loaded && state.map.marker.center.length"
@@ -344,6 +336,7 @@
   import type { EventData } from 'mapbox-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
   import { useDark } from '@vueuse/core';
+  import { useMap } from '@/stores/useMap';
   import CommonMap from '@/components/map/CommonMap.vue';
   import Markers from '@/components/map/layers/Markers.vue';
   import Clusters from '@/components/map/layers/Clusters.vue';
@@ -358,11 +351,9 @@
       Heatmap,
     },
     setup() {
+      const mapStore = useMap();
       const state = reactive({
         map: {
-          loaded: false as boolean,
-          styleChanged: false as boolean,
-          tilesLoaded: false as boolean,
           center: [73.8567, 18.5204],
           zoom: 11,
           marker: {
@@ -390,12 +381,12 @@
         },
       });
       const loading = computed(
-        () => !state.map.loaded || !state.map.styleChanged,
+        () => !mapStore.$state.ui.loaded || !mapStore.$state.ui.styleChanged,
       );
       const isDark = useDark();
 
       const getMarkerColor = computed(() => {
-        return [!isDark ? 'text-indigo-500' : 'text-indigo-600'];
+        return [isDark ? 'text-indigo-600' : 'text-indigo-500'];
       });
       const marker = computed(
         () =>
@@ -508,6 +499,7 @@
   .expense-popup-card .mapboxgl-popup-tip {
     display: none;
   }
+
   .expense-popup-card .mapboxgl-popup-content {
     @apply bg-opacity-75;
     @apply p-0;

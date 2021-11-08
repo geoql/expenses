@@ -4,8 +4,6 @@ import VControlFullscreen from './controls/VControlFullscreen.vue';
 import VControlGeolocate from './controls/VControlGeolocate.vue';
 import VControlNavigation from './controls/VControlNavigation.vue';
 import VControlScale from './controls/VControlScale.vue';
-// Layers – Deck.gl
-import VLayerDeckGeojson from './layers/deck.gl/VLayerDeckGeojson.vue';
 // Layers – Mapbox
 import VLayerMapboxCanvas from './layers/mapbox/VLayerMapboxCanvas.vue';
 import VLayerMapboxGeojson from './layers/mapbox/VLayerMapboxGeojson.vue';
@@ -27,7 +25,6 @@ export {
   // Popup
   VPopup,
   // Layers
-  VLayerDeckGeojson,
   VLayerMapboxCanvas,
   VLayerMapboxGeojson,
   VLayerMapboxImage,

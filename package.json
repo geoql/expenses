@@ -13,8 +13,8 @@
     "lint:eslint:fix": "eslint --fix \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
     "lint:prettier": "prettier --check \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
     "lint:prettier:fix": "prettier --write \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
-    "lint:css": "stylelint '**/*.{css,scss,sass,vue}' --ignore-path .gitignore",
-    "lint:css:fix": "stylelint --fix '**/*.{css,scss,sass,vue}' --ignore-path .gitignore",
+    "lint:css": "stylelint \"{,!(node_modules|.nuxt|dist|static)/**/}*.{css,scss,sass,vue}\" --ignore-path .gitignore",
+    "lint:css:fix": "stylelint --fix \"{,!(node_modules|.nuxt|dist|static)/**/}*.{css,scss,sass,vue}\" --ignore-path .gitignore",
     "release": "shipjs prepare",
     "release:dry": "shipjs prepare --dry-run",
     "release:auto": "shipjs prepare --yes",
@@ -28,6 +28,8 @@
     "pinia": "^2.0.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^14.1.0",
+    "@commitlint/config-conventional": "^14.1.0",
     "@nuxt/types": "^2.15.8",
     "@types/mapbox-gl": "1.13.2",
     "@typescript-eslint/eslint-plugin": "^5.3.0",

@@ -188,20 +188,20 @@ Usage:
   }
 */
 @font-face {
-  font-family: 'Inter var';
+  font-family: "Inter var";
   font-weight: 100 900;
   font-display: swap;
   font-style: normal;
-  font-named-instance: 'Regular';
+  font-named-instance: "Regular";
   src: url("~@/assets/fonts/Inter-roman.var.woff2?v=3.12") format("woff2");
 }
 
 @font-face {
-  font-family: 'Inter var';
+  font-family: "Inter var";
   font-weight: 100 900;
   font-display: swap;
   font-style: italic;
-  font-named-instance: 'Italic';
+  font-named-instance: "Italic";
   src: url("~@/assets/fonts/Inter-italic.var.woff2?v=3.12") format("woff2");
 }
 
@@ -219,7 +219,7 @@ explicitly, e.g.
 
 */
 @font-face {
-  font-family: 'Inter var experimental';
+  font-family: "Inter var experimental";
   font-weight: 100 900;
   font-display: swap;
   font-style: oblique 0deg 10deg;

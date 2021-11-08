@@ -2,7 +2,7 @@ import { NuxtOptionsPlugin } from '@nuxt/types/config/plugin';
 import { NuxtOptionsRuntimeConfig } from '@nuxt/types/config/runtime';
 
 const publicRuntimeConfig: NuxtOptionsRuntimeConfig = {
-  mapToken: process.env.MAP_TOKEN,
+  mapToken: process.env.MAP_ACCESS_TOKEN,
   appVersion: process.env.npm_package_version,
 };
 

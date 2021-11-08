@@ -8,6 +8,7 @@ const extract = {
     'pages/**/*.vue',
     'plugins/**/*.js',
     'nuxt.config.js',
+    'app.vue',
     // TypeScript
     'plugins/**/*.ts',
     'nuxt.config.ts',
