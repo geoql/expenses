@@ -12,7 +12,7 @@
     "
   >
     <p class="text-sm">
-      Made with <span class="blinking-heart">❤️</span> by
+      Made with <span class="animate-pulse">❤️</span> by
       <a href="https://vinayakkulkarni.dev">@Vinayak</a> &copy;
       {{ state.date }}
     </p>
