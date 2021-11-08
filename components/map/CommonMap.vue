@@ -8,6 +8,7 @@
       @mousemove="onMapMouseMove"
       @zoomend="onMapZoomEnd"
     >
+      <!-- Basemaps -->
       <div
         class="
           absolute
@@ -23,8 +24,6 @@
         "
       >
         <div class="relative flex flex-col space-y-2">
-          <!-- Basemaps -->
-          <!-- v-click-outside="() => (state.utils.basemaps.shown = false)" -->
           <div
             class="
               relative
@@ -268,6 +267,7 @@
           </div>
         </div>
       </div>
+      <marker />
     </v-map>
   </main>
 </template>
@@ -280,12 +280,14 @@
   import { useMap } from '@/stores/useMap';
   import VMap from '@/lib/v-mapbox';
   import Basemaps from './_partials/Basemaps.vue';
+  import { VMarker } from '@/lib/v-mapbox';
 
   export default defineComponent({
     name: 'Map',
     components: {
       VMap,
       Basemaps,
+      Marker: VMarker,
     },
     setup(_, { emit }: SetupContext) {
       const { $config } = useNuxtApp();

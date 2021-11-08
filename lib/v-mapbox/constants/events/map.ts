@@ -1,4 +1,4 @@
-import { MapEventType, MapLayerEventType } from 'mapbox-gl';
+import { MapEventType } from 'mapbox-gl';
 
 export const mapEvents: Array<keyof MapEventType> = [
   'error',
@@ -47,20 +47,4 @@ export const mapEvents: Array<keyof MapEventType> = [
   'pitch',
   'pitchend',
   'wheel',
-];
-
-export const mapLayerEvents: Array<keyof MapLayerEventType> = [
-  'click',
-  'dblclick',
-  'mousedown',
-  'mouseup',
-  'mousemove',
-  'mouseenter',
-  'mouseleave',
-  'mouseover',
-  'mouseout',
-  'contextmenu',
-  'touchstart',
-  'touchend',
-  'touchcancel',
 ];

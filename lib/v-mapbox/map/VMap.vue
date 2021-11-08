@@ -3,6 +3,7 @@
   import { ref, onMounted, defineComponent, h } from 'vue';
   import type { PropType, SetupContext, Ref } from 'vue';
   import { mapEvents } from '../constants/events';
+  import { useGlobalState } from '../store';
 
   export default defineComponent({
     name: 'VMap',
@@ -16,6 +17,7 @@
     setup(props, { emit, slots }: SetupContext) {
       let map: Ref<Map> = ref({} as Map);
       let events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
+      let state = useGlobalState();
 
       onMounted(() => {
         map.value = new Map({
@@ -31,6 +33,7 @@
             }
           });
         });
+        state.value.map = map.value;
       });
       return () =>
         h('div', { id: 'map' }, slots && slots.default ? slots.default() : {});
