@@ -12,13 +12,12 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/geoql/expenses.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/geoql/expenses/context:javascript)
 [![GitHub contributors](https://img.shields.io/github/contributors/geoql/expenses)](https://github.com/geoql/expenses/graphs/contributors)
 
-[![nuxt](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/nuxt?logo=nuxt.js)](https://nuxtjs.org/)
+[![nuxt](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/nuxt3?logo=nuxt.js)](https://v3.nuxtjs.org/)
 [![mapbox](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/mapbox-gl?logo=mapbox)](https://mapbox.com/)
 [![eslint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/eslint?logo=eslint)](https://eslint.org/)
 [![prettier](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/prettier?logo=prettier)](https://prettier.io/)
 [![stylelint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/stylelint?logo=stylelint)](https://stylelint.io/)
-[![tailwind](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/@nuxtjs/tailwindcss?logo=tailwindcss)](https://tailwindcss.nuxtjs.org/)
-[![postcss](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/postcss?logo=postcss)](https://postcss.org/)
+[![windicss](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/nuxt-windicss?logo=windicss)](https://windicss.org/integrations/nuxt.html)
 [![typescript](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/typescript?logo=TypeScript)](https://www.typescriptlang.org/)
 
 ## About
@@ -27,8 +26,7 @@ Quickly add any expenses/incomes on map and keep track of it :)
 ## Stacktrace 
 Development stack:
 - [Nuxt](https://typescript.nuxtjs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [v-mapbox](https://github.com/geospoc/v-mapbox)
+- [Windi CSS](https://windicss.org/)
 
 CI/CD stack:
 - [GitHub actions](./.github/workflows/ci.yml)
