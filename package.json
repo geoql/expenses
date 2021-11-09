@@ -43,7 +43,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",
-    "nuxt-windicss": "^2.0.11",
+    "nuxt-windicss": "^2.0.12",
     "nuxt3": "3.0.0-27268729.5b8e10f",
     "postcss-html": "^1.2.0",
     "postcss-scss": "^4.0.2",
