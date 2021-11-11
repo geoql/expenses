@@ -22,7 +22,7 @@
     "lint-staged": "lint-staged"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.1.2",
+    "@pinia/nuxt": "^0.1.4",
     "@vueuse/core": "^6.8.0",
     "mapbox-gl": "1.13.2",
     "pinia": "^2.0.3"
