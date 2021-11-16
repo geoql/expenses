@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Map, MapboxOptions, MapEventType } from 'mapbox-gl';
-  import { ref, onMounted, defineComponent, h } from 'vue';
+  import { ref, reactive, onMounted, provide, defineComponent, h } from 'vue';
   import type { PropType, SetupContext, Ref } from 'vue';
   import { mapEvents } from '../constants/events';
-  import { useGlobalState } from '../store';
 
   export default defineComponent({
     name: 'VMap',
@@ -15,26 +14,65 @@
       },
     },
     setup(props, { emit, slots }: SetupContext) {
-      let map: Ref<Map> = ref({} as Map);
+      let map: Map = reactive({}) as Map;
       let events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
-      let state = useGlobalState();
+      let loaded: Ref<boolean> = ref(false);
+      let styleChanged: Ref<boolean> = ref(false);
+      let tilesLoaded: Ref<boolean> = ref(false);
 
       onMounted(() => {
-        map.value = new Map({
+        map = new Map({
           ...props.options,
           container: 'map',
         });
+        loaded.value = true;
+        provide('map.ui.loaded', loaded);
+        provide('map.ui.style-loaded', styleChanged);
+        provide('map.ui.tiles-loaded', tilesLoaded);
+        provide('map.initialized.state', map);
+        listenMapEvents();
+      });
+
+      function listenMapEvents(): void {
+        // Listen for events
         events.value.forEach((e) => {
-          map.value.on(e, (evt) => {
-            if (e === 'load') {
-              emit('load', map.value);
-            } else {
-              emit(e, evt);
+          map.on(e, (evt) => {
+            switch (e) {
+              case 'load':
+                emit('load', map);
+                break;
+              case 'sourcedata' || 'sourcedataloading':
+                const sourceTimeout = () => {
+                  if (!map.areTilesLoaded()) {
+                    tilesLoaded.value = false;
+                    setTimeout(sourceTimeout, 200);
+                  } else {
+                    tilesLoaded.value = true;
+                  }
+                };
+                sourceTimeout();
+                break;
+              // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
+              // @ts-ignore
+              case 'style.load':
+                const styleTimeout = () => {
+                  if (!map.isStyleLoaded()) {
+                    styleChanged.value = false;
+                    setTimeout(styleTimeout, 200);
+                  } else {
+                    styleChanged.value = true;
+                  }
+                };
+                styleTimeout();
+                break;
+              default:
+                emit(e, evt);
+                break;
             }
           });
         });
-        state.value.map = map.value;
-      });
+      }
+
       return () =>
         h('div', { id: 'map' }, slots && slots.default ? slots.default() : {});
     },

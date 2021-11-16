@@ -8,6 +8,14 @@
       @mousemove="onMapMouseMove"
       @zoomend="onMapZoomEnd"
     >
+      <template v-if="loaded">
+        <v-marker
+          v-for="(marker, index) in markers.data"
+          :key="index"
+          :options="marker.options"
+          v-model:coordinates="marker.coordinates"
+        />
+      </template>
       <!-- Basemaps -->
       <div
         class="
@@ -267,32 +275,47 @@
           </div>
         </div>
       </div>
-      <marker />
     </v-map>
   </main>
 </template>
 
 <script lang="ts">
   import { useNuxtApp } from '#app';
-  import { defineComponent, readonly } from 'vue';
+  import { defineComponent, readonly, computed } from 'vue';
   import type { SetupContext } from 'vue';
-  import type { EventData, Map } from 'mapbox-gl';
+  import type { EventData, LngLatLike, Map } from 'mapbox-gl';
   import { useMap } from '@/stores/useMap';
   import VMap from '@/lib/v-mapbox';
   import Basemaps from './_partials/Basemaps.vue';
-  import { VMarker } from '@/lib/v-mapbox';
+  import VMarker from '@/lib/v-mapbox/markers/VMarker.vue';
 
   export default defineComponent({
-    name: 'Map',
+    name: 'CommonMap',
     components: {
       VMap,
       Basemaps,
-      Marker: VMarker,
+      VMarker,
     },
     setup(_, { emit }: SetupContext) {
       const { $config } = useNuxtApp();
       const store = useMap();
       let map = readonly({} as Map);
+      let markers = {
+        data: [
+          {
+            options: { color: 'red', draggable: true },
+            coordinates: [73.8567, 18.5204] as LngLatLike,
+          },
+          {
+            options: { color: 'indigo', draggable: true },
+            coordinates: [73.8567, 18.5514] as LngLatLike,
+          },
+        ],
+      };
+
+      const loaded = computed(
+        () => store.$state.ui.loaded || store.$state.ui.styleChanged,
+      );
 
       /**
        * This function syncs the loaded & style-changed
@@ -522,6 +545,8 @@
       }
       return {
         state: store.$state,
+        loaded,
+        markers,
         map,
         mapOptions: {
           ...store.$state.map.options,
