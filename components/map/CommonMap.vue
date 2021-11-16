@@ -281,8 +281,8 @@
 
 <script lang="ts">
   import { useNuxtApp } from '#app';
-  import { defineComponent, readonly, computed } from 'vue';
-  import type { SetupContext } from 'vue';
+  import { defineComponent, readonly, computed, ref } from 'vue';
+  import type { Ref, SetupContext } from 'vue';
   import type { EventData, LngLatLike, Map } from 'mapbox-gl';
   import { useMap } from '@/stores/useMap';
   import VMap from '@/lib/v-mapbox';
@@ -299,7 +299,7 @@
     setup(_, { emit }: SetupContext) {
       const { $config } = useNuxtApp();
       const store = useMap();
-      let map = readonly({} as Map);
+      let map = readonly(ref({} as Map));
       let markers = {
         data: [
           {
@@ -324,7 +324,7 @@
        * @param {Map} e - Mapbox GL Map object
        * @returns {void}
        */
-      function onMapLoaded(e: Map): void {
+      function onMapLoaded(e: Ref<Map>): void {
         map = e;
         const events: string[] = [
           'idle',
@@ -335,10 +335,10 @@
           'sourcedataloading',
         ];
         events.forEach((event) => {
-          map.on(event, () => {
+          map.value.on(event, () => {
             if (event === 'sourcedata' || event === 'sourcedataloading') {
               const waiting = () => {
-                if (!map.areTilesLoaded()) {
+                if (!map.value.areTilesLoaded()) {
                   store.setTilesLoaded(false);
                   setTimeout(waiting, 200);
                 } else {
@@ -349,7 +349,7 @@
             }
             if (event === 'style.load') {
               const waiting = () => {
-                if (!map.isStyleLoaded()) {
+                if (!map.value.isStyleLoaded()) {
                   store.setStyleChanged(false);
                   setTimeout(waiting, 200);
                 } else {
@@ -400,7 +400,7 @@
        * @returns {void} void
        */
       function onMapPitchEnd(): void {
-        const bearing = parseInt(map.getBearing().toFixed(), 10);
+        const bearing = parseInt(map.value.getBearing().toFixed(), 10);
         store.setBearing(bearing);
       }
       /**
@@ -410,7 +410,7 @@
        * @returns {void} void
        */
       function onMapZoomEnd(): void {
-        store.setZoom(map.getZoom());
+        store.setZoom(map.value.getZoom());
       }
       /**
        * Zooms the map in by currentZoom + 1
@@ -419,8 +419,8 @@
        */
       function mapZoomIn(): void {
         if (map !== null) {
-          const currentZoom = map.getZoom();
-          map.zoomTo(currentZoom + 1);
+          const currentZoom = map.value.getZoom();
+          map.value.zoomTo(currentZoom + 1);
           setMapState();
         }
       }
@@ -431,8 +431,8 @@
        */
       function mapZoomOut(): void {
         if (map !== null) {
-          const currentZoom = map.getZoom();
-          map.zoomTo(currentZoom - 1);
+          const currentZoom = map.value.getZoom();
+          map.value.zoomTo(currentZoom - 1);
           setMapState();
         }
       }
@@ -452,7 +452,7 @@
         pitch: number;
         bearing: number;
       }): void {
-        map.easeTo({
+        map.value.easeTo({
           pitch,
           bearing,
         });
@@ -475,7 +475,7 @@
         lat: number;
         zoom: number;
       }): void {
-        map.flyTo({
+        map.value.flyTo({
           center: [lng, lat],
           zoom,
           speed: 3,
@@ -498,7 +498,7 @@
             }
           });
         });
-        map.setStyle(e);
+        map.value.setStyle(e);
       }
       /**
        * Toggles the tool enabled on the map
@@ -537,10 +537,10 @@
        * @returns {void} void
        */
       function setMapState(): void {
-        const { lng, lat } = map.getCenter();
+        const { lng, lat } = map.value.getCenter();
         store.setCenter([lng, lat]);
-        store.setZoom(map.getZoom());
-        store.setBounds(map.getBounds().toArray());
+        store.setZoom(map.value.getZoom());
+        store.setBounds(map.value.getBounds().toArray());
         store.setCoordinates({ lat, lng });
       }
       return {

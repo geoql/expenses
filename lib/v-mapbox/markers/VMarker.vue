@@ -4,10 +4,12 @@
   </section>
 </template>
 <script lang="ts">
-  import { defineComponent, inject, onMounted, ref } from 'vue';
+  import { defineComponent, onMounted } from 'vue';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { EventData, Marker } from 'mapbox-gl';
-  import type { Map, MarkerOptions, LngLatLike } from 'mapbox-gl';
+  import type { MarkerOptions, LngLatLike } from 'mapbox-gl';
+  import { MapKey, MapLoadedKey } from '../types/symbols';
+  import { injectStrict } from '../utils';
 
   export default defineComponent({
     name: 'VMarker',
@@ -29,8 +31,8 @@
       },
     },
     setup(props, { emit }: SetupContext) {
-      let map = inject('map.initialized.state') as Map;
-      let loaded = inject('map.ui.loaded') as Ref<boolean>;
+      let map = injectStrict(MapKey);
+      let loaded = injectStrict(MapLoadedKey);
       let marker: Marker = new Marker(props.options);
 
       onMounted(() => {
@@ -64,7 +66,7 @@
        * @returns {void}
        */
       function addToMap(): void {
-        marker.addTo(map);
+        marker.addTo(map.value);
         emit('added', { marker });
       }
       /**
