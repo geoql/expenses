@@ -45,7 +45,7 @@
     "lint-staged": "^12.1.1",
     "nuxt-windicss": "^2.0.12",
     "nuxt3": "3.0.0-27296423.f3082ca",
-    "postcss-html": "^1.2.0",
+    "postcss-html": "^1.3.0",
     "postcss-scss": "^4.0.2",
     "prettier": "^2.4.1",
     "sass": "^1.43.5",
