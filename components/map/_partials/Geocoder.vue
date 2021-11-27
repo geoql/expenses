@@ -6,44 +6,19 @@
       v-model="state.search"
       type="text"
       name="geocoder"
-      class="
-        block
-        w-full
-        h-full
-        dark:bg-gray-800 dark:text-gray-50
-        bg-opacity-25 bg-gray-200
-        text-gray-900
-        rounded-md
-        shadow-sm
-        sm:text-sm
-      "
+      class="block w-full h-full dark:bg-gray-800 dark:text-gray-50 bg-opacity-25 bg-gray-200 text-gray-900 rounded-md shadow-sm sm:text-sm"
       placeholder="eg. Mumbai"
       autofocus
       @input="geocode"
     />
     <div
       v-if="state.results.length > 0"
-      class="
-        flex flex-col
-        mt-1
-        overflow-auto
-        divide-y divide-gray-100
-        dark:divide-gray-500
-      "
+      class="flex flex-col mt-1 overflow-auto divide-y divide-gray-100 dark:divide-gray-500"
     >
       <div
         v-for="({ label, lng, lat, zoom }, index) in state.results"
         :key="index"
-        class="
-          flex-1
-          px-1
-          truncate
-          bg-gray-200 bg-opacity-50
-          dark:bg-gray-800
-          cursor-pointer
-          select-none
-          hover:bg-opacity-100
-        "
+        class="flex-1 px-1 truncate bg-gray-200 bg-opacity-50 dark:bg-gray-800 cursor-pointer select-none hover:bg-opacity-100"
         :title="label"
         @click="$emit('fly-to', { lng, lat, zoom })"
       >

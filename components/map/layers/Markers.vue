@@ -38,29 +38,10 @@
         @close="$emit('update:visibility', false)"
       >
         <div
-          class="
-            flex flex-col
-            items-start
-            justify-center
-            text-white
-            border border-gray-700
-            rounded-md
-            shadow-lg
-            bg-gradient-to-tr
-            from-gray-700
-            to-gray-800
-          "
+          class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-700 to-gray-800"
         >
           <div
-            class="
-              flex
-              items-center
-              justify-between
-              w-full
-              px-3
-              py-1
-              border-b border-gray-600
-            "
+            class="flex items-center justify-between w-full px-3 py-1 border-b border-gray-600"
           >
             <div v-if="marker.properties" class="capitalize">
               {{ marker.properties.expense.type }}
@@ -77,14 +58,7 @@
             </div>
           </div>
           <div
-            class="
-              flex flex-col
-              items-start
-              justify-between
-              px-3
-              py-1
-              space-y-1
-            "
+            class="flex flex-col items-start justify-between px-3 py-1 space-y-1"
           >
             <div
               v-if="marker.properties && marker.properties.expense.amount"

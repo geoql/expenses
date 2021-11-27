@@ -1,28 +1,11 @@
 <template>
   <div
-    class="
-      flex
-      items-center
-      justify-between
-      w-full
-      h-10
-      px-4
-      border-b border-gray-300
-      shadow
-      dark:border-gray-700
-    "
+    class="flex items-center justify-between w-full h-10 px-4 border-b border-gray-300 shadow dark:border-gray-700"
   >
     <div title="Dashboard" class="visible">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="
-          w-8
-          h-8
-          transition-colors
-          duration-300
-          cursor-pointer
-          fill-current
-        "
+        class="w-8 h-8 transition-colors duration-300 cursor-pointer fill-current"
         data-name="Layer 1"
         viewBox="0 0 512 512"
         :class="[isDark ? 'text-white' : 'text-gray-900']"

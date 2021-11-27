@@ -3,16 +3,7 @@
     <!-- Loading indicator -->
     <div
       v-if="loading"
-      class="
-        fixed
-        z-10
-        flex
-        items-center
-        justify-center
-        w-full
-        h-full
-        opacity-75
-      "
+      class="fixed z-10 flex items-center justify-center w-full h-full opacity-75"
     >
       <svg
         class="w-6 h-6 dark:text-white text-gray-900 animate-spin"

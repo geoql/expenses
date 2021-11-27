@@ -18,36 +18,11 @@
       </template>
       <!-- Basemaps -->
       <div
-        class="
-          absolute
-          top-0
-          right-0
-          z-10
-          invisible
-          m-2
-          text-gray-800
-          bg-opacity-50
-          rounded-md
-          dark:text-white
-        "
+        class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
       >
         <div class="relative flex flex-col space-y-2">
           <div
-            class="
-              relative
-              visible
-              w-10
-              h-10
-              text-sm text-gray-600
-              bg-gray-200
-              border border-gray-100
-              rounded-md
-              hover:bg-gray-300
-              dark:bg-gray-800
-              dark:border-gray-700
-              dark:text-white
-              dark:hover:bg-gray-800
-            "
+            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Basemaps"
             :class="{
               'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
@@ -77,20 +52,7 @@
             >
               <div
                 v-if="state.utils.basemaps.shown"
-                class="
-                  absolute
-                  top-0
-                  right-0
-                  w-48
-                  mr-12
-                  origin-right
-                  bg-gray-300
-                  rounded-md
-                  shadow-lg
-                  sm:w-64
-                  dark:bg-gray-700
-                  ring-1 ring-white ring-opacity-5
-                "
+                class="absolute top-0 right-0 w-48 mr-12 origin-right bg-gray-300 rounded-md shadow-lg sm:w-64 dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
               >
                 <basemaps
                   :data="state.utils.basemaps.data"
@@ -104,19 +66,7 @@
       </div>
       <!-- Zoom in, Zoom out, Bearing & Locate Me -->
       <div
-        class="
-          absolute
-          right-0
-          z-10
-          invisible
-          m-2
-          text-gray-800
-          bg-opacity-50
-          rounded-md
-          bottom-12
-          sm:bottom-7
-          dark:text-white
-        "
+        class="absolute right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
       >
         <div class="relative flex flex-col space-y-2">
           <!-- Zoom in & out -->
@@ -126,21 +76,7 @@
           >
             <!-- Zoom In -->
             <div
-              class="
-                w-10
-                h-10
-                p-2
-                text-sm text-gray-600
-                bg-gray-200
-                border border-b-0 border-gray-100
-                rounded-md rounded-b-none
-                cursor-pointer
-                hover:bg-gray-300
-                dark:bg-gray-800
-                dark:border-gray-700
-                dark:text-white
-                dark:hover:bg-gray-800
-              "
+              class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-b-0 border-gray-100 rounded-md rounded-b-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
               title="Zoom In"
               @click="mapZoomIn"
             >
@@ -161,21 +97,7 @@
             </div>
             <!-- Zoom Out -->
             <div
-              class="
-                w-10
-                h-10
-                p-2
-                text-sm text-gray-600
-                bg-gray-200
-                border border-t-0 border-gray-100
-                rounded-md rounded-t-none
-                cursor-pointer
-                hover:bg-gray-300
-                dark:bg-gray-800
-                dark:border-gray-700
-                dark:text-white
-                dark:hover:bg-gray-800
-              "
+              class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-t-0 border-gray-100 rounded-md rounded-t-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
               title="Zoom Out"
               @click="mapZoomOut"
             >
@@ -197,21 +119,7 @@
           </div>
           <!-- Bearing -->
           <div
-            class="
-              relative
-              visible
-              w-10
-              h-10
-              text-sm text-gray-600
-              bg-gray-200
-              border border-gray-100
-              rounded-md
-              hover:bg-gray-300
-              dark:bg-gray-800
-              dark:border-gray-700
-              dark:text-white
-              dark:hover:bg-gray-800
-            "
+            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Locate Me"
             :class="{
               'bg-gray-300 dark:bg-gray-800': state.utils.compass.shown,
@@ -220,15 +128,7 @@
             <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="
-                  w-5
-                  h-5
-                  transition-all
-                  duration-100
-                  ease-linear
-                  transform
-                  fill-current
-                "
+                class="w-5 h-5 transition-all duration-100 ease-linear transform fill-current"
                 viewBox="0 0 18 18"
                 :style="{
                   transform:
@@ -243,21 +143,7 @@
           </div>
           <!-- Locate -->
           <div
-            class="
-              relative
-              visible
-              w-10
-              h-10
-              text-sm text-gray-600
-              bg-gray-200
-              border border-gray-100
-              rounded-md
-              hover:bg-gray-300
-              dark:bg-gray-800
-              dark:border-gray-700
-              dark:text-white
-              dark:hover:bg-gray-800
-            "
+            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Locate Me"
           >
             <div class="p-2 cursor-pointer" @click="toggleTool('locate')">

@@ -11,16 +11,7 @@
       class="select-none"
     >
       <div
-        class="
-          flex
-          items-center
-          justify-between
-          p-2
-          rounded
-          shadow
-          cursor-pointer
-          hover:shadow-md
-        "
+        class="flex items-center justify-between p-2 rounded shadow cursor-pointer hover:shadow-md"
         :class="{
           'text-white bg-gradient-to-l from-purple-600 to-purple-800':
             basemap.enabled,
