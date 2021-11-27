@@ -18,8 +18,7 @@
     "release": "shipjs prepare",
     "release:dry": "shipjs prepare --dry-run",
     "release:auto": "shipjs prepare --yes",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.1.5",
