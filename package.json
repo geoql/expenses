@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.1.6",
-    "@vueuse/core": "^7.3.0",
+    "@vueuse/core": "^7.4.0",
     "mapbox-gl": "1.13.2",
     "pinia": "^2.0.6"
   },
