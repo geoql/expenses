@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@nuxt/types": "^2.15.8",
     "@types/mapbox-gl": "1.13.2",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
