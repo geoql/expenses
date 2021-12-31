@@ -24,7 +24,7 @@
     "@pinia/nuxt": "^0.1.6",
     "@vueuse/core": "^7.4.3",
     "mapbox-gl": "1.13.2",
-    "pinia": "^2.0.8"
+    "pinia": "^2.0.9"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.0.1",
