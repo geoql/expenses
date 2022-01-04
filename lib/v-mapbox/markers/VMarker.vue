@@ -4,10 +4,10 @@
   </section>
 </template>
 <script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
-  import type { PropType, Ref, SetupContext } from 'vue';
+  import type { LngLatLike, MarkerOptions } from 'mapbox-gl';
   import { EventData, Marker } from 'mapbox-gl';
-  import type { MarkerOptions, LngLatLike } from 'mapbox-gl';
+  import type { PropType, SetupContext } from 'vue';
+  import { defineComponent, onMounted } from 'vue';
   import { MapKey, MapLoadedKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
