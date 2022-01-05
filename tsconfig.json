@@ -13,9 +13,9 @@
     "experimentalDecorators": true,
     "types": [
       "@types/geojson",
-      "@types/mapbox-gl",
       "@types/webpack",
-      "@nuxt/types"
+      "@nuxt/types",
+      "maplibre-gl"
     ]
   },
   "include": [

@@ -6,7 +6,7 @@ const buildModules: NuxtOptionsModule[] = [
   // https://windicss.org/guide/
   'nuxt-windicss',
   // https://vueuse.org/guide/#nuxt
-  '@vueuse/core/nuxt',
+  '@vueuse/nuxt',
 ];
 
 export { buildModules };

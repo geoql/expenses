@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Map, MapboxOptions, MapEventType } from 'mapbox-gl';
+  import { Map, MapboxOptions, MapEventType } from 'maplibre-gl';
   import { ref, onMounted, provide, defineComponent, h } from 'vue';
   import type { PropType, SetupContext, Ref } from 'vue';
   import { mapEvents } from '../constants/events';
@@ -58,7 +58,7 @@
                 };
                 sourceTimeout();
                 break;
-              // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
+              // https://github.com/mapbox/maplibre-gl-js/issues/2268#issuecomment-401979967
               // @ts-ignore
               case 'style.load':
                 const styleTimeout = () => {

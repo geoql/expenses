@@ -32,7 +32,7 @@
 
 <script lang="ts">
   import { computed, defineComponent, onMounted, reactive } from 'vue';
-  import type { EventData } from 'mapbox-gl';
+  import type { EventData } from 'maplibre-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
   import { useDark } from '@vueuse/core';
   import { useMap } from '@/stores/useMap';

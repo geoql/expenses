@@ -7,7 +7,7 @@ const publicRuntimeConfig: NuxtOptionsRuntimeConfig = {
 };
 
 const css: string[] = [
-  'mapbox-gl/dist/mapbox-gl.css',
+  'maplibre-gl/dist/maplibre-gl.css',
   '~/assets/css/global.css',
   '~/assets/css/fonts.css',
 ];

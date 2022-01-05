@@ -169,7 +169,7 @@
   import { useNuxtApp } from '#app';
   import { defineComponent, readonly, computed, ref } from 'vue';
   import type { Ref, SetupContext } from 'vue';
-  import type { EventData, LngLatLike, Map } from 'mapbox-gl';
+  import type { EventData, LngLatLike, Map } from 'maplibre-gl';
   import { useMap } from '@/stores/useMap';
   import VMap from '@/lib/v-mapbox';
   import Basemaps from './_partials/Basemaps.vue';

@@ -4,8 +4,8 @@
   </section>
 </template>
 <script lang="ts">
-  import type { LngLatLike, MarkerOptions } from 'mapbox-gl';
-  import { EventData, Marker } from 'mapbox-gl';
+  import type { LngLatLike, MarkerOptions } from 'maplibre-gl';
+  import { EventData, Marker } from 'maplibre-gl';
   import type { PropType, SetupContext } from 'vue';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey, MapLoadedKey } from '../../types/symbols';
