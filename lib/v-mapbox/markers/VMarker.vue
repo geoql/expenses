@@ -95,6 +95,7 @@
               }
               emit('update:coordinates', coordinates);
             }
+            emit(event, e);
           });
         });
         // Listen to Marker DOM events

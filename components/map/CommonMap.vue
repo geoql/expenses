@@ -1,8 +1,8 @@
 <template>
   <main class="w-full h-full select-none">
     <v-map
-      :options="mapOptions"
-      @load="onMapLoaded"
+      :options="state.map.options"
+      @loaded="onMapLoaded"
       @click="onMapClicked"
       @pitchend="onMapPitchEnd"
       @mousemove="onMapMouseMove"
@@ -14,6 +14,28 @@
           :key="index"
           :options="marker.options"
           v-model:coordinates="marker.coordinates"
+        >
+          <!-- <v-popup :coordinates="marker.coordinates">
+            {{ marker.popupContent }}
+          </v-popup> -->
+        </v-marker>
+        <v-layer-mapbox-geojson
+          :source-id="'geojson-source'"
+          :source="geojson.source"
+          :layer-id="'geojson-layer'"
+          :layer="geojson.layer"
+        />
+        <v-layer-mapbox-vector
+          :source-id="'vector-source'"
+          :source="vector.source"
+          :layer-id="'vector-layer'"
+          :layer="vector.layer"
+        />
+        <v-layer-mapbox-image
+          :source-id="'image-source'"
+          :source="image.source"
+          :layer-id="'image-layer'"
+          :layer="image.layer"
         />
       </template>
       <!-- Basemaps -->
@@ -166,14 +188,28 @@
 </template>
 
 <script lang="ts">
-  import { useNuxtApp } from '#app';
-  import { defineComponent, readonly, computed, ref } from 'vue';
-  import type { Ref, SetupContext } from 'vue';
-  import type { EventData, LngLatLike, Map } from 'maplibre-gl';
+  import VMap, {
+    VLayerMapboxGeojson,
+    VLayerMapboxImage,
+    VLayerMapboxVector,
+    VMarker,
+    VPopup,
+  } from '@/lib/v-mapbox';
   import { useMap } from '@/stores/useMap';
-  import VMap from '@/lib/v-mapbox';
+  import type { FeatureCollection } from 'geojson';
+  import type {
+    EventData,
+    FillLayer,
+    ImageSourceRaw,
+    LineLayer,
+    LngLatLike,
+    Map,
+    RasterLayer,
+    VectorSource,
+  } from 'maplibre-gl';
+  import type { SetupContext } from 'vue';
+  import { computed, defineComponent, readonly, ref } from 'vue';
   import Basemaps from './_partials/Basemaps.vue';
-  import VMarker from '@/lib/v-mapbox/markers/VMarker.vue';
 
   export default defineComponent({
     name: 'CommonMap',
@@ -181,23 +217,104 @@
       VMap,
       Basemaps,
       VMarker,
+      VPopup,
+      VLayerMapboxGeojson,
+      VLayerMapboxVector,
+      VLayerMapboxImage,
     },
     setup(_, { emit }: SetupContext) {
-      const { $config } = useNuxtApp();
       const store = useMap();
-      let map = readonly(ref({} as Map));
-      let markers = {
+      let map = readonly({} as Map);
+      let markers = ref({
         data: [
           {
             options: { color: 'red', draggable: true },
             coordinates: [73.8567, 18.5204] as LngLatLike,
+            hasPopup: true,
+            popupContent: 'ABC',
           },
           {
             options: { color: 'indigo', draggable: true },
             coordinates: [73.8567, 18.5514] as LngLatLike,
+            hasPopup: false,
           },
         ],
-      };
+      });
+      let geojson = ref({
+        source: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'Polygon',
+                coordinates: [
+                  [
+                    [68.5546875, 17.644022027872726],
+                    [70.6640625, 9.795677582829743],
+                    [81.9140625, 5.61598581915534],
+                    [83.3203125, 20.632784250388028],
+                    [68.5546875, 17.644022027872726],
+                  ],
+                ],
+              },
+            },
+          ],
+        } as FeatureCollection,
+        layer: {
+          type: 'fill',
+          layout: {
+            visibility: 'visible',
+          },
+          paint: {
+            'fill-color': '#0080ff', // blue color fill
+            'fill-opacity': 0.25,
+          },
+        } as FillLayer,
+      });
+      let vector = ref({
+        source: {
+          type: 'vector',
+          tiles: [
+            'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333',
+          ],
+          minzoom: 6,
+          maxzoom: 14,
+        } as VectorSource,
+        layer: {
+          type: 'line',
+          // Source has several layers. We visualize the one with name 'sequence'.
+          'source-layer': 'sequence',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round',
+          },
+          paint: {
+            'line-opacity': 0.6,
+            'line-color': 'rgb(53, 175, 109)',
+            'line-width': 2,
+          },
+        } as LineLayer,
+      });
+      let image = ref({
+        source: {
+          type: 'image',
+          url: 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif',
+          coordinates: [
+            [-80.425, 46.437],
+            [-71.516, 46.437],
+            [-71.516, 37.936],
+            [-80.425, 37.936],
+          ],
+        } as ImageSourceRaw,
+        layer: {
+          type: 'raster',
+          paint: {
+            'raster-fade-duration': 0,
+          },
+        } as RasterLayer,
+      });
 
       const loaded = computed(
         () => store.$state.ui.loaded || store.$state.ui.styleChanged,
@@ -210,7 +327,7 @@
        * @param {Map} e - Mapbox GL Map object
        * @returns {void}
        */
-      function onMapLoaded(e: Ref<Map>): void {
+      function onMapLoaded(e: Map): void {
         map = e;
         const events: string[] = [
           'idle',
@@ -221,10 +338,10 @@
           'sourcedataloading',
         ];
         events.forEach((event) => {
-          map.value.on(event, () => {
+          map.on(event, () => {
             if (event === 'sourcedata' || event === 'sourcedataloading') {
               const waiting = () => {
-                if (!map.value.areTilesLoaded()) {
+                if (!map.areTilesLoaded()) {
                   store.setTilesLoaded(false);
                   setTimeout(waiting, 200);
                 } else {
@@ -235,7 +352,7 @@
             }
             if (event === 'style.load') {
               const waiting = () => {
-                if (!map.value.isStyleLoaded()) {
+                if (!map.isStyleLoaded()) {
                   store.setStyleChanged(false);
                   setTimeout(waiting, 200);
                 } else {
@@ -286,7 +403,7 @@
        * @returns {void} void
        */
       function onMapPitchEnd(): void {
-        const bearing = parseInt(map.value.getBearing().toFixed(), 10);
+        const bearing = parseInt(map.getBearing().toFixed(), 10);
         store.setBearing(bearing);
       }
       /**
@@ -296,7 +413,7 @@
        * @returns {void} void
        */
       function onMapZoomEnd(): void {
-        store.setZoom(map.value.getZoom());
+        store.setZoom(map.getZoom());
       }
       /**
        * Zooms the map in by currentZoom + 1
@@ -305,8 +422,8 @@
        */
       function mapZoomIn(): void {
         if (map !== null) {
-          const currentZoom = map.value.getZoom();
-          map.value.zoomTo(currentZoom + 1);
+          const currentZoom = map.getZoom();
+          map.zoomTo(currentZoom + 1);
           setMapState();
         }
       }
@@ -317,8 +434,8 @@
        */
       function mapZoomOut(): void {
         if (map !== null) {
-          const currentZoom = map.value.getZoom();
-          map.value.zoomTo(currentZoom - 1);
+          const currentZoom = map.getZoom();
+          map.zoomTo(currentZoom - 1);
           setMapState();
         }
       }
@@ -338,7 +455,7 @@
         pitch: number;
         bearing: number;
       }): void {
-        map.value.easeTo({
+        map.easeTo({
           pitch,
           bearing,
         });
@@ -361,7 +478,7 @@
         lat: number;
         zoom: number;
       }): void {
-        map.value.flyTo({
+        map.flyTo({
           center: [lng, lat],
           zoom,
           speed: 3,
@@ -384,7 +501,7 @@
             }
           });
         });
-        map.value.setStyle(e);
+        map.setStyle(e);
       }
       /**
        * Toggles the tool enabled on the map
@@ -423,21 +540,21 @@
        * @returns {void} void
        */
       function setMapState(): void {
-        const { lng, lat } = map.value.getCenter();
+        const { lng, lat } = map.getCenter();
         store.setCenter([lng, lat]);
-        store.setZoom(map.value.getZoom());
-        store.setBounds(map.value.getBounds().toArray());
+        store.setZoom(map.getZoom());
+        store.setBounds(map.getBounds().toArray());
         store.setCoordinates({ lat, lng });
       }
+
       return {
         state: store.$state,
+        map,
         loaded,
         markers,
-        map,
-        mapOptions: {
-          ...store.$state.map.options,
-          accessToken: $config.mapToken,
-        },
+        image,
+        geojson,
+        vector,
         onMapLoaded,
         onMapMouseMove,
         onMapClicked,

@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { Map, MapboxOptions, MapEventType } from 'maplibre-gl';
-  import { ref, onMounted, provide, defineComponent, h } from 'vue';
-  import type { PropType, SetupContext, Ref } from 'vue';
+  import type { MapboxOptions, MapEventType } from 'maplibre-gl';
+  import { Map } from 'maplibre-gl';
+  import type { PropType, Ref, SetupContext } from 'vue';
+  import { defineComponent, h, onMounted, provide, ref } from 'vue';
   import { mapEvents } from '../constants/events';
   import {
     MapKey,
@@ -45,7 +46,7 @@
           map.value.on(e, (evt) => {
             switch (e) {
               case 'load':
-                emit('load', map);
+                emit('loaded', map.value);
                 break;
               case 'sourcedata' || 'sourcedataloading':
                 const sourceTimeout = () => {
@@ -58,7 +59,7 @@
                 };
                 sourceTimeout();
                 break;
-              // https://github.com/mapbox/maplibre-gl-js/issues/2268#issuecomment-401979967
+              // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
               // @ts-ignore
               case 'style.load':
                 const styleTimeout = () => {

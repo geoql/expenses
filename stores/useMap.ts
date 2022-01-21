@@ -28,7 +28,8 @@ export const useMap = defineStore({
         options: {
           // style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
           container: 'map',
-          style: 'mapbox://styles/mapbox/dark-v10?optimize=true',
+          style:
+            'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
           center: [73.8567, 18.5204] as number[],
           zoom: 11,
           maxZoom: 22,
@@ -51,22 +52,8 @@ export const useMap = defineStore({
                 enabled: true,
                 image: 'dark',
                 source: 'mapbox',
-                style: 'mapbox://styles/mapbox/dark-v10?optimize=true',
-              },
-              {
-                type: 'Satellite',
-                enabled: false,
-                image: 'satellite',
-                source: 'mapbox',
                 style:
-                  'mapbox://styles/mapbox/satellite-streets-v11?optimize=true',
-              },
-              {
-                type: 'Streets',
-                enabled: false,
-                image: 'streets',
-                source: 'mapbox',
-                style: 'mapbox://styles/mapbox/streets-v11?optimize=true',
+                  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
               },
               {
                 type: 'Light',
