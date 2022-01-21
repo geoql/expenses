@@ -27,7 +27,7 @@
     "pinia": "^2.0.9"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.0.2",
+    "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@nuxt/types": "^2.15.8",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
