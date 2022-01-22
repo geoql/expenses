@@ -13,11 +13,15 @@
           v-for="(marker, index) in markers.data"
           :key="index"
           :options="marker.options"
+          :popup-options="marker.popup.options"
           v-model:coordinates="marker.coordinates"
         >
-          <!-- <v-popup :coordinates="marker.coordinates">
-            {{ marker.popupContent }}
-          </v-popup> -->
+          <template>
+            <div class="p-2 text-black">
+              Popup Content: {{ marker.popup.content }}
+              <img class="rounded shadow-sm" src="https://picsum.photos/200" />
+            </div>
+          </template>
         </v-marker>
         <v-layer-mapbox-geojson
           :source-id="'geojson-source'"
@@ -188,14 +192,6 @@
 </template>
 
 <script lang="ts">
-  import VMap, {
-    VLayerMapboxGeojson,
-    VLayerMapboxImage,
-    VLayerMapboxVector,
-    VMarker,
-    VPopup,
-  } from '@/lib/v-mapbox';
-  import { useMap } from '@/stores/useMap';
   import type { FeatureCollection } from 'geojson';
   import type {
     EventData,
@@ -209,6 +205,13 @@
   } from 'maplibre-gl';
   import type { SetupContext } from 'vue';
   import { computed, defineComponent, readonly, ref } from 'vue';
+  import VMap, {
+    VLayerMapboxGeojson,
+    VLayerMapboxImage,
+    VLayerMapboxVector,
+    VMarker,
+  } from '~/lib/v-mapbox';
+  import { useMap } from '~/stores/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
   export default defineComponent({
@@ -217,7 +220,6 @@
       VMap,
       Basemaps,
       VMarker,
-      VPopup,
       VLayerMapboxGeojson,
       VLayerMapboxVector,
       VLayerMapboxImage,
@@ -230,13 +232,26 @@
           {
             options: { color: 'red', draggable: true },
             coordinates: [73.8567, 18.5204] as LngLatLike,
-            hasPopup: true,
-            popupContent: 'ABC',
+            popup: {
+              options: {
+                closeButton: false,
+                closeOnClick: true,
+                closeOnMove: true,
+              },
+              content: 'ABC',
+            },
           },
           {
             options: { color: 'indigo', draggable: true },
             coordinates: [73.8567, 18.5514] as LngLatLike,
-            hasPopup: false,
+            popup: {
+              options: {
+                closeButton: true,
+                closeOnClick: false,
+                closeOnMove: false,
+              },
+              content: 'XYZ',
+            },
           },
         ],
       });

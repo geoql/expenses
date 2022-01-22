@@ -1,13 +1,24 @@
 <template>
   <section :id="`marker-${Date.now()}`">
-    <slot />
+    <v-popup
+      :marker="marker"
+      :options="popupOptions"
+      :coordinates="coordinates"
+    >
+      <slot />
+    </v-popup>
   </section>
 </template>
 <script lang="ts">
-  import type { LngLatLike, MarkerOptions } from 'maplibre-gl';
-  import { EventData, Marker } from 'maplibre-gl';
-  import type { PropType, SetupContext } from 'vue';
-  import { defineComponent, onMounted } from 'vue';
+  import type {
+    EventData,
+    LngLatLike,
+    MarkerOptions,
+    PopupOptions,
+  } from 'maplibre-gl';
+  import { Marker } from 'maplibre-gl';
+  import { defineComponent, onMounted, PropType, SetupContext } from 'vue';
+  import VPopup from '../popups/VPopup.vue';
   import { MapKey, MapLoadedKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
@@ -17,6 +28,11 @@
       options: {
         type: Object as PropType<MarkerOptions>,
         default: () => ({} as MarkerOptions),
+        required: true,
+      },
+      popupOptions: {
+        type: Object as PropType<PopupOptions>,
+        default: () => ({} as PopupOptions),
         required: true,
       },
       coordinates: {
@@ -29,6 +45,9 @@
         default: 'pointer',
         required: false,
       },
+    },
+    components: {
+      VPopup,
     },
     setup(props, { emit }: SetupContext) {
       let map = injectStrict(MapKey);
@@ -105,6 +124,10 @@
           });
         });
       }
+
+      return {
+        marker,
+      };
     },
   });
 </script>
