@@ -14,12 +14,12 @@
     props: {
       sourceId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-vector-source',
+        default: 'maplibre.gl-vector-source',
         required: true,
       },
       layerId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-vector-layer',
+        default: 'maplibre.gl-vector-layer',
         required: true,
       },
       source: {
@@ -44,9 +44,9 @@
       onMounted(() => {
         if (loaded.value) {
           const layer = {
+            ...props.layer,
             id: props.layerId,
             source: props.sourceId,
-            ...props.layer,
           };
           map.value.addSource(props.sourceId, props.source);
           map.value.addLayer(layer, props.before);

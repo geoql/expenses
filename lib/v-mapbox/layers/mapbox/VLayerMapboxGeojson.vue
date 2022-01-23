@@ -15,12 +15,12 @@
     props: {
       sourceId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-geojson-source',
+        default: 'maplibre.gl-geojson-source',
         required: true,
       },
       layerId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-geojson-layer',
+        default: 'maplibre.gl-geojson-layer',
         required: true,
       },
       source: {
@@ -49,9 +49,9 @@
             data: props.source,
           };
           const layer = {
+            ...props.layer,
             id: props.layerId,
             source: props.sourceId,
-            ...props.layer,
           };
           map.value.addSource(props.sourceId, source);
           map.value.addLayer(layer, props.before);

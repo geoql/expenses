@@ -15,12 +15,12 @@
     props: {
       sourceId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-raster-source',
+        default: 'maplibre.gl-raster-source',
         required: true,
       },
       layerId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-raster-layer',
+        default: 'maplibre.gl-raster-layer',
         required: true,
       },
       source: {
@@ -49,9 +49,9 @@
             data: props.source,
           };
           const layer = {
+            ...props.layer,
             id: props.layerId,
             source: props.sourceId,
-            ...props.layer,
           };
           map.value.addSource(props.sourceId, source);
           map.value.addLayer(layer, props.before);

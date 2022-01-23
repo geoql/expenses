@@ -14,12 +14,12 @@
     props: {
       sourceId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-video-source',
+        default: 'maplibre.gl-video-source',
         required: true,
       },
       layerId: {
         type: String as PropType<string>,
-        default: 'mapbox.gl-video-layer',
+        default: 'maplibre.gl-video-layer',
         required: true,
       },
       source: {
@@ -44,9 +44,9 @@
       onMounted(() => {
         if (loaded.value) {
           const layer = {
+            ...props.layer,
             id: props.layerId,
             source: props.sourceId,
-            ...props.layer,
           };
           map.value.addSource(props.sourceId, props.source);
           map.value.addLayer(layer, props.before);

@@ -4,11 +4,12 @@
   </section>
 </template>
 <script lang="ts">
-  import type { LngLatLike, Marker, PopupOptions } from 'maplibre-gl';
-  import type { PropType, SetupContext } from 'vue';
+  import type { LngLatLike, Map, Marker, PopupOptions } from 'maplibre-gl';
   import { Popup } from 'maplibre-gl';
+  import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
-  import { MapLoadedKey } from '../types/symbols';
+  import { MapKey, MapLoadedKey } from '../types/symbols';
+  import { popupEvents } from '../constants/events';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
@@ -17,7 +18,7 @@
       marker: {
         type: Object as PropType<Marker>,
         default: () => ({} as Marker),
-        required: true,
+        required: false,
       },
       options: {
         type: Object as PropType<PopupOptions>,
@@ -26,14 +27,15 @@
       },
       coordinates: {
         type: Object as PropType<LngLatLike>,
-        default: () => [],
+        default: () => ({}),
         required: true,
       },
     },
     setup(props, { emit }: SetupContext) {
-      let loaded = injectStrict(MapLoadedKey);
+      let map: Ref<Map> = injectStrict(MapKey);
+      let loaded: Ref<boolean> = injectStrict(MapLoadedKey);
       let popup: Popup = new Popup(props.options);
-      const content = ref(null);
+      const content: Ref<null | HTMLElement> = ref(null);
 
       onMounted(() => {
         if (loaded.value) {
@@ -53,25 +55,33 @@
 
       /**
        * Set popup coordinates
+       *
        * @returns {void}
        */
       function setPopupCoordinates(): void {
         const { outerHTML }: { outerHTML: string } =
-          content.value.children[0].children[0];
+          content.value!.children[0].children[0];
         popup.setHTML(outerHTML);
         popup.setLngLat(props.coordinates);
       }
 
       /**
-       * Add popup to map
+       * Add popup to marker if marker exists
+       * else add it to the map.
+       *
        * @returns {void}
        */
       function addToMarker(): void {
-        props.marker.setPopup(popup);
+        if (props.marker) {
+          props.marker.setPopup(popup);
+        } else {
+          popup.addTo(map.value);
+        }
         emit('added', { popup });
       }
       /**
        * Remove popup from map
+       *
        * @returns {void}
        */
       function remove(): void {
@@ -81,10 +91,11 @@
 
       /**
        * Listen to events
+       *
        * @returns {void}
        */
       function listenPopupEvents(): void {
-        ['open', 'close'].forEach((event: string) => {
+        popupEvents.forEach((event: string) => {
           popup.on(event, () => {
             emit(event);
           });
@@ -92,10 +103,11 @@
       }
       /**
        * Turn off listener
+       *
        * @returns {void}
        */
       function removePopupEvents(): void {
-        ['open', 'close'].forEach((event: string) => {
+        popupEvents.forEach((event: string) => {
           popup.off(event, () => {
             emit(event);
           });

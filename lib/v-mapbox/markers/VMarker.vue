@@ -18,12 +18,16 @@
   } from 'maplibre-gl';
   import { Marker } from 'maplibre-gl';
   import { defineComponent, onMounted, PropType, SetupContext } from 'vue';
-  import VPopup from '../popups/VPopup.vue';
   import { MapKey, MapLoadedKey } from '../types/symbols';
+  import { markerDOMEvents, markerMapEvents } from '../constants/events';
+  import VPopup from '../popups/VPopup.vue';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
     name: 'VMarker',
+    components: {
+      VPopup,
+    },
     props: {
       options: {
         type: Object as PropType<MarkerOptions>,
@@ -36,8 +40,8 @@
         required: true,
       },
       coordinates: {
-        type: Object as PropType<LngLatLike>,
-        default: () => [],
+        type: [Object, Array] as PropType<LngLatLike>,
+        default: () => ({}),
         required: true,
       },
       cursor: {
@@ -45,9 +49,6 @@
         default: 'pointer',
         required: false,
       },
-    },
-    components: {
-      VPopup,
     },
     setup(props, { emit }: SetupContext) {
       let map = injectStrict(MapKey);
@@ -67,6 +68,7 @@
 
       /**
        * Set marker coordinates
+       *
        * @returns {void}
        */
       function setMarkerCoordinates(): void {
@@ -74,6 +76,7 @@
       }
       /**
        * Sets the Cursor to Pointer
+       *
        * @returns {void}
        */
       function setCursorPointer(): void {
@@ -82,6 +85,7 @@
 
       /**
        * Add marker to map
+       *
        * @returns {void}
        */
       function addToMap(): void {
@@ -90,6 +94,7 @@
       }
       /**
        * Remove marker from map
+       *
        * @returns {void}
        */
       function removeFromMap(): void {
@@ -99,12 +104,13 @@
 
       /**
        * Listen to events
+       *
        * @returns {void}
        */
       function listenMarkerEvents(): void {
         let coordinates: LngLatLike;
         // Listen to Marker Mapbox events
-        ['dragstart', 'drag', 'dragend'].forEach((event: string) => {
+        markerMapEvents.forEach((event: string) => {
           marker.on(event, (e: EventData) => {
             if (event === 'dragend') {
               if (props.coordinates instanceof Array) {
@@ -118,7 +124,7 @@
           });
         });
         // Listen to Marker DOM events
-        ['click', 'mouseenter', 'mouseleave'].forEach((event: string) => {
+        markerDOMEvents.forEach((event: string) => {
           marker.getElement().addEventListener(event, (e) => {
             emit(event, e);
           });

@@ -3,13 +3,13 @@
   import { Map } from 'maplibre-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, h, onMounted, provide, ref } from 'vue';
-  import { mapEvents } from '../constants/events';
   import {
     MapKey,
     MapLoadedKey,
     MapStylesLoadedKey,
     MapTilesLoadedKey,
   } from '../types/symbols';
+  import { mapEvents } from '../constants/events';
 
   export default defineComponent({
     name: 'VMap',
@@ -17,7 +17,7 @@
       options: {
         type: Object as PropType<MapboxOptions>,
         required: true,
-        default: '',
+        default: () => ({}),
       },
     },
     setup(props, { emit, slots }: SetupContext) {
@@ -40,6 +40,11 @@
         listenMapEvents();
       });
 
+      /**
+       * Listen to map events
+       *
+       * @returns {void}
+       */
       function listenMapEvents(): void {
         // Listen for events
         events.value.forEach((e) => {
@@ -59,7 +64,7 @@
                 };
                 sourceTimeout();
                 break;
-              // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
+              // https://github.com/maplibre-gl/maplibre-gl-js/issues/2268#issuecomment-401979967
               // @ts-ignore
               case 'style.load':
                 const styleTimeout = () => {
