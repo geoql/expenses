@@ -22,16 +22,14 @@
     },
     setup(props, { emit, slots }: SetupContext) {
       let map: Ref<Map> = ref({} as Map);
-      let events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
       let loaded: Ref<boolean> = ref(false);
+      let events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
+
       let styleChanged: Ref<boolean> = ref(false);
       let tilesLoaded: Ref<boolean> = ref(false);
 
       onMounted(() => {
-        map.value = new Map({
-          ...props.options,
-          container: 'map',
-        });
+        map.value = new Map(props.options);
         loaded.value = true;
         provide(MapLoadedKey, loaded);
         provide(MapKey, map);
@@ -86,7 +84,14 @@
       }
 
       return () =>
-        h('div', { id: 'map' }, slots && slots.default ? slots.default() : {});
+        h(
+          'div',
+          {
+            id: props.options.container || 'map',
+            class: 'v-map-container',
+          },
+          slots && slots.default ? slots.default() : {},
+        );
     },
   });
 </script>
@@ -96,7 +101,7 @@
     outline: none;
   }
 
-  #map {
+  .v-map-container {
     width: 100%;
     height: 100%;
   }
