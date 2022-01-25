@@ -23,7 +23,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.1.8",
     "@vueuse/nuxt": "^7.5.4",
-    "maplibre-gl": "^1.15.2",
+    "maplibre-gl": "^2.0.5",
     "pinia": "^2.0.9"
   },
   "devDependencies": {
