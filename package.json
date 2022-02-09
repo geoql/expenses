@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.1.8",
-    "@vueuse/nuxt": "^7.5.5",
+    "@vueuse/nuxt": "^7.6.0",
     "maplibre-gl": "^1.15.2",
     "pinia": "^2.0.11"
   },
