@@ -32,7 +32,7 @@
     "@nuxt/types": "^2.15.8",
     "@types/geojson": "^7946.0.8",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
-    "@typescript-eslint/parser": "^5.11.0",
+    "@typescript-eslint/parser": "^5.12.0",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^8.9.0",
