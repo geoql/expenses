@@ -13,7 +13,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/geoql/expenses)](https://github.com/geoql/expenses/graphs/contributors)
 
 [![nuxt](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/nuxt3?logo=nuxt.js)](https://v3.nuxtjs.org/)
-[![mapbox](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/mapbox-gl?logo=mapbox)](https://mapbox.com/)
+[![maplibre](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/maplibre-gl?logo=mapbox)](https://maplibre.org/maplibre-gl-js-docs/api/)
 [![eslint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/eslint?logo=eslint)](https://eslint.org/)
 [![prettier](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/prettier?logo=prettier)](https://prettier.io/)
 [![stylelint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/stylelint?logo=stylelint)](https://stylelint.io/)

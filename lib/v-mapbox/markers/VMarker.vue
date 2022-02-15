@@ -17,10 +17,11 @@
     PopupOptions,
   } from 'maplibre-gl';
   import { Marker } from 'maplibre-gl';
-  import { defineComponent, onMounted, PropType, SetupContext } from 'vue';
-  import { MapKey, MapLoadedKey } from '../types/symbols';
+  import type { PropType, Ref, SetupContext } from 'vue';
+  import { defineComponent, onMounted, ref } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';
   import VPopup from '../popups/VPopup.vue';
+  import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
@@ -52,8 +53,21 @@
     },
     setup(props, { emit }: SetupContext) {
       let map = injectStrict(MapKey);
-      let loaded = injectStrict(MapLoadedKey);
       let marker: Marker = new Marker(props.options);
+      let loaded: Ref<boolean> = ref(true);
+
+      map.value.on('style.load', () => {
+        // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
+        const styleTimeout = () => {
+          if (!map.value.isStyleLoaded()) {
+            loaded.value = false;
+            setTimeout(styleTimeout, 200);
+          } else {
+            loaded.value = true;
+          }
+        };
+        styleTimeout();
+      });
 
       onMounted(() => {
         if (loaded.value) {

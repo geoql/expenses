@@ -8,8 +8,8 @@
   import { Popup } from 'maplibre-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
-  import { MapKey, MapLoadedKey } from '../types/symbols';
   import { popupEvents } from '../constants/events';
+  import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
@@ -33,9 +33,22 @@
     },
     setup(props, { emit }: SetupContext) {
       let map: Ref<Map> = injectStrict(MapKey);
-      let loaded: Ref<boolean> = injectStrict(MapLoadedKey);
       let popup: Popup = new Popup(props.options);
+      let loaded: Ref<boolean> = ref(true);
       const content: Ref<null | HTMLElement> = ref(null);
+
+      map.value.on('style.load', () => {
+        // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
+        const styleTimeout = () => {
+          if (!map.value.isStyleLoaded()) {
+            loaded.value = false;
+            setTimeout(styleTimeout, 200);
+          } else {
+            loaded.value = true;
+          }
+        };
+        styleTimeout();
+      });
 
       onMounted(() => {
         if (loaded.value) {

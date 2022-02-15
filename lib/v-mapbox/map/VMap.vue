@@ -3,13 +3,8 @@
   import { Map } from 'maplibre-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, h, onMounted, provide, ref } from 'vue';
-  import {
-    MapKey,
-    MapLoadedKey,
-    MapStylesLoadedKey,
-    MapTilesLoadedKey,
-  } from '../types/symbols';
   import { mapEvents } from '../constants/events';
+  import { MapKey } from '../types/symbols';
 
   export default defineComponent({
     name: 'VMap',
@@ -31,10 +26,7 @@
       onMounted(() => {
         map.value = new Map(props.options);
         loaded.value = true;
-        provide(MapLoadedKey, loaded);
         provide(MapKey, map);
-        provide(MapStylesLoadedKey, styleChanged);
-        provide(MapTilesLoadedKey, tilesLoaded);
         listenMapEvents();
       });
 
@@ -50,30 +42,6 @@
             switch (e) {
               case 'load':
                 emit('loaded', map.value);
-                break;
-              case 'sourcedata' || 'sourcedataloading':
-                const sourceTimeout = () => {
-                  if (!map.value.areTilesLoaded()) {
-                    tilesLoaded.value = false;
-                    setTimeout(sourceTimeout, 200);
-                  } else {
-                    tilesLoaded.value = true;
-                  }
-                };
-                sourceTimeout();
-                break;
-              // https://github.com/maplibre-gl/maplibre-gl-js/issues/2268#issuecomment-401979967
-              // @ts-ignore
-              case 'style.load':
-                const styleTimeout = () => {
-                  if (!map.value.isStyleLoaded()) {
-                    styleChanged.value = false;
-                    setTimeout(styleTimeout, 200);
-                  } else {
-                    styleChanged.value = true;
-                  }
-                };
-                styleTimeout();
                 break;
               default:
                 emit(e, evt);
