@@ -38,6 +38,7 @@ export const useMap = defineStore({
           preserveDrawingBuffer: true,
           hash: false,
           minPitch: 0,
+          attributionControl: false,
           maxPitch: 60,
         } as MapboxOptions,
       },
