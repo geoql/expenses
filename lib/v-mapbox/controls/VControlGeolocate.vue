@@ -1,22 +1,55 @@
-<template>
-  <main>
-    {{ options }}
-  </main>
-</template>
-
 <script lang="ts">
+  import type { FitBoundsOptions, PositionOptions } from 'maplibre-gl';
+  import { GeolocateControl } from 'maplibre-gl';
   import type { PropType } from 'vue';
-  import { defineComponent } from 'vue';
+  import { defineComponent, onMounted } from 'vue';
+  import { geolocateControlEvents as events } from '../constants/events/geolocate';
+  import { MapKey } from '../types/symbols';
+  import { injectStrict } from '../utils';
 
   export default defineComponent({
-    name: 'VControlGeolocate',
+    name: 'VControlFullscreen',
     props: {
       options: {
-        type: Object as PropType<{}>,
+        type: Object as PropType<{
+          positionOptions?: PositionOptions;
+          fitBoundsOptions?: FitBoundsOptions;
+          trackUserLocation?: boolean;
+          showAccuracyCircle?: boolean;
+          showUserLocation?: boolean;
+        }>,
         default: () => ({}),
         required: true,
       },
+      position: {
+        type: String as PropType<
+          'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+        >,
+        default: () => 'top-left',
+        required: false,
+      },
     },
-    setup() {},
+    setup(props, { emit }) {
+      let map = injectStrict(MapKey);
+
+      onMounted(() => {
+        addControl();
+      });
+
+      /**
+       * Adds the Attribution Control
+       *
+       * @returns {void}
+       */
+      function addControl(): void {
+        const control = new GeolocateControl(props.options);
+        map.value.addControl(control, props.position);
+        events.forEach((event: string) => {
+          control.on(event, () => {
+            emit(event);
+          });
+        });
+      }
+    },
   });
 </script>

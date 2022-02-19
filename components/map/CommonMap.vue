@@ -8,6 +8,25 @@
       @mousemove="onMapMouseMove"
       @zoomend="onMapZoomEnd"
     >
+      <!-- Controls -->
+      <template v-if="loaded">
+        <v-control-attribution>
+          Map Designed By © GeoSpoc 2022
+        </v-control-attribution>
+        <v-control-geolocate
+          :options="{
+            positionOptions: {
+              enableHighAccuracy: true,
+            },
+            trackUserLocation: true,
+            showUserHeading: true,
+          }"
+        />
+        <v-control-fullscreen />
+        <v-control-navigation />
+        <v-control-scale />
+      </template>
+      <!-- Layers -->
       <template v-if="loaded">
         <v-marker
           v-for="(marker, index) in markers.data"
@@ -206,6 +225,11 @@
   import type { SetupContext } from 'vue';
   import { computed, defineComponent, readonly, ref } from 'vue';
   import VMap, {
+    VControlAttribution,
+    VControlFullscreen,
+    VControlGeolocate,
+    VControlNavigation,
+    VControlScale,
     VLayerMapboxGeojson,
     VLayerMapboxImage,
     VLayerMapboxVector,
@@ -223,6 +247,11 @@
       VLayerMapboxGeojson,
       VLayerMapboxVector,
       VLayerMapboxImage,
+      VControlAttribution,
+      VControlFullscreen,
+      VControlGeolocate,
+      VControlNavigation,
+      VControlScale,
     },
     setup(_, { emit }: SetupContext) {
       const store = useMap();
