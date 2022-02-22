@@ -31,7 +31,7 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@nuxt/types": "^2.15.8",
     "@types/geojson": "^7946.0.8",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@windicss/plugin-scrollbar": "^1.2.3",
