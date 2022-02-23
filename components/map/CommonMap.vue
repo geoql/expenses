@@ -26,10 +26,10 @@
         <v-control-navigation />
         <v-control-scale />
       </template>
-      <!-- Layers -->
+      <!-- Mapbox Layers -->
       <template v-if="loaded">
         <v-marker
-          v-for="(marker, index) in markers.data"
+          v-for="(marker, index) in mapbox.markers.data"
           :key="index"
           :options="marker.options"
           :popup-options="marker.popup.options"
@@ -44,21 +44,34 @@
         </v-marker>
         <v-layer-mapbox-geojson
           :source-id="'geojson-source'"
-          :source="geojson.source"
+          :source="mapbox.geojson.source"
           :layer-id="'geojson-layer'"
-          :layer="geojson.layer"
+          :layer="mapbox.geojson.layer"
         />
         <v-layer-mapbox-vector
           :source-id="'vector-source'"
-          :source="vector.source"
+          :source="mapbox.vector.source"
           :layer-id="'vector-layer'"
-          :layer="vector.layer"
+          :layer="mapbox.vector.layer"
         />
         <v-layer-mapbox-image
           :source-id="'image-source'"
-          :source="image.source"
+          :source="mapbox.image.source"
           :layer-id="'image-layer'"
-          :layer="image.layer"
+          :layer="mapbox.image.layer"
+        />
+      </template>
+      <!-- Deck.gl Layers -->
+      <template v-if="loaded">
+        <v-layer-deck-arc
+          :data="deck.arc.source"
+          :layer-id="'deck.gl-arc-layer'"
+          :options="deck.arc.options"
+        />
+        <v-layer-deck-geojson
+          :data="deck.geojson.source"
+          :layer-id="'deck.gl-geojson-layer'"
+          :options="deck.geojson.options"
         />
       </template>
       <!-- Basemaps -->
@@ -230,6 +243,8 @@
     VControlGeolocate,
     VControlNavigation,
     VControlScale,
+    VLayerDeckArc,
+    VLayerDeckGeojson,
     VLayerMapboxGeojson,
     VLayerMapboxImage,
     VLayerMapboxVector,
@@ -252,112 +267,190 @@
       VControlGeolocate,
       VControlNavigation,
       VControlScale,
+      VLayerDeckArc,
+      VLayerDeckGeojson,
     },
     setup(_, { emit }: SetupContext) {
       const store = useMap();
       let map = readonly({} as Map);
-      let markers = ref({
-        data: [
-          {
-            options: { color: 'red', draggable: true },
-            coordinates: [73.8567, 18.5204] as LngLatLike,
-            popup: {
-              options: {
-                closeButton: false,
-                closeOnClick: true,
-                closeOnMove: true,
-              },
-              content: 'ABC',
-            },
-          },
-          {
-            options: { color: 'indigo', draggable: true },
-            coordinates: [73.8567, 18.5514] as LngLatLike,
-            popup: {
-              options: {
-                closeButton: true,
-                closeOnClick: false,
-                closeOnMove: false,
-              },
-              content: 'XYZ',
-            },
-          },
-        ],
-      });
-      let geojson = ref({
-        source: {
-          type: 'FeatureCollection',
-          features: [
+      const mapbox = ref({
+        markers: {
+          data: [
             {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'Polygon',
-                coordinates: [
-                  [
-                    [68.5546875, 17.644022027872726],
-                    [70.6640625, 9.795677582829743],
-                    [81.9140625, 5.61598581915534],
-                    [83.3203125, 20.632784250388028],
-                    [68.5546875, 17.644022027872726],
-                  ],
-                ],
+              options: { color: 'red', draggable: true },
+              coordinates: [73.8567, 18.5204] as LngLatLike,
+              popup: {
+                options: {
+                  closeButton: false,
+                  closeOnClick: true,
+                  closeOnMove: true,
+                },
+                content: 'ABC',
+              },
+            },
+            {
+              options: { color: 'indigo', draggable: true },
+              coordinates: [73.8567, 18.5514] as LngLatLike,
+              popup: {
+                options: {
+                  closeButton: true,
+                  closeOnClick: false,
+                  closeOnMove: false,
+                },
+                content: 'XYZ',
               },
             },
           ],
-        } as FeatureCollection,
-        layer: {
-          type: 'fill',
-          layout: {
-            visibility: 'visible',
-          },
-          paint: {
-            'fill-color': '#0080ff', // blue color fill
-            'fill-opacity': 0.25,
-          },
-        } as FillLayer,
+        },
+        geojson: {
+          source: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [68.5546875, 17.644022027872726],
+                      [70.6640625, 9.795677582829743],
+                      [81.9140625, 5.61598581915534],
+                      [83.3203125, 20.632784250388028],
+                      [68.5546875, 17.644022027872726],
+                    ],
+                  ],
+                },
+              },
+            ],
+          } as FeatureCollection,
+          layer: {
+            type: 'fill',
+            layout: {
+              visibility: 'visible',
+            },
+            paint: {
+              'fill-color': '#0080ff', // blue color fill
+              'fill-opacity': 0.25,
+            },
+          } as FillLayer,
+        },
+        vector: {
+          source: {
+            type: 'vector',
+            tiles: [
+              'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333',
+            ],
+            minzoom: 6,
+            maxzoom: 14,
+          } as VectorSource,
+          layer: {
+            type: 'line',
+            // Source has several layers. We visualize the one with name 'sequence'.
+            'source-layer': 'sequence',
+            layout: {
+              'line-cap': 'round',
+              'line-join': 'round',
+            },
+            paint: {
+              'line-opacity': 0.6,
+              'line-color': 'rgb(53, 175, 109)',
+              'line-width': 2,
+            },
+          } as LineLayer,
+        },
+        image: {
+          source: {
+            type: 'image',
+            url: 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif',
+            coordinates: [
+              [-80.425, 46.437],
+              [-71.516, 46.437],
+              [-71.516, 37.936],
+              [-80.425, 37.936],
+            ],
+          } as ImageSourceRaw,
+          layer: {
+            type: 'raster',
+            paint: {
+              'raster-fade-duration': 0,
+            },
+          } as RasterLayer,
+        },
       });
-      let vector = ref({
-        source: {
-          type: 'vector',
-          tiles: [
-            'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333',
+      const deck = ref({
+        arc: {
+          source: [
+            {
+              inbound: 72633,
+              outbound: 74735,
+              from: {
+                name: '19th St. Oakland (19TH)',
+                coordinates: [-122.269029, 37.80787],
+              },
+              to: {
+                name: '12th St. Oakland City Center (12TH)',
+                coordinates: [-122.271604, 37.803664],
+              },
+            },
           ],
-          minzoom: 6,
-          maxzoom: 14,
-        } as VectorSource,
-        layer: {
-          type: 'line',
-          // Source has several layers. We visualize the one with name 'sequence'.
-          'source-layer': 'sequence',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round',
+          options: {
+            pickable: true,
+            getWidth: 12,
+            getSourcePosition: (d) => d.from.coordinates,
+            getTargetPosition: (d) => d.to.coordinates,
+            getSourceColor: (d) => [Math.sqrt(d.inbound), 140, 0],
+            getTargetColor: (d) => [Math.sqrt(d.outbound), 140, 0],
           },
-          paint: {
-            'line-opacity': 0.6,
-            'line-color': 'rgb(53, 175, 109)',
-            'line-width': 2,
+        },
+        geojson: {
+          source: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [74.50927734375, 31.89621446335144],
+                      [73.71826171874999, 30.012030680358613],
+                      [71.89453125, 28.033197847676377],
+                      [70.24658203125, 28.013801376380712],
+                      [69.43359375, 26.980828590472107],
+                      [70.224609375, 26.352497858154024],
+                      [70.09277343749999, 25.93828707492375],
+                      [70.3125, 25.60190226111573],
+                      [70.9716796875, 25.443274612305746],
+                      [70.7958984375, 25.105497373014686],
+                      [70.99365234375, 24.686952411999155],
+                      [69.71923828125, 24.387127324604496],
+                      [68.53271484375, 23.68477416688374],
+                      [71.60888671875, 19.704657579362323],
+                      [77.45361328125, 21.453068633086783],
+                      [76.7724609375, 29.7453016622136],
+                      [74.50927734375, 31.89621446335144],
+                    ],
+                  ],
+                },
+              },
+            ],
+          } as FeatureCollection,
+          options: {
+            pickable: true,
+            stroked: false,
+            filled: true,
+            extruded: true,
+            pointType: 'circle',
+            lineWidthScale: 20,
+            lineWidthMinPixels: 2,
+            getFillColor: [33, 160, 180, 200],
+            getPointRadius: 100,
+            getLineWidth: 1,
+            getElevation: 200,
           },
-        } as LineLayer,
-      });
-      let image = ref({
-        source: {
-          type: 'image',
-          url: 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif',
-          coordinates: [
-            [-80.425, 46.437],
-            [-71.516, 46.437],
-            [-71.516, 37.936],
-            [-80.425, 37.936],
-          ],
-        } as ImageSourceRaw,
-        layer: {
-          type: 'raster',
-          paint: {
-            'raster-fade-duration': 0,
-          },
-        } as RasterLayer,
+        },
       });
 
       const loaded = computed(
@@ -595,10 +688,8 @@
         state: store.$state,
         map,
         loaded,
-        markers,
-        image,
-        geojson,
-        vector,
+        mapbox,
+        deck,
         onMapLoaded,
         onMapMouseMove,
         onMapClicked,

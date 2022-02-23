@@ -31,15 +31,14 @@
 </template>
 
 <script lang="ts">
-  import { computed, defineComponent, onMounted, reactive } from 'vue';
-  import type { EventData } from 'maplibre-gl';
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import { useDark } from '@vueuse/core';
-  import { useMap } from '@/stores/useMap';
-  import CommonMap from '@/components/map/CommonMap.vue';
-  import Markers from '@/components/map/layers/Markers.vue';
-  import Clusters from '@/components/map/layers/Clusters.vue';
-  import Heatmap from '@/components/map/layers/Heatmap.vue';
+  import type { EventData } from 'maplibre-gl';
+  import { computed, defineComponent, onMounted, reactive } from 'vue';
+  import CommonMap from '~/components/map/CommonMap.vue';
+  import Clusters from '~/components/map/layers/Clusters.vue';
+  import Heatmap from '~/components/map/layers/Heatmap.vue';
+  import Markers from '~/components/map/layers/Markers.vue';
+  import { useMap } from '~/stores/useMap';
 
   export default defineComponent({
     name: 'Dashboard',

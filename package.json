@@ -29,6 +29,8 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
     "@commitlint/config-conventional": "^16.2.1",
+    "@deck.gl/layers": "^8.6.8",
+    "@deck.gl/mapbox": "^8.6.8",
     "@nuxt/types": "^2.15.8",
     "@types/geojson": "^7946.0.8",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
