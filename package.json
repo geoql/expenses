@@ -24,7 +24,7 @@
     "@pinia/nuxt": "^0.1.8",
     "@vueuse/nuxt": "^8.0.0",
     "maplibre-gl": "^1.15.2",
-    "pinia": "^2.0.11"
+    "pinia": "^2.0.12"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.1",
