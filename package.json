@@ -48,7 +48,7 @@
     "nuxt3": "3.0.0-27456065.f38cace",
     "postcss-html": "^1.3.0",
     "postcss-scss": "^4.0.3",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.0",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
     "stylelint": "^14.5.3",
