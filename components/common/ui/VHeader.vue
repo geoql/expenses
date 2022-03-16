@@ -63,9 +63,8 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
   import { useDark, useToggle } from '@vueuse/core';
-  import { useMap } from '@/stores/useMap';
+  import { useMap } from '~/stores/useMap';
 
   export default defineComponent({
     name: 'Header',
