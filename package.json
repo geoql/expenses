@@ -46,7 +46,7 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.3.7",
     "nuxt-windicss": "^2.2.8",
-    "nuxt3": "3.0.0-27460489.53fbca7",
+    "nuxt3": "3.0.0-27466220.7c0d2e1",
     "postcss-html": "^1.3.0",
     "postcss-scss": "^4.0.3",
     "prettier": "^2.6.0",
