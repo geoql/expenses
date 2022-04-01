@@ -23,7 +23,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.1.8",
     "maplibre-gl": "^1.15.2",
-    "pinia": "^2.0.12"
+    "pinia": "^2.0.13"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
