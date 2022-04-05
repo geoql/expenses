@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
-    "@vueuse/core": "^8.2.3",
+    "@vueuse/core": "^8.2.4",
     "@vueuse/nuxt": "^8.2.4",
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^8.12.0",
