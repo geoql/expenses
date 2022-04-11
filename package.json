@@ -28,7 +28,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
-    "@deck.gl/layers": "^8.7.4",
+    "@deck.gl/layers": "^8.7.5",
     "@deck.gl/mapbox": "^8.7.4",
     "@nuxt/types": "^2.15.8",
     "@types/geojson": "^7946.0.8",
