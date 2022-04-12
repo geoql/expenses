@@ -1,4 +1,4 @@
-import { MapboxOptions } from 'maplibre-gl';
+import { MapboxOptions } from 'mapbox-gl';
 import { defineStore } from 'pinia';
 
 /**

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { FitBoundsOptions, PositionOptions } from 'maplibre-gl';
-  import { GeolocateControl } from 'maplibre-gl';
+  import type { FitBoundsOptions, PositionOptions } from 'mapbox-gl';
+  import { GeolocateControl } from 'mapbox-gl';
   import type { PropType } from 'vue';
   import { defineComponent, onMounted } from 'vue';
   import { geolocateControlEvents as events } from '../constants/events/geolocate';

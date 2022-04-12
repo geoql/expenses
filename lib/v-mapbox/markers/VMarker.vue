@@ -15,8 +15,8 @@
     LngLatLike,
     MarkerOptions,
     PopupOptions,
-  } from 'maplibre-gl';
-  import { Marker } from 'maplibre-gl';
+  } from 'mapbox-gl';
+  import { Marker } from 'mapbox-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, onMounted, ref } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';

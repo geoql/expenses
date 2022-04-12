@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { FullscreenControlOptions } from 'maplibre-gl';
-  import { FullscreenControl } from 'maplibre-gl';
+  import type { FullscreenControlOptions } from 'mapbox-gl';
+  import { FullscreenControl } from 'mapbox-gl';
   import type { PropType } from 'vue';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey } from '../types/symbols';

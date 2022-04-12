@@ -62,7 +62,7 @@
         />
       </template>
       <!-- Deck.gl Layers -->
-      <template v-if="loaded">
+      <!-- <template v-if="loaded">
         <v-layer-deck-arc
           :data="deck.arc.source"
           :layer-id="'deck.gl-arc-layer'"
@@ -73,7 +73,7 @@
           :layer-id="'deck.gl-geojson-layer'"
           :options="deck.geojson.options"
         />
-      </template>
+      </template> -->
       <!-- Basemaps -->
       <div
         class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
@@ -234,22 +234,22 @@
     Map,
     RasterLayer,
     VectorSource,
-  } from 'maplibre-gl';
-  import type { SetupContext } from 'vue';
-  import { computed, defineComponent, readonly, ref } from 'vue';
+  } from 'mapbox-gl';
   import VMap, {
     VControlAttribution,
     VControlFullscreen,
     VControlGeolocate,
     VControlNavigation,
     VControlScale,
-    VLayerDeckArc,
-    VLayerDeckGeojson,
+    // VLayerDeckArc,
+    // VLayerDeckGeojson,
     VLayerMapboxGeojson,
     VLayerMapboxImage,
     VLayerMapboxVector,
     VMarker,
-  } from '~/lib/v-mapbox';
+  } from 'v-mapbox';
+  import type { SetupContext } from 'vue';
+  import { computed, defineComponent, readonly, ref } from 'vue';
   import { useMap } from '~/stores/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
@@ -267,8 +267,8 @@
       VControlGeolocate,
       VControlNavigation,
       VControlScale,
-      VLayerDeckArc,
-      VLayerDeckGeojson,
+      // VLayerDeckArc,
+      // VLayerDeckGeojson,
     },
     setup(_, { emit }: SetupContext) {
       const store = useMap();

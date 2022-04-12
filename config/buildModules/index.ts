@@ -1,6 +1,4 @@
-import { NuxtOptionsModule } from '@nuxt/types/config/module';
-
-const buildModules: NuxtOptionsModule[] = [
+const buildModules: any[] = [
   // https://pinia.esm.dev/ssr/nuxt.html#nuxt-js
   '@pinia/nuxt',
   // https://windicss.org/guide/

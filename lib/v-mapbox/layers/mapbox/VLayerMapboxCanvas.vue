@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
   import type { FeatureCollection } from 'geojson';
-  import type { AnyLayer, GeoJSONSourceRaw } from 'maplibre-gl';
+  import type { AnyLayer, GeoJSONSourceRaw } from 'mapbox-gl';
   import type { PropType, Ref } from 'vue';
   import { defineComponent, onMounted, ref, watch } from 'vue';
   import { MapKey } from '../../types/symbols';

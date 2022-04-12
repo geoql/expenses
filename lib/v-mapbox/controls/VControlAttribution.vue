@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-  import { AttributionControl } from 'maplibre-gl';
+  import { AttributionControl } from 'mapbox-gl';
   import type { PropType } from 'vue';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey } from '../types/symbols';

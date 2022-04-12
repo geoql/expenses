@@ -32,7 +32,7 @@
 
 <script lang="ts">
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import type { EventData } from 'maplibre-gl';
+  import type { EventData } from 'mapbox-gl';
   import { computed, defineComponent, onMounted, reactive } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
   import Clusters from '~/components/map/layers/Clusters.vue';

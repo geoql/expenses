@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ScaleControl } from 'maplibre-gl';
+  import { ScaleControl } from 'mapbox-gl';
   import type { PropType } from 'vue';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey } from '../types/symbols';

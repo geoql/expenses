@@ -1,4 +1,4 @@
-import { MapLayerEventType } from 'maplibre-gl';
+import { MapLayerEventType } from 'mapbox-gl';
 
 export const mapLayerEvents: Array<keyof MapLayerEventType> = [
   'click',

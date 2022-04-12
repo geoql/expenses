@@ -1,6 +1,11 @@
+<template>
+  <div :id="options.container || 'map'" class="v-map-container">
+    <slot />
+  </div>
+</template>
 <script lang="ts">
-  import type { MapboxOptions, MapEventType } from 'maplibre-gl';
-  import { Map } from 'maplibre-gl';
+  import type { MapboxOptions, MapEventType } from 'mapbox-gl';
+  import { Map } from 'mapbox-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, h, onMounted, provide, ref } from 'vue';
   import { mapEvents } from '../constants/events';
