@@ -50,7 +50,7 @@
     "nuxt-windicss": "^2.2.11",
     "nuxt3": "~3.0.0-27501460.04a72f8",
     "prettier": "^2.6.2",
-    "sass": "^1.50.0",
+    "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
     "stylelint": "^14.7.1",
     "stylelint-config-prettier": "^9.0.3",
