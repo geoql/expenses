@@ -40,7 +40,7 @@
     "@vueuse/core": "^8.3.1",
     "@vueuse/nuxt": "^8.3.1",
     "@windicss/plugin-scrollbar": "^1.2.3",
-    "eslint": "^8.13.0",
+    "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsdoc": "^39.2.7",
     "eslint-plugin-nuxt": "^3.2.0",
