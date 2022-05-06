@@ -23,7 +23,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.1.8",
     "mapbox-gl": "1.13.2",
-    "pinia": "^2.0.13",
+    "pinia": "^2.0.14",
     "v-mapbox": "^3.2.2"
   },
   "devDependencies": {
