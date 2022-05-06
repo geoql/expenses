@@ -21,7 +21,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.1.8",
+    "@pinia/nuxt": "^0.1.9",
     "mapbox-gl": "1.13.2",
     "pinia": "^2.0.13",
     "v-mapbox": "^3.2.2"
