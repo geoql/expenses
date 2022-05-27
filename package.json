@@ -27,7 +27,7 @@
     "v-mapbox": "^3.2.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.0",
+    "@commitlint/cli": "^17.0.1",
     "@commitlint/config-conventional": "^17.0.0",
     "@deck.gl/layers": "^8.7.10",
     "@deck.gl/mapbox": "^8.7.10",
@@ -52,7 +52,7 @@
     "prettier": "^2.6.2",
     "sass": "^1.52.0",
     "sass-loader": "^13.0.0",
-    "stylelint": "^14.8.2",
+    "stylelint": "^14.8.5",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard": "^25.0.0",
