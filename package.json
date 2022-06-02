@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.1",
-    "@commitlint/config-conventional": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.2",
     "@deck.gl/layers": "^8.7.10",
     "@deck.gl/mapbox": "^8.7.10",
     "@nuxt/types": "^2.15.8",
