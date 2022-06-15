@@ -24,7 +24,7 @@
     "@pinia/nuxt": "^0.1.9",
     "mapbox-gl": "1.13.2",
     "pinia": "^2.0.14",
-    "v-mapbox": "^3.2.2"
+    "v-mapbox": "^3.2.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.2",
