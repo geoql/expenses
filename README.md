@@ -12,8 +12,8 @@
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/geoql/expenses.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/geoql/expenses/context:javascript)
 [![GitHub contributors](https://img.shields.io/github/contributors/geoql/expenses)](https://github.com/geoql/expenses/graphs/contributors)
 
-[![nuxt](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/nuxt3?logo=nuxt.js)](https://v3.nuxtjs.org/)
-[![maplibre](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/maplibre-gl?logo=mapbox)](https://maplibre.org/maplibre-gl-js-docs/api/)
+[![nuxt](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/nuxt?logo=nuxt.js)](https://v3.nuxtjs.org/)
+[![maplibre](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/mapbox-gl?logo=mapbox)](https://maplibre.org/maplibre-gl-js-docs/api/)
 [![eslint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/eslint?logo=eslint)](https://eslint.org/)
 [![prettier](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/prettier?logo=prettier)](https://prettier.io/)
 [![stylelint](https://img.shields.io/github/package-json/dependency-version/geoql/expenses/dev/stylelint?logo=stylelint)](https://stylelint.io/)
