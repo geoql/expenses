@@ -38,7 +38,7 @@
   import Clusters from '~/components/map/layers/Clusters.vue';
   import Heatmap from '~/components/map/layers/Heatmap.vue';
   import Markers from '~/components/map/layers/Markers.vue';
-  import { useMap } from '~/stores/useMap';
+  import { useMap } from '~/composables/useMap';
 
   export default defineComponent({
     name: 'Dashboard',

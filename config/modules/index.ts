@@ -1,4 +1,4 @@
-const buildModules: any[] = [
+const modules: any[] = [
   // https://pinia.esm.dev/ssr/nuxt.html#nuxt-js
   '@pinia/nuxt',
   // https://windicss.org/guide/
@@ -7,4 +7,4 @@ const buildModules: any[] = [
   '@vueuse/nuxt',
 ];
 
-export { buildModules };
+export { modules };

@@ -3,9 +3,10 @@
   "version": "1.6.0",
   "private": true,
   "scripts": {
-    "dev": "export NODE_OPTIONS=--openssl-legacy-provider; nuxi dev",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; nuxi build",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider; node .output/server/index.mjs",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider nuxt build",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider nuxt dev",
+    "generate": "NODE_OPTIONS=--openssl-legacy-provider nuxt generate",
+    "preview": "NODE_OPTIONS=--openssl-legacy-provider nuxt preview",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:css",
     "lintfix": "npm run lint:eslint:fix && npm run lint:prettier:fix && npm run lint:css:fix",
     "lint:js": "npm run lint:eslint && npm run lint:prettier",
@@ -13,8 +14,8 @@
     "lint:eslint:fix": "eslint --fix \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
     "lint:prettier": "prettier --check \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
     "lint:prettier:fix": "prettier --write \"{,!(node_modules|.nuxt|dist|static)/**/}*.{js,ts,vue}\" --ignore-path .gitignore",
-    "lint:css": "stylelint \"{,!(node_modules|.nuxt|dist|static)/**/}*.{css,scss,sass,vue}\" --ignore-path .gitignore",
-    "lint:css:fix": "stylelint --fix \"{,!(node_modules|.nuxt|dist|static)/**/}*.{css,scss,sass,vue}\" --ignore-path .gitignore",
+    "lint:css": "stylelint '**/*.{css,scss,sass,vue}' --ignore-path .gitignore",
+    "lint:css:fix": "stylelint --fix '**/*.{css,scss,sass,vue}' --ignore-path .gitignore",
     "release": "shipjs prepare",
     "release:dry": "shipjs prepare --dry-run",
     "release:auto": "shipjs prepare --yes",
@@ -23,7 +24,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.2.1",
     "mapbox-gl": "1.13.2",
-    "pinia": "^2.0.14",
+    "pinia": "^2.0.16",
     "v-mapbox": "^3.3.1"
   },
   "devDependencies": {
@@ -39,27 +40,40 @@
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@vueuse/core": "^8.9.2",
     "@vueuse/nuxt": "^8.9.2",
+    "@windicss/animations": "^1.0.8",
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-nuxt": "^3.2.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^7.0.4",
+    "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "nuxt": "3.0.0-rc.4",
     "nuxt-windicss": "^2.4.3",
-    "nuxt3": "~3.0.0-27507520.e006c56",
     "prettier": "^2.7.1",
     "sass": "^1.53.0",
-    "sass-loader": "^13.0.2",
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard": "^26.0.0",
     "typescript": "^4.7.4"
   },
+  "repository": {
+    "url": "git+https://github.com/geoql/expenses.git",
+    "type": "git"
+  },
+  "author": {
+    "name": "Vinayak Kulkarni",
+    "email": "inbox.vinayak@gmail.com",
+    "url": "https://vinayakkulkarni.dev"
+  },
   "engines": {
-    "node": ">=17.0.0",
-    "npm": ">=8.1.0"
-  }
+    "node": ">=18.5.0",
+    "npm": ">=8.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/geoql/expenses/issues"
+  },
+  "homepage": "https://github.com/geoql/expenses#readme"
 }

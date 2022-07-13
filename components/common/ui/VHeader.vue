@@ -64,7 +64,7 @@
 
 <script lang="ts">
   import { useDark, useToggle } from '@vueuse/core';
-  import { useMap } from '~/stores/useMap';
+  import { useMap } from '~/composables/useMap';
 
   export default defineComponent({
     name: 'Header',

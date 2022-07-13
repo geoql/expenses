@@ -1,15 +1,12 @@
-import { defineNuxtConfig } from 'nuxt3';
-import { css, meta, publicRuntimeConfig } from './config';
-import { buildModules } from './config/buildModules';
+import { defineNuxtConfig } from 'nuxt';
+import { css, meta, modules, publicRuntimeConfig } from './config';
 
 export default defineNuxtConfig({
   ssr: false,
-  // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#meta
+  modern: 'client',
+  target: 'static',
   meta,
-  // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#css
   css,
-  // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#publicruntimeconfig
   publicRuntimeConfig,
-  // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config#buildmodules
-  buildModules,
+  modules,
 });

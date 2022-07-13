@@ -250,7 +250,7 @@
   } from 'v-mapbox';
   import type { SetupContext } from 'vue';
   import { computed, defineComponent, readonly, ref } from 'vue';
-  import { useMap } from '~/stores/useMap';
+  import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
   export default defineComponent({

@@ -16,4 +16,5 @@ const css: string[] = [
 const plugins: NuxtOptionsPlugin[] = [];
 
 export { meta } from './meta';
+export { modules } from './modules';
 export { css, plugins, publicRuntimeConfig };
