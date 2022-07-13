@@ -1,16 +1,14 @@
-name: ci
+name: 'Continuous Integration'
 
 on:
   push:
     branches:
       - main
       - dev
-      - next
   pull_request_target:
     branches:
       - main
       - dev
-      - next
 
 permissions:
   checks: write
@@ -23,39 +21,28 @@ concurrency:
 jobs:
   ci:
     runs-on: ${{ matrix.os }}
-
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        node: [16]
-
+        node: [18]
     steps:
-      - name: Check out repository (push)
-        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request_target' || github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+      - name: Check out repository ✨
+        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' }}
         uses: actions/checkout@v3
-
-      - name: Check out repository (pull_request_target)
+      - name: Check out repository 🎉 (dependabot)
         if: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v3.4.0
+      - name: Setup node env 📦
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          registry-url: 'https://registry.npmjs.org'
           check-latest: true
           cache: 'npm'
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upgrade npm ✨
-        run: npm i -g npm@latest
-
-      - name: Install dependencies 👨🏻‍💻
+      - name: Install dependencies 🚀
         run: npm ci --prefer-offline --no-audit --unsafe-perm=true
-
       - name: Run linter(s) 👀
         uses: wearerequired/lint-action@v2
         with:
