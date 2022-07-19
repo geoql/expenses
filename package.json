@@ -36,7 +36,7 @@
     "@types/geojson": "^7946.0.9",
     "@types/mapbox-gl": "^1.13.3",
     "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.7",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@vueuse/core": "^8.9.2",
     "@vueuse/nuxt": "^8.9.2",
