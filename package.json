@@ -39,7 +39,7 @@
     "@typescript-eslint/parser": "^5.30.7",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@vueuse/core": "^8.9.4",
-    "@vueuse/nuxt": "^8.9.2",
+    "@vueuse/nuxt": "^8.9.4",
     "@windicss/animations": "^1.0.8",
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^8.20.0",
