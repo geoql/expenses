@@ -24,7 +24,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.1",
     "mapbox-gl": "1.13.2",
-    "pinia": "^2.0.18",
+    "pinia": "^2.0.20",
     "v-mapbox": "^3.3.1"
   },
   "devDependencies": {
