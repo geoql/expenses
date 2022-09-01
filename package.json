@@ -52,7 +52,7 @@
     "nuxt": "3.0.0-rc.8",
     "nuxt-windicss": "^2.5.1",
     "prettier": "^2.7.1",
-    "sass": "^1.54.5",
+    "sass": "^1.54.8",
     "stylelint": "^14.11.0",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
