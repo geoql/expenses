@@ -42,7 +42,7 @@
     "@vueuse/nuxt": "^9.6.0",
     "@windicss/animations": "^1.0.8",
     "@windicss/plugin-scrollbar": "^1.2.3",
-    "eslint": "^8.28.0",
+    "eslint": "^8.29.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsdoc": "^39.6.4",
     "eslint-plugin-nuxt": "^4.0.0",
