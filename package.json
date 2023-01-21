@@ -28,7 +28,7 @@
     "v-mapbox": "^3.3.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.0",
+    "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@deck.gl/layers": "^8.8.21",
     "@deck.gl/mapbox": "^8.8.23",
