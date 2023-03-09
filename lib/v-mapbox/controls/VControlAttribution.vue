@@ -1,12 +1,7 @@
-<template>
-  <div>
-    <slot />
-  </div>
-</template>
 <script lang="ts">
   import { AttributionControl } from 'mapbox-gl';
   import type { PropType } from 'vue';
-  import { defineComponent, onMounted } from 'vue';
+  import { defineComponent, onMounted, h } from 'vue';
   import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
@@ -22,7 +17,7 @@
           compact: false,
           customAttribution: 'Map design by me',
         }),
-        required: true,
+        required: false,
       },
       position: {
         type: String as PropType<
@@ -48,12 +43,14 @@
         const options = {
           ...props.options,
         };
-        if (slots && slots.default()) {
-          options.customAttribution = slots.default()[0].el.data;
+        if (slots && slots.default?.()) {
+          options.customAttribution = slots.default?.() as any;
         }
         const control = new AttributionControl(options);
         map.value.addControl(control, props.position);
       }
+
+      return () => [h('div', slots.default?.())];
     },
   });
 </script>
