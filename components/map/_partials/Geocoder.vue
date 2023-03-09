@@ -29,11 +29,7 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive } from 'vue';
-  import { useNuxtApp } from '#app';
-  import type { PropType } from 'vue';
-  import type { AxiosError } from 'axios';
-  import type { SearchResult, GeocodedFeature } from '@/@types/map';
+  import type { SearchResult, GeocodedFeature } from '~/@types/map';
 
   export default defineComponent({
     name: 'Geocoder',
@@ -45,7 +41,7 @@
       },
     },
     setup(props) {
-      const { $axios, $config } = useNuxtApp();
+      const runtimeConfig = useRuntimeConfig();
       const state = reactive({
         search: '',
         loading: false,
@@ -57,13 +53,13 @@
       async function geocode() {
         if (state.search && !state.loading) {
           state.loading = true;
-          const { mapToken } = $config;
+          const { mapToken } = runtimeConfig;
           const queryStr = encodeURIComponent(state.search);
           // minLon, minLat, maxLon, maxLat
           const bbox = props.bbox;
           try {
             const { data }: { data: { features: GeocodedFeature[] } } =
-              await $axios.get(
+              await useFetch(
                 `https://api.mapbox.com/geocoding/v5/mapbox.places/${queryStr}.json?access_token=${mapToken}&bbox=${bbox}`,
               );
             if (data && data.features) {
@@ -77,10 +73,10 @@
               });
             }
             state.loading = false;
-          } catch (error: unknown) {
-            const { response } = error as AxiosError;
+          } catch (error) {
+            console.log('error: ', error);
             state.loading = false;
-            alert(response!.data.message);
+            // alert(error.data.message);
           } finally {
             state.loading = false;
           }
