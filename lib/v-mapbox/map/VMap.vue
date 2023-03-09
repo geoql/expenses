@@ -4,8 +4,8 @@
   </div>
 </template>
 <script lang="ts">
-  import type { MapboxOptions, MapEventType } from 'mapbox-gl';
-  import { Map } from 'mapbox-gl';
+  import type { MapboxOptions, MapEventType } from 'maplibre-gl';
+  import { Map } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
   import { defineComponent, onMounted, provide, ref } from 'vue';
   import { mapEvents } from '../constants/events';

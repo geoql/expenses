@@ -10,13 +10,8 @@
   </section>
 </template>
 <script lang="ts">
-  import type {
-    EventData,
-    LngLatLike,
-    MarkerOptions,
-    PopupOptions,
-  } from 'mapbox-gl';
-  import { Marker } from 'mapbox-gl';
+  import type { LngLatLike, MarkerOptions, PopupOptions } from 'maplibre-gl';
+  import { Marker } from 'maplibre-gl';
   import type { PropType, Ref, SetupContext } from 'vue';
   import { defineComponent, onMounted, ref } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';
@@ -125,7 +120,7 @@
         let coordinates: LngLatLike;
         // Listen to Marker Mapbox events
         markerMapEvents.forEach((event: string) => {
-          marker.on(event, (e: EventData) => {
+          marker.on(event, (e: { target: Marker }) => {
             if (event === 'dragend') {
               if (props.coordinates instanceof Array) {
                 coordinates = [e.target._lngLat.lng, e.target._lngLat.lat];

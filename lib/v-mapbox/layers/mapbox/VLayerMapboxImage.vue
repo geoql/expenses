@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts">
-  import type { AnyLayer, ImageSourceRaw } from 'mapbox-gl';
+  import type { AnyLayer, ImageSourceRaw } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
   import { defineComponent, onMounted, ref, watch } from 'vue';
   import { MapKey } from '../../types/symbols';

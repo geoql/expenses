@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AttributionControl } from 'mapbox-gl';
+  import { AttributionControl } from 'maplibre-gl';
   import type { PropType } from 'vue';
   import { defineComponent, onMounted, h } from 'vue';
   import { MapKey } from '../types/symbols';
