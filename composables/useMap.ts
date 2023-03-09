@@ -1,4 +1,4 @@
-import { MapboxOptions } from 'mapbox-gl';
+import { MapOptions } from 'maplibre-gl';
 import { defineStore } from 'pinia';
 
 /**
@@ -32,14 +32,15 @@ export const useMap = defineStore({
         center: [73.8567, 18.5204] as number[],
         zoom: 11,
         maxZoom: 22,
+        hash: false,
         crossSourceCollisions: false,
         failIfMajorPerformanceCaveat: false,
         preserveDrawingBuffer: true,
-        hash: false,
-        minPitch: 0,
         attributionControl: false,
+        trackResize: true,
+        minPitch: 0,
         maxPitch: 60,
-      } as MapboxOptions,
+      } as MapOptions,
       controls: {
         attribution: {
           shown: true as boolean,
