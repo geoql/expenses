@@ -28,14 +28,14 @@
     </div>
     <common-map
       :class="{ 'opacity-50': !mapStore.loaded }"
-      @click="onMapClicked"
+      @on-clicked="onMapClicked"
     />
   </div>
 </template>
 
 <script lang="ts">
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import type { EventData } from 'mapbox-gl';
+  import type { MapMouseEvent, Marker } from 'maplibre-gl';
   import { computed, defineComponent, onMounted, reactive } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
   // import Clusters from '~/components/map/layers/Clusters.vue';
@@ -82,6 +82,7 @@
         },
       });
       const isDark = useDark();
+      const runtimeConfig = useRuntimeConfig();
 
       const getMarkerColor = computed(() => {
         return [isDark ? 'text-indigo-600' : 'text-indigo-500'];
@@ -104,33 +105,49 @@
           !state.map.ui.isMarker &&
           !state.map.ui.isHeatmap,
       );
+
       onMounted(() => {
+        mapStore.$patch((state) => {
+          state.utils.basemaps.data.basemaps.push(
+            {
+              type: 'Dark Std (AWS)',
+              enabled: false,
+              image: 'dark',
+              source: 'aws',
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-standard-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+            },
+            {
+              type: 'Light Std (AWS)',
+              enabled: false,
+              image: 'streets',
+              source: 'aws',
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-standard-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+            },
+            {
+              type: 'Dark Viz (AWS)',
+              enabled: false,
+              image: 'dark',
+              source: 'aws',
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-viz-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+            },
+            {
+              type: 'Light Viz (AWS)',
+              enabled: false,
+              image: 'streets',
+              source: 'aws',
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-viz-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+            },
+          );
+        });
         state.expense.geojson = JSON.parse(
           localStorage.getItem('expenses') as any,
         ) as FeatureCollection<Point>;
       });
 
-      /**
-       * Adds a temp marker to store
-       *
-       * @param {EventData} e - Mapbox Event
-       */
-      function onMapClicked(e: EventData): void {
+      function onMapClicked(e: MapMouseEvent): void {
         if (!state.expense.popup.shown) {
-          // state.map.marker.center = [e.lngLat.lng, e.lngLat.lat];
+          state.map.marker.center = [e.lngLat.lng, e.lngLat.lat];
         }
-      }
-      /**
-       * Update the marker center
-       *
-       * @param {Record<string,EventData>} e - Event data
-       * @param {EventData} e.mapboxEvent - Mapbox Event
-       */
-      function markerDragged(e: { mapboxEvent: EventData }): void {
-        state.map.marker.center = [
-          e.mapboxEvent.target._lngLat.lng,
-          e.mapboxEvent.target._lngLat.lat,
-        ];
       }
       /**
        * Adds the expense to map
@@ -186,7 +203,6 @@
         cluster,
         // methods:
         onMapClicked,
-        markerDragged,
         add,
       };
     },
