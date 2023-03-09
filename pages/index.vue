@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center w-full h-full select-none">
     <!-- Loading indicator -->
     <div
-      v-if="loading"
+      v-if="!mapStore.loaded"
       class="fixed z-10 flex items-center justify-center w-full h-full opacity-75"
     >
       <svg
@@ -26,7 +26,10 @@
         />
       </svg>
     </div>
-    <common-map :class="{ 'opacity-50': loading }" @click="onMapClicked" />
+    <common-map
+      :class="{ 'opacity-50': !mapStore.loaded }"
+      @click="onMapClicked"
+    />
   </div>
 </template>
 
@@ -78,9 +81,6 @@
           } as FeatureCollection<Point>,
         },
       });
-      const loading = computed(
-        () => !mapStore.$state.ui.loaded || !mapStore.$state.ui.styleChanged,
-      );
       const isDark = useDark();
 
       const getMarkerColor = computed(() => {
@@ -178,7 +178,7 @@
 
       return {
         state,
-        loading,
+        mapStore,
         // computed:
         getMarkerColor,
         marker,
