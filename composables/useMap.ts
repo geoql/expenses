@@ -6,78 +6,104 @@ import { defineStore } from 'pinia';
  */
 export const useMap = defineStore({
   id: 'map',
-  state: () => {
-    return {
-      ui: {
-        loaded: false as boolean,
-        styleChanged: false as boolean,
-        tilesLoaded: false as boolean,
-        errors: {
-          shown: false as boolean,
-          data: [] as string[],
-        },
+  state: () => ({
+    ui: {
+      loaded: false as boolean,
+      styleChanged: false as boolean,
+      tilesLoaded: false as boolean,
+      errors: {
+        shown: false as boolean,
+        data: [] as string[],
       },
-      map: {
-        state: {
-          latitude: 0 as number,
-          longitude: 0 as number,
-          bbox: [] as number[][],
-          center: [] as number[],
-          zoom: 0 as number,
-        },
-        options: {
-          // style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-          container: 'map',
-          style:
-            'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-          center: [73.8567, 18.5204] as number[],
-          zoom: 11,
-          maxZoom: 22,
-          crossSourceCollisions: false,
-          failIfMajorPerformanceCaveat: false,
-          preserveDrawingBuffer: true,
-          hash: false,
-          minPitch: 0,
-          attributionControl: false,
-          maxPitch: 60,
-        } as MapboxOptions,
+    },
+    map: {
+      state: {
+        latitude: 0 as number,
+        longitude: 0 as number,
+        bbox: [] as number[][],
+        center: [] as number[],
+        zoom: 0 as number,
       },
-      utils: {
-        basemaps: {
-          shown: false as boolean,
-          data: {
-            title: 'Basemaps',
-            basemaps: [
-              {
-                type: 'Dark',
-                enabled: true,
-                image: 'dark',
-                source: 'mapbox',
-                style:
-                  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-              },
-              {
-                type: 'Light',
-                enabled: false,
-                image: 'streets',
-                source: 'carto',
-                style:
-                  'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-              },
-            ],
+      options: {
+        // style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+        container: 'map',
+        style:
+          'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+        center: [73.8567, 18.5204] as number[],
+        zoom: 11,
+        maxZoom: 22,
+        crossSourceCollisions: false,
+        failIfMajorPerformanceCaveat: false,
+        preserveDrawingBuffer: true,
+        hash: false,
+        minPitch: 0,
+        attributionControl: false,
+        maxPitch: 60,
+      } as MapboxOptions,
+      controls: {
+        attribution: {
+          shown: true as boolean,
+        },
+        geolocate: {
+          shown: true as boolean,
+          options: {
+            positionOptions: {
+              enableHighAccuracy: true,
+            },
+            trackUserLocation: true,
           },
         },
-        upload: {
-          shown: false as boolean,
+        fullscreen: {
+          shown: true as boolean,
         },
-        compass: {
-          shown: false as boolean,
-          data: {
-            bearing: 0,
-          },
+        navigation: {
+          shown: true as boolean,
+        },
+        scale: {
+          shown: true as boolean,
         },
       },
-    };
+    },
+    utils: {
+      basemaps: {
+        shown: false as boolean,
+        data: {
+          title: 'Basemaps',
+          basemaps: [
+            {
+              type: 'Dark (Carto)',
+              enabled: true,
+              image: 'dark',
+              source: 'carto',
+              style:
+                'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+            },
+            {
+              type: 'Light (Carto)',
+              enabled: false,
+              image: 'streets',
+              source: 'carto',
+              style:
+                'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+            },
+          ],
+        },
+      },
+      upload: {
+        shown: false as boolean,
+      },
+      compass: {
+        shown: false as boolean,
+        data: {
+          bearing: 0,
+        },
+      },
+    },
+  }),
+  getters: {
+    loaded: (state): boolean => {
+      return state.ui.loaded || state.ui.styleChanged || state.ui.tilesLoaded;
+    },
   },
   actions: {
     setLoaded(loaded: boolean) {
