@@ -229,6 +229,7 @@
     VectorSourceSpecification as VectorSource,
   } from 'maplibre-gl';
   import { VMarker } from '~/lib/v-mapbox';
+  // import { VMarker } from 'v-mapbox';
   import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 

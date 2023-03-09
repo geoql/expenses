@@ -35,7 +35,7 @@
 
 <script lang="ts">
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import type { MapMouseEvent, Marker } from 'maplibre-gl';
+  import type { MapMouseEvent } from 'maplibre-gl';
   import { computed, defineComponent, onMounted, reactive } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
   // import Clusters from '~/components/map/layers/Clusters.vue';
