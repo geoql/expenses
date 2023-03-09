@@ -98,21 +98,6 @@
             maxzoom: 22,
           };
         }),
-        markers: computed(() => {
-          return {
-            id: 'alpr-reads-cluster-marker-layer',
-            type: 'symbol',
-            source: 'alpr-reads-cluster-source',
-            filter: ['!has', 'point_count'],
-            layout: {
-              'icon-image': 'current-icon',
-              'icon-size': 0.27,
-              'icon-allow-overlap': true,
-              visibility: props.visibility ? 'visible' : 'none',
-            },
-            maxzoom: 22,
-          };
-        }),
       });
 
       return {
