@@ -1,20 +1,29 @@
-import { NuxtOptionsPlugin } from '@nuxt/types/config/plugin';
-import { NuxtOptionsRuntimeConfig } from '@nuxt/types/config/runtime';
+import type { NuxtConfig } from 'nuxt/schema';
+import { head } from './head';
 
-const publicRuntimeConfig: NuxtOptionsRuntimeConfig = {
-  mapToken: process.env.MAP_ACCESS_TOKEN,
-  appVersion: process.env.npm_package_version,
-};
-
-const css: string[] = [
+const css: NuxtConfig['css'] = [
   'mapbox-gl/dist/mapbox-gl.css',
   'v-mapbox/dist/v-mapbox.css',
   '~/assets/css/global.css',
   '~/assets/css/fonts.css',
 ];
 
-const plugins: NuxtOptionsPlugin[] = [];
+const plugins: NuxtConfig['plugins'] = [
+  '~/plugins/v-mapbox.ts',
+  '~/plugins/v-click-outside.ts',
+];
 
-export { meta } from './meta';
+const runtimeConfig: NuxtConfig['runtimeConfig'] = {
+  public: {
+    appVersion: process.env.npm_package_version,
+  },
+};
+const app: NuxtConfig['app'] = {
+  baseURL: '/',
+  head,
+};
+
+const ssr: NuxtConfig['ssr'] = false;
+
 export { modules } from './modules';
-export { css, plugins, publicRuntimeConfig };
+export { app, css, plugins, runtimeConfig, ssr };
