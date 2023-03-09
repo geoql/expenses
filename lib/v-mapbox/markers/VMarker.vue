@@ -35,15 +35,15 @@
         default: () => ({} as MarkerOptions),
         required: true,
       },
-      popupOptions: {
-        type: Object as PropType<PopupOptions>,
-        default: () => ({} as PopupOptions),
-        required: true,
-      },
       coordinates: {
         type: [Object, Array] as PropType<LngLatLike>,
         default: () => ({}),
         required: true,
+      },
+      popupOptions: {
+        type: Object as PropType<PopupOptions>,
+        default: () => ({} as PopupOptions),
+        required: false,
       },
       cursor: {
         type: String as PropType<string>,
