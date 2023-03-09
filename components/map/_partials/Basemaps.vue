@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-2 space-y-2"
+    class="p-2 space-y-2 h-60 overflow-y-auto scrollbar-thin scroll-smooth dark:scrollbar-track-gray-800 dark:scrollbar-thumb-gray-300"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="options-menu"
@@ -11,16 +11,19 @@
       class="select-none"
     >
       <div
-        class="flex items-center justify-between p-2 rounded shadow cursor-pointer hover:shadow-md"
+        class="flex items-center border-l border-l-2 justify-between p-2 rounded shadow cursor-pointer hover:shadow-md"
         :class="{
           'text-white bg-gradient-to-l from-purple-600 to-purple-800':
             basemap.enabled,
           'text-gray-800 bg-gray-400 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-500 hover:bg-gray-100':
             !basemap.enabled,
+          'border-black': basemap.source === 'carto',
+          'border-blue-500': basemap.source === 'mapbox',
+          'border-yellow-500': basemap.source === 'aws',
         }"
         @click="updateBasemap(basemap)"
       >
-        <div class="w-1/2">
+        <div class="w-1/4">
           <img
             class="object-cover h-12 rounded-lg"
             :src="`/images/basemaps/${basemap.image}.webp`"
