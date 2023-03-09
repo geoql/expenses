@@ -241,7 +241,7 @@
     },
     setup(_, { emit }) {
       const store = useMap();
-      let map = toRaw({} as Map);
+      let map = markRaw({} as Map);
       const mapbox = ref({
         markers: {
           data: [
