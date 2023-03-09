@@ -38,18 +38,18 @@
   import type { EventData } from 'mapbox-gl';
   import { computed, defineComponent, onMounted, reactive } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
-  import Clusters from '~/components/map/layers/Clusters.vue';
-  import Heatmap from '~/components/map/layers/Heatmap.vue';
-  import Markers from '~/components/map/layers/Markers.vue';
+  // import Clusters from '~/components/map/layers/Clusters.vue';
+  // import Heatmap from '~/components/map/layers/Heatmap.vue';
+  // import Markers from '~/components/map/layers/Markers.vue';
   import { useMap } from '~/composables/useMap';
 
   export default defineComponent({
     name: 'Dashboard',
     components: {
       CommonMap,
-      Markers,
-      Clusters,
-      Heatmap,
+      // Markers,
+      // Clusters,
+      // Heatmap,
     },
     setup() {
       const mapStore = useMap();

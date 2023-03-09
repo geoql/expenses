@@ -229,7 +229,7 @@
     VectorSource,
   } from 'mapbox-gl';
   import type { SetupContext } from 'vue';
-  import { VMarker, VPopup } from '~/lib/v-mapbox';
+  import { VMarker } from '~/lib/v-mapbox';
   import { defineComponent, readonly, ref } from 'vue';
   import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
@@ -239,7 +239,6 @@
     components: {
       Basemaps,
       VMarker,
-      VPopup,
     },
     setup(_, { emit }: SetupContext) {
       const store = useMap();
