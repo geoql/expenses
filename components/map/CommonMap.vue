@@ -10,7 +10,7 @@
     >
       <template v-if="store.loaded">
         <!-- Controls -->
-        <v-control-attribution
+        <!-- <v-control-attribution
           v-if="store.$state.map.controls.attribution.shown"
         >
           <span>Map Designed By © CARTO | © OpenStreetMap contributors</span>
@@ -24,7 +24,7 @@
         />
         <v-control-navigation
           v-if="store.$state.map.controls.navigation.shown"
-        />
+        /> -->
         <v-control-scale v-if="store.$state.map.controls.scale.shown" />
         <!-- Mapbox Layers -->
         <template v-if="store.loaded">
@@ -219,18 +219,16 @@
 <script lang="ts">
   import type { FeatureCollection } from 'geojson';
   import type {
-    EventData,
-    FillLayer,
-    ImageSourceRaw,
-    LineLayer,
+    FillLayerSpecification as FillLayer,
+    ImageSourceSpecification as ImageSourceRaw,
+    LineLayerSpecification as LineLayer,
     LngLatLike,
     Map,
-    RasterLayer,
-    VectorSource,
-  } from 'mapbox-gl';
-  import type { SetupContext } from 'vue';
+    MapMouseEvent,
+    RasterLayerSpecification as RasterLayer,
+    VectorSourceSpecification as VectorSource,
+  } from 'maplibre-gl';
   import { VMarker } from '~/lib/v-mapbox';
-  import { defineComponent, readonly, ref } from 'vue';
   import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
@@ -240,9 +238,9 @@
       Basemaps,
       VMarker,
     },
-    setup(_, { emit }: SetupContext) {
+    setup(_, { emit }) {
       const store = useMap();
-      let map = readonly({} as Map);
+      let map = toRaw({} as Map);
       const mapbox = ref({
         markers: {
           data: [
@@ -404,10 +402,10 @@
        * When user is entered the map
        * canvas
        *
-       * @param {EventData | MouseEvent } e - Mapbox Event data
+       * @param {MapMouseEvent | MouseEvent } e - Mapbox Event data
        * @returns {void} void
        */
-      function onMapMouseMove(e: EventData | MouseEvent): void {
+      function onMapMouseMove(e: MapMouseEvent | MouseEvent): void {
         if (e instanceof MouseEvent) {
           return;
         } else {
@@ -419,11 +417,15 @@
        * This function emits a click event to the
        * parent component
        *
-       * @param {EventData} e - Mapbox Event
+       * @param {MapMouseEvent} e - Mapbox Event
        * @returns {void}
        */
-      function onMapClicked(e: EventData): void {
-        emit('click', e);
+      function onMapClicked(e: MapMouseEvent | PointerEvent): void {
+        if (e instanceof PointerEvent) {
+          return;
+        } else {
+          emit('on-clicked', e);
+        }
       }
       /**
        * When user changes the North direction
