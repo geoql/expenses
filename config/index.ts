@@ -15,6 +15,15 @@ const plugins: NuxtConfig['plugins'] = [
 
 const runtimeConfig: NuxtConfig['runtimeConfig'] = {
   public: {
+    map: {
+      aws: {
+        region: 'ap-south-1',
+        key: process.env.AWS_MAP_TOKEN,
+      },
+      mapbox: {
+        key: process.env.MAPBOX_MAP_TOKEN,
+      },
+    },
     appVersion: process.env.npm_package_version,
   },
 };
