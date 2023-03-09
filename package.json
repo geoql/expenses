@@ -27,7 +27,7 @@
     "click-outside-vue3": "^4.0.1",
     "maplibre-gl": "^2.4.0",
     "pinia": "^2.0.33",
-    "v-mapbox": "^3.3.1"
+    "v-mapbox": "^4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",

@@ -2,7 +2,7 @@ import type { NuxtConfig } from 'nuxt/schema';
 import { head } from './head';
 
 const css: NuxtConfig['css'] = [
-  'mapbox-gl/dist/mapbox-gl.css',
+  'maplibre-gl/dist/maplibre-gl.css',
   'v-mapbox/dist/v-mapbox.css',
   '~/assets/css/global.css',
   '~/assets/css/fonts.css',
