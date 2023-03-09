@@ -35,9 +35,6 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
-  import type { SetupContext } from 'vue';
-
   export default defineComponent({
     name: 'Basemaps',
     props: {
@@ -46,7 +43,7 @@
         required: true,
       },
     },
-    setup(_, { emit }: SetupContext) {
+    setup(_, { emit }) {
       /**
        * Updates the basemap
        *
