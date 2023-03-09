@@ -53,7 +53,7 @@
       async function geocode() {
         if (state.search && !state.loading) {
           state.loading = true;
-          const { mapToken } = runtimeConfig;
+          const mapToken = runtimeConfig.public.map.mapbox.key;
           const queryStr = encodeURIComponent(state.search);
           // minLon, minLat, maxLon, maxLat
           const bbox = props.bbox;
