@@ -16,7 +16,7 @@
   import type { LngLatLike, MarkerOptions, PopupOptions } from 'maplibre-gl';
   import { Marker } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
-  import { defineComponent, onMounted, ref, watch } from 'vue';
+  import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';
   import VPopup from '../popups/VPopup.vue';
   import { injectStrict, MapKey } from '../utils';
@@ -27,15 +27,15 @@
       VPopup,
     },
     props: {
-      options: {
-        type: Object as PropType<MarkerOptions>,
-        default: () => ({} as MarkerOptions),
-        required: true,
-      },
       coordinates: {
         type: [Object, Array] as PropType<LngLatLike>,
         default: () => ({}),
         required: true,
+      },
+      options: {
+        type: Object as PropType<MarkerOptions>,
+        default: () => ({} as MarkerOptions),
+        required: false,
       },
       popupOptions: {
         type: Object as PropType<PopupOptions>,
@@ -96,6 +96,10 @@
         } else {
           removeFromMap(marker.value);
         }
+      });
+
+      onBeforeUnmount(() => {
+        removeFromMap(marker.value);
       });
 
       map.value.on('style.load', () => {
