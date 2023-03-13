@@ -29,15 +29,204 @@
     <common-map
       :class="{ 'opacity-50': !mapStore.loaded }"
       @on-clicked="onMapClicked"
-    />
+    >
+      <div
+        class="absolute top-0 left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+      >
+        <div class="relative flex flex-col space-y-2">
+          <!-- Basemaps -->
+          <span class="visible isolate inline-flex rounded-full shadow-sm">
+            <button
+              type="button"
+              class="relative inline-flex items-center rounded-l-full bg-gray-300 dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-50 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10"
+            >
+              Marker(s)
+            </button>
+            <button
+              type="button"
+              class="relative -ml-px inline-flex items-center bg-gray-300 dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-50 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10"
+            >
+              Cluster(s)
+            </button>
+            <button
+              type="button"
+              class="relative -ml-px inline-flex items-center rounded-r-full bg-gray-300 dark:bg-gray-700 px-3 py-2 text-sm text-gray-900 dark:text-gray-50 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 focus:z-10"
+            >
+              Heatmap
+            </button>
+          </span>
+        </div>
+      </div>
+      <template v-if="mapStore.loaded">
+        <v-marker
+          :options="state.map.marker.options"
+          :popup-options="state.map.marker.popup.options"
+          v-model:coordinates="state.map.marker.coordinates"
+        >
+          <template #markers="{ setRef }">
+            <svg
+              :ref="(el) => setRef(el)"
+              class="w-8 h-8 cursor-pointer"
+              :class="getMarkerColor"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </template>
+          <div class="expense-popup-card">
+            <div
+              class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-800"
+            >
+              <div
+                class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-50 text-gray-800"
+              >
+                <div class="capitalize">
+                  {{ state.expense.form.type }}
+                </div>
+                <button
+                  type="button"
+                  class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
+                  :class="{
+                    'bg-green-600 focus:ring-green-500':
+                      state.expense.form.type === 'credit',
+                    'bg-red-600 focus:ring-red-500':
+                      state.expense.form.type === 'debit',
+                  }"
+                  aria-pressed="false"
+                  @click="
+                    state.expense.form.type === 'credit'
+                      ? (state.expense.form.type = 'debit')
+                      : (state.expense.form.type = 'credit')
+                  "
+                >
+                  <span class="sr-only">Use setting</span>
+                  <span
+                    aria-hidden="true"
+                    :class="{
+                      'translate-x-5': state.expense.form.type === 'debit',
+                      'translate-x-0': state.expense.form.type === 'credit',
+                    }"
+                    class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
+                  />
+                </button>
+              </div>
+              <form class="grid p-4 space-y-2" @submit.prevent="add">
+                <div class="rounded-md shadow-sm">
+                  <label
+                    for="expense"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  >
+                    Amount
+                  </label>
+                  <div class="relative mt-1 rounded-md shadow-sm">
+                    <div
+                      class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                    >
+                      <svg
+                        class="w-5 h-5 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      id="expense"
+                      v-model.number="state.expense.form.amount"
+                      type="text"
+                      name="expense"
+                      required="true"
+                      class="block w-full pl-10 rounded-md sm:text-sm border-gray-300 outline-none dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white"
+                      :class="{
+                        'focus:ring-green-500 focus:border-green-500':
+                          state.expense.form.type === 'credit',
+                        'focus:ring-red-500 focus:border-red-500':
+                          state.expense.form.type === 'debit',
+                      }"
+                      :placeholder="
+                        state.expense.form.type === 'credit'
+                          ? 'eg. 100'
+                          : 'eg. 96'
+                      "
+                    />
+                  </div>
+                </div>
+                <div class="rounded-md shadow-sm">
+                  <label
+                    for="description"
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    id="description"
+                    v-model="state.expense.form.description"
+                    name="description"
+                    rows="2"
+                    class="block w-full mt-1 rounded-md outline-none border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white py-2 px-3 sm:text-sm"
+                    :class="{
+                      'focus:ring-green-500 focus:border-green-500':
+                        state.expense.form.type === 'credit',
+                      'focus:ring-red-500 focus:border-red-500':
+                        state.expense.form.type === 'debit',
+                    }"
+                    :placeholder="
+                      state.expense.form.type === 'credit'
+                        ? 'eg. refund Rs. 100'
+                        : 'eg. spent 96 on milk'
+                    "
+                  />
+                </div>
+                <div class="rounded-md shadow-sm">
+                  <button
+                    type="submit"
+                    :class="{
+                      'bg-red-600 hover:bg-red-700 focus:ring-red-500':
+                        state.expense.form.type === 'debit',
+                      'bg-green-600 hover:bg-green-700 focus:ring-green-500':
+                        state.expense.form.type === 'credit',
+                    }"
+                    class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  >
+                    Add
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </v-marker>
+      </template>
+    </common-map>
   </div>
 </template>
 
 <script lang="ts">
   import type { Feature, FeatureCollection, Point } from 'geojson';
-  import type { MapMouseEvent } from 'maplibre-gl';
+  import type { MapMouseEvent, PopupOptions } from 'maplibre-gl';
   import { computed, defineComponent, onMounted, reactive } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
+  import { VMarker } from '~/lib/v-mapbox';
   // import Clusters from '~/components/map/layers/Clusters.vue';
   // import Heatmap from '~/components/map/layers/Heatmap.vue';
   // import Markers from '~/components/map/layers/Markers.vue';
@@ -47,6 +236,7 @@
     name: 'Dashboard',
     components: {
       CommonMap,
+      VMarker,
       // Markers,
       // Clusters,
       // Heatmap,
@@ -58,7 +248,18 @@
           center: [73.8567, 18.5204],
           zoom: 11,
           marker: {
-            center: [] as number[],
+            options: { draggable: true },
+            popup: {
+              options: {
+                closeButton: false,
+                closeOnClick: false,
+                offset: {
+                  top: [0, 10],
+                  bottom: [0, -10],
+                },
+              } as PopupOptions,
+            },
+            coordinates: [73.8567, 18.5204] as [number, number],
           },
           ui: {
             isMarker: true as boolean,
@@ -85,8 +286,9 @@
       const runtimeConfig = useRuntimeConfig();
 
       const getMarkerColor = computed(() => {
-        return [isDark ? 'text-indigo-600' : 'text-indigo-500'];
+        return [isDark.value ? 'text-indigo-600' : 'text-indigo-500'];
       });
+
       const marker = computed(
         () =>
           !state.map.ui.isCluster &&
@@ -144,23 +346,19 @@
         ) as FeatureCollection<Point>;
       });
 
-      function onMapClicked(e: MapMouseEvent): void {
+      const onMapClicked = (e: MapMouseEvent): void => {
         if (!state.expense.popup.shown) {
-          state.map.marker.center = [e.lngLat.lng, e.lngLat.lat];
+          state.map.marker.coordinates = [e.lngLat.lng, e.lngLat.lat];
         }
-      }
-      /**
-       * Adds the expense to map
-       *
-       * @returns {void}
-       */
-      function add(): void {
+      };
+
+      const add = (): void => {
         // Build a Feature of Type Point
         const feature = {
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: state.map.marker.center,
+            coordinates: state.map.marker.coordinates,
           },
           properties: {
             expense: state.expense.form,
@@ -191,7 +389,7 @@
           description: '',
           type: 'debit',
         };
-      }
+      };
 
       return {
         state,
@@ -214,9 +412,16 @@
     display: none;
   }
 
-  .expense-popup-card .mapboxgl-popup-content {
+  .expense-popup-card .mapboxgl-popup-content,
+  .maplibregl-popup-content {
     @apply bg-opacity-75;
     @apply p-0;
     @apply bg-gray-800;
+    background: transparent !important;
+  }
+
+  .maplibregl-popup-tip,
+  .mapboxgl-popup-tip {
+    @apply hidden;
   }
 </style>
