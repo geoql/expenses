@@ -1,12 +1,9 @@
-import { defineNuxtConfig } from 'nuxt';
-import { css, meta, modules, publicRuntimeConfig } from './config';
+import { app, css, modules, ssr, runtimeConfig } from './config';
 
 export default defineNuxtConfig({
-  ssr: false,
-  modern: 'client',
-  target: 'static',
-  meta,
+  app,
   css,
-  publicRuntimeConfig,
+  ssr,
   modules,
+  runtimeConfig,
 });

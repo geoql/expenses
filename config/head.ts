@@ -1,6 +1,6 @@
-import type { NuxtOptionsHead } from '@nuxt/types/config/head';
+import type { NuxtAppConfig } from 'nuxt/schema';
 
-const meta: NuxtOptionsHead = {
+const head: NuxtAppConfig['head'] = {
   title: 'Map My Expenses :: Dashboard',
   meta: [
     {
@@ -34,4 +34,4 @@ const meta: NuxtOptionsHead = {
   ],
 };
 
-export { meta };
+export { head };

@@ -1,32 +1,16 @@
 module.exports = {
-  customSyntax: 'postcss-html',
+  plugins: ['stylelint-prettier'],
   extends: [
-    'stylelint-config-prettier',
+    'stylelint-prettier/recommended',
     'stylelint-config-recommended-vue',
-    'stylelint-config-standard',
   ],
-  // add your custom config here
-  // https://stylelint.io/user-guide/configuration
+  ignoreFiles: ['node_modules/*', 'src/assets/**'],
   rules: {
-    'at-rule-no-unknown': [
+    'prettier/prettier': [
       true,
       {
-        ignoreAtRules: [
-          'tailwind',
-          'apply',
-          'variants',
-          'responsive',
-          'screen',
-        ],
-      },
-    ],
-    'declaration-block-trailing-semicolon': null,
-    'no-descending-specificity': null,
-    'color-no-invalid-hex': true,
-    'property-no-unknown': [
-      true,
-      {
-        ignoreProperties: ['font-named-instance'],
+        singleQuote: true,
+        tabWidth: 2,
       },
     ],
   },

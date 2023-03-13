@@ -1,42 +1,37 @@
 <template>
-  <section v-if="features.length">
-    <mgl-marker
-      v-for="(marker, idx) in features"
-      :key="idx"
-      :coordinates="marker.geometry.coordinates"
-      @click="$emit('update:visibility', true)"
-    >
-      <svg
-        slot="marker"
-        class="w-6 h-6 cursor-pointer"
-        :class="getExpenseMarkerColor(marker)"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
+  <section v-if="data.features.length">
+    <template v-for="(marker, idx) in data.features">
+      <v-marker
+        v-if="visibility"
+        :key="idx"
+        :coordinates="getExpenseMarkerCoordinates(marker)"
+        @click="$emit('update:popup-visibility', true)"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-        />
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-        />
-      </svg>
-      <!-- Form -->
-      <mgl-popup
-        :showed="false"
-        :close-button="false"
-        :close-on-click="true"
-        :close-on-move="true"
-        class-name="expense-popup-card"
-        @close="$emit('update:visibility', false)"
-      >
+        <template #markers="{ setRef }">
+          <svg
+            :ref="(el) => setRef(el)"
+            class="w-6 h-6 cursor-pointer"
+            :class="getExpenseMarkerColor(marker)"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </template>
+        <!-- Form -->
         <div
           class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-700 to-gray-800"
         >
@@ -110,53 +105,77 @@
             </div>
           </div>
         </div>
-      </mgl-popup>
-    </mgl-marker>
+      </v-marker>
+    </template>
   </section>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue';
   import type { PropType } from 'vue';
-  import type { Feature, Point } from 'geojson';
+  import type {
+    Feature,
+    FeatureCollection,
+    GeoJsonProperties,
+    Point,
+  } from 'geojson';
+  import { VMarker } from '~/lib/v-mapbox';
 
   export default defineComponent({
-    name: 'ExpenseMarkers',
+    name: 'ExpenseMarker',
+    components: {
+      VMarker,
+    },
     props: {
-      features: {
-        type: Array as PropType<Feature<Point>[]>,
+      data: {
+        type: Object as PropType<FeatureCollection<Point>>,
         required: true,
-        default: () => [],
         description: 'Point type features within the FeatureCollection',
       },
       visibility: {
         type: Boolean as PropType<boolean>,
         required: true,
-        default: false,
+        description: 'Whether to show the marker or not',
+      },
+      popupVisibility: {
+        type: Boolean as PropType<boolean>,
+        required: true,
         description: 'Whether to show the popup or not',
       },
     },
     setup() {
       /**
+       * Gets the coordinates for the marker
+       *
+       * @param {Feature<Point, GeoJsonProperties>} m - Marker
+       * @returns {number[]} - Coordinates
+       */
+      function getExpenseMarkerCoordinates(
+        m: Feature<Point, GeoJsonProperties>,
+      ): [number, number] {
+        return [m.geometry.coordinates[0], m.geometry.coordinates[1]];
+      }
+
+      /**
        * Gets the color for the svg
        * marker based on the expense type
        *
-       * @param {Feature<Point>} marker - Expense type
+       * @param {Feature<Point>} m - Expense type
        * @returns {Record<string, boolean> | string} - Color object
        */
       function getExpenseMarkerColor(
-        marker: Feature<Point>,
+        m: Feature<Point, GeoJsonProperties>,
       ): Record<string, boolean> | string {
-        if (marker.properties) {
+        if (m.properties) {
           return {
-            'text-green-600': marker.properties.expense.type === 'credit',
-            'text-red-600': marker.properties.expense.type === 'debit',
+            'text-green-600': m.properties.expense.type === 'credit',
+            'text-red-600': m.properties.expense.type === 'debit',
           };
         }
         return 'text-blue-600';
       }
 
       return {
+        getExpenseMarkerCoordinates,
         getExpenseMarkerColor,
       };
     },

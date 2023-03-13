@@ -1,28 +1,25 @@
 <template>
-  <section :id="`marker-${Date.now()}`">
-    <v-popup
-      :marker="marker"
-      :options="popupOptions"
-      :coordinates="coordinates"
-    >
-      <slot />
-    </v-popup>
+  <section :id="`marker-${Date.now()}`" class="absolute">
+    <slot :set-ref="setSlotRef" name="markers" />
+    <template v-if="isMarkerAvailable">
+      <v-popup
+        :marker="marker"
+        :options="popupOptions"
+        :coordinates="coordinates"
+      >
+        <slot />
+      </v-popup>
+    </template>
   </section>
 </template>
 <script lang="ts">
-  import type {
-    EventData,
-    LngLatLike,
-    MarkerOptions,
-    PopupOptions,
-  } from 'mapbox-gl';
-  import { Marker } from 'mapbox-gl';
-  import type { PropType, Ref, SetupContext } from 'vue';
-  import { defineComponent, onMounted, ref } from 'vue';
+  import type { LngLatLike, MarkerOptions, PopupOptions } from 'maplibre-gl';
+  import { Marker } from 'maplibre-gl';
+  import type { PropType, Ref } from 'vue';
+  import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';
   import VPopup from '../popups/VPopup.vue';
-  import { MapKey } from '../types/symbols';
-  import { injectStrict } from '../utils';
+  import { injectStrict, MapKey } from '../utils';
 
   export default defineComponent({
     name: 'VMarker',
@@ -30,20 +27,20 @@
       VPopup,
     },
     props: {
-      options: {
-        type: Object as PropType<MarkerOptions>,
-        default: () => ({} as MarkerOptions),
-        required: true,
-      },
-      popupOptions: {
-        type: Object as PropType<PopupOptions>,
-        default: () => ({} as PopupOptions),
-        required: true,
-      },
       coordinates: {
         type: [Object, Array] as PropType<LngLatLike>,
         default: () => ({}),
         required: true,
+      },
+      options: {
+        type: Object as PropType<MarkerOptions>,
+        default: () => ({} as MarkerOptions),
+        required: false,
+      },
+      popupOptions: {
+        type: Object as PropType<PopupOptions>,
+        default: () => ({} as PopupOptions),
+        required: false,
       },
       cursor: {
         type: String as PropType<string>,
@@ -51,10 +48,59 @@
         required: false,
       },
     },
-    setup(props, { emit }: SetupContext) {
+    emits: [
+      'added',
+      'update:coordinates',
+      'removed',
+      ...markerMapEvents,
+      ...markerDOMEvents,
+    ],
+    setup(props, { emit }) {
       let map = injectStrict(MapKey);
-      let marker: Marker = new Marker(props.options);
+      let marker: Ref<Marker> = ref({}) as Ref<Marker>;
       let loaded: Ref<boolean> = ref(true);
+      let isMarkerAvailable = ref(false);
+      let slotRef: Ref<HTMLElement | null> = ref(null);
+
+      const setSlotRef = (el: HTMLElement) => {
+        slotRef.value = el;
+      };
+
+      watch(marker, (marker) => {
+        if ('_map' in marker) {
+          isMarkerAvailable.value = true;
+        } else {
+          isMarkerAvailable.value = false;
+        }
+      });
+
+      onMounted(() => {
+        if (loaded.value) {
+          if (slotRef.value !== null) {
+            // add marker to map
+            marker.value = new Marker({
+              element: slotRef.value!,
+              ...props.options,
+            });
+            setMarkerCoordinates(marker.value);
+            addToMap(marker.value);
+            setCursorPointer(marker.value);
+            listenMarkerEvents(marker.value);
+          } else {
+            marker.value = new Marker(props.options);
+            setMarkerCoordinates(marker.value);
+            addToMap(marker.value);
+            setCursorPointer(marker.value);
+            listenMarkerEvents(marker.value);
+          }
+        } else {
+          removeFromMap(marker.value);
+        }
+      });
+
+      onBeforeUnmount(() => {
+        removeFromMap(marker.value);
+      });
 
       map.value.on('style.load', () => {
         // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
@@ -69,23 +115,12 @@
         styleTimeout();
       });
 
-      onMounted(() => {
-        if (loaded.value) {
-          setMarkerCoordinates();
-          addToMap();
-          setCursorPointer();
-        } else {
-          removeFromMap();
-        }
-        listenMarkerEvents();
-      });
-
       /**
        * Set marker coordinates
        *
        * @returns {void}
        */
-      function setMarkerCoordinates(): void {
+      function setMarkerCoordinates(marker: Marker): void {
         marker.setLngLat(props.coordinates);
       }
       /**
@@ -93,7 +128,7 @@
        *
        * @returns {void}
        */
-      function setCursorPointer(): void {
+      function setCursorPointer(marker: Marker): void {
         marker.getElement().style.cursor = props.cursor || 'default';
       }
 
@@ -102,7 +137,7 @@
        *
        * @returns {void}
        */
-      function addToMap(): void {
+      function addToMap(marker: Marker): void {
         marker.addTo(map.value);
         emit('added', { marker });
       }
@@ -111,9 +146,11 @@
        *
        * @returns {void}
        */
-      function removeFromMap(): void {
-        marker.remove();
-        emit('removed');
+      function removeFromMap(marker: Marker): void {
+        if (isMarkerAvailable.value) {
+          marker.remove();
+          emit('removed');
+        }
       }
 
       /**
@@ -121,11 +158,11 @@
        *
        * @returns {void}
        */
-      function listenMarkerEvents(): void {
+      function listenMarkerEvents(marker: Marker): void {
         let coordinates: LngLatLike;
         // Listen to Marker Mapbox events
         markerMapEvents.forEach((event: string) => {
-          marker.on(event, (e: EventData) => {
+          marker.on(event, (e: { target: Marker }) => {
             if (event === 'dragend') {
               if (props.coordinates instanceof Array) {
                 coordinates = [e.target._lngLat.lng, e.target._lngLat.lat];
@@ -146,8 +183,15 @@
       }
 
       return {
+        isMarkerAvailable,
         marker,
+        setSlotRef,
       };
     },
   });
 </script>
+<style>
+  .absolute {
+    position: absolute !important;
+  }
+</style>

@@ -1,29 +1,35 @@
 <template>
   <section v-if="data.features.length">
-    <!-- Cluster Circle Layer -->
-    <mgl-geojson-layer
-      :source-id="clusters.sourceId"
-      :source="clusters.source"
-      :layer-id="clusters.circleLayer.id"
-      :layer="clusters.circleLayer"
+    <v-layer-mapbox-geojson
+      :source="cluster.source"
+      :source-id="'expenses-cluster-source-0'"
+      v-model:layer="cluster.circleLayer"
+      :layer-id="cluster.circleLayer.id"
     />
-    <!-- Cluster Count Layer -->
-    <mgl-geojson-layer
-      :source-id="clusters.sourceId"
-      :source="clusters.source"
-      :layer-id="clusters.countLayer.id"
-      :layer="clusters.countLayer"
+    <v-layer-mapbox-geojson
+      :source="cluster.source"
+      :source-id="'expenses-cluster-source-1'"
+      v-model:layer="cluster.countLayer"
+      :layer-id="cluster.countLayer.id"
     />
   </section>
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, computed } from 'vue';
+  import type {
+    GeoJSONSourceSpecification,
+    CircleLayerSpecification,
+    SymbolLayerSpecification,
+  } from 'maplibre-gl';
   import type { PropType } from 'vue';
   import type { FeatureCollection, Point } from 'geojson';
+  import { VLayerMapboxGeojson } from '~/lib/v-mapbox';
 
   export default defineComponent({
-    name: 'Clusters',
+    name: 'ExpenseCluster',
+    components: {
+      VLayerMapboxGeojson,
+    },
     props: {
       data: {
         type: Object as PropType<FeatureCollection<Point>>,
@@ -36,8 +42,7 @@
       },
     },
     setup(props) {
-      const clusters = reactive({
-        sourceId: 'expenses-cluster-source',
+      const cluster = ref({
         source: computed(() => {
           return {
             type: 'geojson',
@@ -45,7 +50,7 @@
             cluster: true,
             clusterMaxZoom: 20,
             clusterRadius: 40,
-          };
+          } as GeoJSONSourceSpecification;
         }),
         circleLayer: computed(() => {
           return {
@@ -58,9 +63,9 @@
                 'step',
                 ['get', 'point_count'],
                 '#4000ff',
-                5,
+                4,
                 '#f22001',
-                15,
+                8,
                 '#00f2cc',
               ],
               'circle-radius': [
@@ -78,7 +83,7 @@
             },
             minzoom: 5,
             maxzoom: 22,
-          };
+          } as CircleLayerSpecification;
         }),
         countLayer: computed(() => {
           return {
@@ -96,27 +101,12 @@
             },
             minzoom: 5,
             maxzoom: 22,
-          };
-        }),
-        markers: computed(() => {
-          return {
-            id: 'alpr-reads-cluster-marker-layer',
-            type: 'symbol',
-            source: 'alpr-reads-cluster-source',
-            filter: ['!has', 'point_count'],
-            layout: {
-              'icon-image': 'current-icon',
-              'icon-size': 0.27,
-              'icon-allow-overlap': true,
-              visibility: props.visibility ? 'visible' : 'none',
-            },
-            maxzoom: 22,
-          };
+          } as SymbolLayerSpecification;
         }),
       });
 
       return {
-        clusters,
+        cluster,
       };
     },
   });

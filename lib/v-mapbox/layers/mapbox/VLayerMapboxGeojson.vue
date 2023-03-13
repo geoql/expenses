@@ -4,12 +4,13 @@
   </div>
 </template>
 <script lang="ts">
-  import type { FeatureCollection } from 'geojson';
-  import type { AnyLayer, GeoJSONSourceRaw } from 'mapbox-gl';
+  import type {
+    LayerSpecification as AnyLayer,
+    SourceSpecification as AnySource,
+  } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
-  import { defineComponent, onMounted, ref, watch } from 'vue';
-  import { MapKey } from '../../types/symbols';
-  import { injectStrict } from '../../utils';
+  import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from 'vue';
+  import { injectStrict, MapKey } from '../../utils';
 
   export default defineComponent({
     name: 'VLayerMapboxGeojson',
@@ -25,7 +26,7 @@
         required: true,
       },
       source: {
-        type: Object as PropType<FeatureCollection>,
+        type: Object as PropType<AnySource>,
         required: true,
       },
       layer: {
@@ -47,10 +48,6 @@
         ...props.layer,
         id: props.layerId,
         source: props.sourceId,
-      };
-      const source: GeoJSONSourceRaw = {
-        type: 'geojson',
-        data: props.source,
       };
 
       map.value.on('style.load', () => {
@@ -79,13 +76,20 @@
         addLayer();
       });
 
+      onBeforeUnmount(() => {
+        if (map.value.getLayer(props.layerId)) {
+          map.value.removeLayer(props.layerId);
+          map.value.removeSource(props.sourceId);
+        }
+      });
+
       /**
        * Re–adds the layer when style changed
        *
        * @returns {void}
        */
       function addLayer(): void {
-        map.value.addSource(props.sourceId, source);
+        map.value.addSource(props.sourceId, props.source);
         map.value.addLayer(layer, props.before);
       }
     },

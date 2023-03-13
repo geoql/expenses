@@ -1,89 +1,28 @@
 <template>
   <main class="w-full h-full select-none">
     <v-map
-      :options="state.map.options"
+      :options="store.$state.map.options"
       @loaded="onMapLoaded"
       @click="onMapClicked"
       @pitchend="onMapPitchEnd"
       @mousemove="onMapMouseMove"
       @zoomend="onMapZoomEnd"
     >
-      <!-- Controls -->
-      <template v-if="loaded">
-        <v-control-attribution>
-          Map Designed By © GeoSpoc 2022
-        </v-control-attribution>
-        <v-control-geolocate
-          :options="{
-            positionOptions: {
-              enableHighAccuracy: true,
-            },
-            trackUserLocation: true,
-            showUserHeading: true,
-          }"
-        />
-        <v-control-fullscreen />
-        <v-control-navigation />
-        <v-control-scale />
+      <template v-if="store.loaded">
+        <!-- <v-control-scale v-if="store.$state.map.controls.scale.shown" /> -->
+        <slot />
       </template>
-      <!-- Mapbox Layers -->
-      <template v-if="loaded">
-        <v-marker
-          v-for="(marker, index) in mapbox.markers.data"
-          :key="index"
-          :options="marker.options"
-          :popup-options="marker.popup.options"
-          v-model:coordinates="marker.coordinates"
-        >
-          <template>
-            <div class="p-2 text-black">
-              Popup Content: {{ marker.popup.content }}
-              <img class="rounded shadow-sm" src="https://picsum.photos/200" />
-            </div>
-          </template>
-        </v-marker>
-        <v-layer-mapbox-geojson
-          :source-id="'geojson-source'"
-          :source="mapbox.geojson.source"
-          :layer-id="'geojson-layer'"
-          :layer="mapbox.geojson.layer"
-        />
-        <v-layer-mapbox-vector
-          :source-id="'vector-source'"
-          :source="mapbox.vector.source"
-          :layer-id="'vector-layer'"
-          :layer="mapbox.vector.layer"
-        />
-        <v-layer-mapbox-image
-          :source-id="'image-source'"
-          :source="mapbox.image.source"
-          :layer-id="'image-layer'"
-          :layer="mapbox.image.layer"
-        />
-      </template>
-      <!-- Deck.gl Layers -->
-      <!-- <template v-if="loaded">
-        <v-layer-deck-arc
-          :data="deck.arc.source"
-          :layer-id="'deck.gl-arc-layer'"
-          :options="deck.arc.options"
-        />
-        <v-layer-deck-geojson
-          :data="deck.geojson.source"
-          :layer-id="'deck.gl-geojson-layer'"
-          :options="deck.geojson.options"
-        />
-      </template> -->
       <!-- Basemaps -->
       <div
         class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
       >
         <div class="relative flex flex-col space-y-2">
+          <!-- Basemaps -->
           <div
             class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Basemaps"
             :class="{
-              'bg-gray-300 dark:bg-gray-800': state.utils.basemaps.shown,
+              'bg-gray-300 dark:bg-gray-800': store.$state.utils.basemaps.shown,
             }"
           >
             <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
@@ -109,13 +48,13 @@
               leave-to-class="transform scale-95 opacity-0"
             >
               <div
-                v-if="state.utils.basemaps.shown"
+                v-if="store.$state.utils.basemaps.shown"
                 class="absolute top-0 right-0 w-48 mr-12 origin-right bg-gray-300 rounded-md shadow-lg sm:w-64 dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
               >
                 <basemaps
-                  :data="state.utils.basemaps.data"
+                  :data="store.$state.utils.basemaps.data"
                   @update-map-style="updateBasemap"
-                  @close="state.utils.basemaps.shown = false"
+                  @close="store.$state.utils.basemaps.shown = false"
                 />
               </div>
             </transition>
@@ -180,7 +119,7 @@
             class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Locate Me"
             :class="{
-              'bg-gray-300 dark:bg-gray-800': state.utils.compass.shown,
+              'bg-gray-300 dark:bg-gray-800': store.$state.utils.compass.shown,
             }"
           >
             <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
@@ -190,7 +129,9 @@
                 viewBox="0 0 18 18"
                 :style="{
                   transform:
-                    'rotate(' + state.utils.compass.data.bearing + 'deg)',
+                    'rotate(' +
+                    store.$state.utils.compass.data.bearing +
+                    'deg)',
                 }"
               >
                 <path
@@ -224,238 +165,20 @@
 </template>
 
 <script lang="ts">
-  import type { FeatureCollection } from 'geojson';
-  import type {
-    EventData,
-    FillLayer,
-    ImageSourceRaw,
-    LineLayer,
-    LngLatLike,
-    Map,
-    RasterLayer,
-    VectorSource,
-  } from 'mapbox-gl';
-  import VMap, {
-    VControlAttribution,
-    VControlFullscreen,
-    VControlGeolocate,
-    VControlNavigation,
-    VControlScale,
-    // VLayerDeckArc,
-    // VLayerDeckGeojson,
-    VLayerMapboxGeojson,
-    VLayerMapboxImage,
-    VLayerMapboxVector,
-    VMarker,
-  } from 'v-mapbox';
-  import type { SetupContext } from 'vue';
-  import { computed, defineComponent, readonly, ref } from 'vue';
+  import type { Map, MapMouseEvent } from 'maplibre-gl';
+  import { VMarker } from 'v-mapbox';
   import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
   export default defineComponent({
     name: 'CommonMap',
     components: {
-      VMap,
       Basemaps,
       VMarker,
-      VLayerMapboxGeojson,
-      VLayerMapboxVector,
-      VLayerMapboxImage,
-      VControlAttribution,
-      VControlFullscreen,
-      VControlGeolocate,
-      VControlNavigation,
-      VControlScale,
-      // VLayerDeckArc,
-      // VLayerDeckGeojson,
     },
-    setup(_, { emit }: SetupContext) {
+    setup(_, { emit }) {
       const store = useMap();
-      let map = readonly({} as Map);
-      const mapbox = ref({
-        markers: {
-          data: [
-            {
-              options: { color: 'red', draggable: true },
-              coordinates: [73.8567, 18.5204] as LngLatLike,
-              popup: {
-                options: {
-                  closeButton: false,
-                  closeOnClick: true,
-                  closeOnMove: true,
-                },
-                content: 'ABC',
-              },
-            },
-            {
-              options: { color: 'indigo', draggable: true },
-              coordinates: [73.8567, 18.5514] as LngLatLike,
-              popup: {
-                options: {
-                  closeButton: true,
-                  closeOnClick: false,
-                  closeOnMove: false,
-                },
-                content: 'XYZ',
-              },
-            },
-          ],
-        },
-        geojson: {
-          source: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [68.5546875, 17.644022027872726],
-                      [70.6640625, 9.795677582829743],
-                      [81.9140625, 5.61598581915534],
-                      [83.3203125, 20.632784250388028],
-                      [68.5546875, 17.644022027872726],
-                    ],
-                  ],
-                },
-              },
-            ],
-          } as FeatureCollection,
-          layer: {
-            type: 'fill',
-            layout: {
-              visibility: 'visible',
-            },
-            paint: {
-              'fill-color': '#0080ff', // blue color fill
-              'fill-opacity': 0.25,
-            },
-          } as FillLayer,
-        },
-        vector: {
-          source: {
-            type: 'vector',
-            tiles: [
-              'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333',
-            ],
-            minzoom: 6,
-            maxzoom: 14,
-          } as VectorSource,
-          layer: {
-            type: 'line',
-            // Source has several layers. We visualize the one with name 'sequence'.
-            'source-layer': 'sequence',
-            layout: {
-              'line-cap': 'round',
-              'line-join': 'round',
-            },
-            paint: {
-              'line-opacity': 0.6,
-              'line-color': 'rgb(53, 175, 109)',
-              'line-width': 2,
-            },
-          } as LineLayer,
-        },
-        image: {
-          source: {
-            type: 'image',
-            url: 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif',
-            coordinates: [
-              [-80.425, 46.437],
-              [-71.516, 46.437],
-              [-71.516, 37.936],
-              [-80.425, 37.936],
-            ],
-          } as ImageSourceRaw,
-          layer: {
-            type: 'raster',
-            paint: {
-              'raster-fade-duration': 0,
-            },
-          } as RasterLayer,
-        },
-      });
-      const deck = ref({
-        arc: {
-          source: [
-            {
-              inbound: 72633,
-              outbound: 74735,
-              from: {
-                name: '19th St. Oakland (19TH)',
-                coordinates: [-122.269029, 37.80787],
-              },
-              to: {
-                name: '12th St. Oakland City Center (12TH)',
-                coordinates: [-122.271604, 37.803664],
-              },
-            },
-          ],
-          options: {
-            pickable: true,
-            getWidth: 12,
-            getSourcePosition: (d) => d.from.coordinates,
-            getTargetPosition: (d) => d.to.coordinates,
-            getSourceColor: (d) => [Math.sqrt(d.inbound), 140, 0],
-            getTargetColor: (d) => [Math.sqrt(d.outbound), 140, 0],
-          },
-        },
-        geojson: {
-          source: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [74.50927734375, 31.89621446335144],
-                      [73.71826171874999, 30.012030680358613],
-                      [71.89453125, 28.033197847676377],
-                      [70.24658203125, 28.013801376380712],
-                      [69.43359375, 26.980828590472107],
-                      [70.224609375, 26.352497858154024],
-                      [70.09277343749999, 25.93828707492375],
-                      [70.3125, 25.60190226111573],
-                      [70.9716796875, 25.443274612305746],
-                      [70.7958984375, 25.105497373014686],
-                      [70.99365234375, 24.686952411999155],
-                      [69.71923828125, 24.387127324604496],
-                      [68.53271484375, 23.68477416688374],
-                      [71.60888671875, 19.704657579362323],
-                      [77.45361328125, 21.453068633086783],
-                      [76.7724609375, 29.7453016622136],
-                      [74.50927734375, 31.89621446335144],
-                    ],
-                  ],
-                },
-              },
-            ],
-          } as FeatureCollection,
-          options: {
-            pickable: true,
-            stroked: false,
-            filled: true,
-            extruded: true,
-            pointType: 'circle',
-            lineWidthScale: 20,
-            lineWidthMinPixels: 2,
-            getFillColor: [33, 160, 180, 200],
-            getPointRadius: 100,
-            getLineWidth: 1,
-            getElevation: 200,
-          },
-        },
-      });
-
-      const loaded = computed(
-        () => store.$state.ui.loaded || store.$state.ui.styleChanged,
-      );
+      let map = markRaw({} as Map);
 
       /**
        * This function syncs the loaded & style-changed
@@ -512,10 +235,10 @@
        * When user is entered the map
        * canvas
        *
-       * @param {EventData | MouseEvent } e - Mapbox Event data
+       * @param {MapMouseEvent | MouseEvent } e - Mapbox Event data
        * @returns {void} void
        */
-      function onMapMouseMove(e: EventData | MouseEvent): void {
+      function onMapMouseMove(e: MapMouseEvent | MouseEvent): void {
         if (e instanceof MouseEvent) {
           return;
         } else {
@@ -527,11 +250,15 @@
        * This function emits a click event to the
        * parent component
        *
-       * @param {EventData} e - Mapbox Event
+       * @param {MapMouseEvent} e - Mapbox Event
        * @returns {void}
        */
-      function onMapClicked(e: EventData): void {
-        emit('click', e);
+      function onMapClicked(e: MapMouseEvent | PointerEvent): void {
+        if (e instanceof PointerEvent) {
+          return;
+        } else {
+          emit('on-clicked', e);
+        }
       }
       /**
        * When user changes the North direction
@@ -685,11 +412,8 @@
       }
 
       return {
-        state: store.$state,
+        store,
         map,
-        loaded,
-        mapbox,
-        deck,
         onMapLoaded,
         onMapMouseMove,
         onMapClicked,
