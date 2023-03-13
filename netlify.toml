@@ -2,9 +2,9 @@
   command = "npm run dev"
 
 [build]
-  command = "npm build"
-  publish = "./output"
+  command = "npm run generate"
+  publish = "./dist"
 
 [build.environment]
-  NODE_VERSION = "17"
-  NPM_VERSION = "8"
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
