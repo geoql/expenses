@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/geoql/expenses/compare/v2.0.0...v2.1.0) (2023-03-13)
+
+
+### Features
+
+* typings & add IndexDb instead of ls ✨ ([9499b46](https://github.com/geoql/expenses/commit/9499b4694dec11fc72af34bab3cfbfeb867835c8))
+
+
+
 # [2.0.0](https://github.com/geoql/expenses/compare/v1.6.0...v2.0.0) (2023-03-13)
 
 
