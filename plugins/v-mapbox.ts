@@ -1,25 +1,25 @@
 // Controls
-import { VControlAttribution } from 'v-mapbox';
-import { VControlFullscreen } from 'v-mapbox';
-import { VControlGeolocate } from 'v-mapbox';
-import { VControlNavigation } from 'v-mapbox';
-import { VControlScale } from 'v-mapbox';
+import { VControlAttribution } from '~/lib/v-mapbox';
+import { VControlFullscreen } from '~/lib/v-mapbox';
+import { VControlGeolocate } from '~/lib/v-mapbox';
+import { VControlNavigation } from '~/lib/v-mapbox';
+import { VControlScale } from '~/lib/v-mapbox';
 // Layers – Deck.gl
-import VLayerDeckArc from 'v-mapbox';
-import VLayerDeckGeojson from 'v-mapbox';
+import VLayerDeckArc from '~/lib/v-mapbox';
+import VLayerDeckGeojson from '~/lib/v-mapbox';
 // Layers – Mapbox
-import { VLayerMapboxCanvas } from 'v-mapbox';
-import { VLayerMapboxGeojson } from 'v-mapbox';
-import { VLayerMapboxImage } from 'v-mapbox';
-import { VLayerMapboxRaster } from 'v-mapbox';
-import { VLayerMapboxVector } from 'v-mapbox';
-import { VLayerMapboxVideo } from 'v-mapbox';
+import { VLayerMapboxCanvas } from '~/lib/v-mapbox';
+import { VLayerMapboxGeojson } from '~/lib/v-mapbox';
+import { VLayerMapboxImage } from '~/lib/v-mapbox';
+import { VLayerMapboxRaster } from '~/lib/v-mapbox';
+import { VLayerMapboxVector } from '~/lib/v-mapbox';
+import { VLayerMapboxVideo } from '~/lib/v-mapbox';
 // Map
-import VMap from 'v-mapbox';
+import VMap from '~/lib/v-mapbox';
 // Marker
-import VMarker from 'v-mapbox';
+import VMarker from '~/lib/v-mapbox';
 // Popup
-import VPopup from 'v-mapbox';
+import VPopup from '~/lib/v-mapbox';
 
 export default defineNuxtPlugin((nuxtApp) => {
   // Map
