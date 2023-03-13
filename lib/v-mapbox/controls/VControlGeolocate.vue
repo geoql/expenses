@@ -1,23 +1,17 @@
 <script lang="ts">
-  import type { FitBoundsOptions, PositionOptions } from 'maplibre-gl';
-  import { GeolocateControl } from 'maplibre-gl';
+  import type { GeolocateOptions } from 'maplibre-gl';
   import type { PropType } from 'vue';
+  import { GeolocateControl } from 'maplibre-gl';
   import { defineComponent, onMounted } from 'vue';
   import { geolocateControlEvents as events } from '../constants/events/geolocate';
   import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
-    name: 'VControlFullscreen',
+    name: 'VControlGeolocate',
     props: {
       options: {
-        type: Object as PropType<{
-          positionOptions?: PositionOptions;
-          fitBoundsOptions?: FitBoundsOptions;
-          trackUserLocation?: boolean;
-          showAccuracyCircle?: boolean;
-          showUserLocation?: boolean;
-        }>,
+        type: Object as PropType<GeolocateOptions>,
         default: () => ({}),
         required: true,
       },

@@ -1,15 +1,16 @@
 <script lang="ts">
-  import { ScaleControl } from 'maplibre-gl';
+  import type { ScaleOptions } from 'maplibre-gl';
   import type { PropType } from 'vue';
+  import { ScaleControl } from 'maplibre-gl';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
-    name: 'VControlFullscreen',
+    name: 'VControlScale',
     props: {
       options: {
-        type: Object as PropType<{ maxWidth?: number; unit?: string }>,
+        type: Object as PropType<ScaleOptions>,
         default: () => ({}),
         required: true,
       },

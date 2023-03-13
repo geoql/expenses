@@ -1,19 +1,16 @@
 <script lang="ts">
-  import { NavigationControl } from 'maplibre-gl';
+  import type { NavigationOptions } from 'maplibre-gl';
   import type { PropType } from 'vue';
+  import { NavigationControl } from 'maplibre-gl';
   import { defineComponent, onMounted } from 'vue';
   import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
 
   export default defineComponent({
-    name: 'VControlFullscreen',
+    name: 'VControlNavigation',
     props: {
       options: {
-        type: Object as PropType<{
-          showCompass?: boolean;
-          showZoom?: boolean;
-          visualizePitch?: boolean;
-        }>,
+        type: Object as PropType<NavigationOptions>,
         default: () => ({}),
         required: true,
       },

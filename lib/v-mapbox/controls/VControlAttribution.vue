@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { AttributionControl } from 'maplibre-gl';
+  import type { AttributionOptions } from 'maplibre-gl';
   import type { PropType } from 'vue';
+  import { AttributionControl } from 'maplibre-gl';
   import { defineComponent, onMounted, h } from 'vue';
   import { MapKey } from '../types/symbols';
   import { injectStrict } from '../utils';
@@ -9,10 +10,7 @@
     name: 'VControlAttribution',
     props: {
       options: {
-        type: Object as PropType<{
-          compact?: boolean;
-          customAttribution?: string | string[];
-        }>,
+        type: Object as PropType<AttributionOptions>,
         default: () => ({
           compact: false,
           customAttribution: 'Map design by me',
