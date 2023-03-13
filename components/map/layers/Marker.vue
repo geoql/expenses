@@ -5,6 +5,7 @@
         v-if="visibility"
         :key="idx"
         :coordinates="getExpenseMarkerCoordinates(marker)"
+        :popup-options="popupOptions"
         @click="$emit('update:popup-visibility', true)"
       >
         <template #markers="{ setRef }">
@@ -113,11 +114,10 @@
 <script lang="ts">
   import type { PropType } from 'vue';
   import type {
-    Feature,
-    FeatureCollection,
-    GeoJsonProperties,
-    Point,
-  } from 'geojson';
+    ExpenseFeature,
+    ExpenseFeatureCollection,
+  } from '~/types/expense';
+  import type { PopupOptions } from 'maplibre-gl';
   import { VMarker } from '~/lib/v-mapbox';
 
   export default defineComponent({
@@ -127,7 +127,7 @@
     },
     props: {
       data: {
-        type: Object as PropType<FeatureCollection<Point>>,
+        type: Object as PropType<ExpenseFeatureCollection>,
         required: true,
         description: 'Point type features within the FeatureCollection',
       },
@@ -135,6 +135,11 @@
         type: Boolean as PropType<boolean>,
         required: true,
         description: 'Whether to show the marker or not',
+      },
+      popupOptions: {
+        type: Object as PropType<PopupOptions>,
+        required: true,
+        description: 'Options for the popup',
       },
       popupVisibility: {
         type: Boolean as PropType<boolean>,
@@ -146,11 +151,11 @@
       /**
        * Gets the coordinates for the marker
        *
-       * @param {Feature<Point, GeoJsonProperties>} m - Marker
-       * @returns {number[]} - Coordinates
+       * @param {ExpenseFeature} m - Marker
+       * @returns {[number, number]} - Coordinates
        */
       function getExpenseMarkerCoordinates(
-        m: Feature<Point, GeoJsonProperties>,
+        m: ExpenseFeature,
       ): [number, number] {
         return [m.geometry.coordinates[0], m.geometry.coordinates[1]];
       }
@@ -159,11 +164,11 @@
        * Gets the color for the svg
        * marker based on the expense type
        *
-       * @param {Feature<Point>} m - Expense type
+       * @param {ExpenseFeature} m - Expense type
        * @returns {Record<string, boolean> | string} - Color object
        */
       function getExpenseMarkerColor(
-        m: Feature<Point, GeoJsonProperties>,
+        m: ExpenseFeature,
       ): Record<string, boolean> | string {
         if (m.properties) {
           return {

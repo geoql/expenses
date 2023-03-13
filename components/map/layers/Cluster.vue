@@ -22,7 +22,7 @@
     SymbolLayerSpecification,
   } from 'maplibre-gl';
   import type { PropType } from 'vue';
-  import type { FeatureCollection, Point } from 'geojson';
+  import type { ExpenseFeatureCollection } from '~/types/expense';
   import { VLayerMapboxGeojson } from '~/lib/v-mapbox';
 
   export default defineComponent({
@@ -32,7 +32,7 @@
     },
     props: {
       data: {
-        type: Object as PropType<FeatureCollection<Point>>,
+        type: Object as PropType<ExpenseFeatureCollection>,
         required: true,
       },
       visibility: {
@@ -43,6 +43,13 @@
     },
     setup(props) {
       const cluster = ref({
+        // source: {
+        //   type: 'geojson',
+        //   data: props.data,
+        //   cluster: true,
+        //   clusterMaxZoom: 20,
+        //   clusterRadius: 40,
+        // } as GeoJSONSourceSpecification,
         source: computed(() => {
           return {
             type: 'geojson',

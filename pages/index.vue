@@ -38,17 +38,11 @@
             type="button"
             class="relative visible inline-flex items-center px-3 py-1.5 rounded-l-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
-              'bg-indigo-800 text-gray-50': state.map.ui.isMarker,
+              'bg-indigo-800 text-gray-50': expenseStore.$state.map.ui.isMarker,
               'text-gray-800 bg-white dark:text-white dark:bg-gray-800':
-                !state.map.ui.isMarker,
+                !expenseStore.$state.map.ui.isMarker,
             }"
-            @click="
-              state.map.ui = {
-                isMarker: true,
-                isCluster: false,
-                isHeatmap: false,
-              }
-            "
+            @click="toggle('marker')"
           >
             <span class="sm:block hidden">Marker(s)</span>
             <svg
@@ -68,17 +62,12 @@
             type="button"
             class="-ml-px relative visible inline-flex items-center px-3 py-1.5 border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
-              'bg-indigo-800 text-gray-50': state.map.ui.isCluster,
+              'bg-indigo-800 text-gray-50':
+                expenseStore.$state.map.ui.isCluster,
               'text-gray-800 bg-white dark:text-white dark:bg-gray-800':
-                !state.map.ui.isCluster,
+                !expenseStore.$state.map.ui.isCluster,
             }"
-            @click="
-              state.map.ui = {
-                isMarker: false,
-                isCluster: true,
-                isHeatmap: false,
-              }
-            "
+            @click="toggle('cluster')"
           >
             <span class="sm:block hidden">Cluster(s)</span>
             <svg
@@ -96,17 +85,12 @@
             type="button"
             class="-ml-px relative visible inline-flex items-center px-3 py-1.5 rounded-r-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
-              'bg-indigo-800 text-gray-50 ': state.map.ui.isHeatmap,
+              'bg-indigo-800 text-gray-50 ':
+                expenseStore.$state.map.ui.isHeatmap,
               'text-gray-800 bg-white dark:text-white dark:bg-gray-800':
-                !state.map.ui.isHeatmap,
+                !expenseStore.$state.map.ui.isHeatmap,
             }"
-            @click="
-              state.map.ui = {
-                isMarker: false,
-                isCluster: false,
-                isHeatmap: true,
-              }
-            "
+            @click="toggle('heatmap')"
           >
             <span class="sm:block hidden">Heatmap</span>
             <svg
@@ -125,9 +109,9 @@
       </div>
       <template v-if="mapStore.loaded">
         <v-marker
-          :options="state.map.marker.options"
-          :popup-options="state.map.marker.popup.options"
-          v-model:coordinates="state.map.marker.coordinates"
+          :options="expenseStore.$state.map.marker.options"
+          :popup-options="expenseStore.$state.map.marker.popup.options"
+          v-model:coordinates="expenseStore.$state.map.marker.coordinates"
         >
           <template #markers="{ setRef }">
             <svg
@@ -161,30 +145,32 @@
                 class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-50 text-gray-800"
               >
                 <div class="capitalize">
-                  {{ state.expense.form.type }}
+                  {{ expenseStore.$state.form.type }}
                 </div>
                 <button
                   type="button"
                   class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
                   :class="{
                     'bg-green-600 focus:ring-green-500':
-                      state.expense.form.type === 'credit',
+                      expenseStore.$state.form.type === 'credit',
                     'bg-red-600 focus:ring-red-500':
-                      state.expense.form.type === 'debit',
+                      expenseStore.$state.form.type === 'debit',
                   }"
                   aria-pressed="false"
                   @click="
-                    state.expense.form.type === 'credit'
-                      ? (state.expense.form.type = 'debit')
-                      : (state.expense.form.type = 'credit')
+                    expenseStore.$state.form.type === 'credit'
+                      ? (expenseStore.$state.form.type = 'debit')
+                      : (expenseStore.$state.form.type = 'credit')
                   "
                 >
                   <span class="sr-only">Use setting</span>
                   <span
                     aria-hidden="true"
                     :class="{
-                      'translate-x-5': state.expense.form.type === 'debit',
-                      'translate-x-0': state.expense.form.type === 'credit',
+                      'translate-x-5':
+                        expenseStore.$state.form.type === 'debit',
+                      'translate-x-0':
+                        expenseStore.$state.form.type === 'credit',
                     }"
                     class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
                   />
@@ -219,19 +205,19 @@
                     </div>
                     <input
                       id="expense"
-                      v-model.number="state.expense.form.amount"
+                      v-model.number="expenseStore.$state.form.amount"
                       type="text"
                       name="expense"
                       required="true"
                       class="block w-full pl-10 rounded-md sm:text-sm border-gray-300 outline-none dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white"
                       :class="{
                         'focus:ring-green-500 focus:border-green-500':
-                          state.expense.form.type === 'credit',
+                          expenseStore.$state.form.type === 'credit',
                         'focus:ring-red-500 focus:border-red-500':
-                          state.expense.form.type === 'debit',
+                          expenseStore.$state.form.type === 'debit',
                       }"
                       :placeholder="
-                        state.expense.form.type === 'credit'
+                        expenseStore.$state.form.type === 'credit'
                           ? 'eg. 100'
                           : 'eg. 96'
                       "
@@ -247,18 +233,18 @@
                   </label>
                   <textarea
                     id="description"
-                    v-model="state.expense.form.description"
+                    v-model="expenseStore.$state.form.description"
                     name="description"
                     rows="2"
                     class="block w-full mt-1 rounded-md outline-none border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white py-2 px-3 sm:text-sm"
                     :class="{
                       'focus:ring-green-500 focus:border-green-500':
-                        state.expense.form.type === 'credit',
+                        expenseStore.$state.form.type === 'credit',
                       'focus:ring-red-500 focus:border-red-500':
-                        state.expense.form.type === 'debit',
+                        expenseStore.$state.form.type === 'debit',
                     }"
                     :placeholder="
-                      state.expense.form.type === 'credit'
+                      expenseStore.$state.form.type === 'credit'
                         ? 'eg. refund Rs. 100'
                         : 'eg. spent 96 on milk'
                     "
@@ -269,9 +255,9 @@
                     type="submit"
                     :class="{
                       'bg-red-600 hover:bg-red-700 focus:ring-red-500':
-                        state.expense.form.type === 'debit',
+                        expenseStore.$state.form.type === 'debit',
                       'bg-green-600 hover:bg-green-700 focus:ring-green-500':
-                        state.expense.form.type === 'credit',
+                        expenseStore.$state.form.type === 'credit',
                     }"
                     class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
                   >
@@ -285,25 +271,26 @@
         <!-- Marker with previously added data -->
         <template
           v-if="
-            state.expense.geojson !== null &&
-            state.expense.geojson.features.length > 0
+            expenseStore.$state.geojson !== null &&
+            expenseStore.$state.geojson.features.length > 0
           "
         >
           <expense-marker
-            v-if="marker"
-            :data="state.expense.geojson"
-            :visibility="marker"
-            v-model:popup-visibility="state.expense.popup.shown"
+            v-if="expenseStore.isMarker"
+            :data="expenseStore.$state.geojson"
+            :visibility="expenseStore.isMarker"
+            v-model:popup-options="expenseStore.$state.popup.options"
+            v-model:popup-visibility="expenseStore.$state.popup.shown"
           />
           <expense-cluster
-            v-if="cluster"
-            :data="state.expense.geojson"
-            :visibility="cluster"
+            v-if="expenseStore.isCluster"
+            :data="expenseStore.$state.geojson"
+            :visibility="expenseStore.isCluster"
           />
           <expense-heatmap
-            v-if="heatmap"
-            :data="state.expense.geojson"
-            :visibility="heatmap"
+            v-if="expenseStore.isHeatmap"
+            :data="expenseStore.$state.geojson"
+            :visibility="expenseStore.isHeatmap"
           />
         </template>
       </template>
@@ -312,15 +299,19 @@
 </template>
 
 <script lang="ts">
-  import type { Feature, FeatureCollection, Point } from 'geojson';
-  import type { MapMouseEvent, PopupOptions } from 'maplibre-gl';
-  import { computed, defineComponent, onMounted, reactive } from 'vue';
+  import type { MapMouseEvent } from 'maplibre-gl';
+  import type { ExpenseFeature, MyDB } from '~/types/expense';
+  import type { IDBPDatabase } from 'idb';
+  import { computed, defineComponent, onMounted } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
   import { VMarker } from '~/lib/v-mapbox';
   import Cluster from '~/components/map/layers/Cluster.vue';
   import Heatmap from '~/components/map/layers/Heatmap.vue';
   import Marker from '~/components/map/layers/Marker.vue';
   import { useMap } from '~/composables/useMap';
+  import { useExpense } from '~/composables/useExpense';
+  import { useIdb } from '~/composables/useIdb';
+  import { v4 as uuid } from 'uuid';
 
   export default defineComponent({
     name: 'Dashboard',
@@ -332,46 +323,10 @@
       ExpenseHeatmap: Heatmap,
     },
     setup() {
+      let db: IDBPDatabase<MyDB>;
       const mapStore = useMap();
-      const state = reactive({
-        map: {
-          center: [73.8567, 18.5204],
-          zoom: 11,
-          marker: {
-            options: { draggable: true },
-            popup: {
-              options: {
-                closeButton: false,
-                closeOnClick: false,
-                offset: {
-                  top: [0, 10],
-                  bottom: [0, -10],
-                },
-              } as PopupOptions,
-            },
-            coordinates: [73.8567, 18.5204] as [number, number],
-          },
-          ui: {
-            isMarker: true,
-            isCluster: false,
-            isHeatmap: false,
-          },
-        },
-        expense: {
-          form: {
-            amount: undefined as number | undefined,
-            description: '' as string,
-            type: 'debit' as 'credit' | 'debit',
-          },
-          popup: {
-            shown: false,
-          },
-          geojson: {
-            type: 'FeatureCollection',
-            features: [],
-          } as FeatureCollection<Point>,
-        },
-      });
+      const expenseStore = useExpense();
+
       const isDark = useDark();
       const runtimeConfig = useRuntimeConfig();
 
@@ -379,26 +334,15 @@
         return [isDark.value ? 'text-indigo-600' : 'text-indigo-500'];
       });
 
-      const marker = computed(
-        () =>
-          !state.map.ui.isCluster &&
-          state.map.ui.isMarker &&
-          !state.map.ui.isHeatmap,
-      );
-      const heatmap = computed(
-        () =>
-          !state.map.ui.isCluster &&
-          !state.map.ui.isMarker &&
-          state.map.ui.isHeatmap,
-      );
-      const cluster = computed(
-        () =>
-          state.map.ui.isCluster &&
-          !state.map.ui.isMarker &&
-          !state.map.ui.isHeatmap,
-      );
-
-      onMounted(() => {
+      onMounted(async () => {
+        db = await useIdb();
+        const expenses = await db.getAll('expenses');
+        if (expenses.length > 0) {
+          expenseStore.$patch((state) => {
+            state.geojson = expenses[0];
+          });
+        }
+        // Popuplate Basemaps
         mapStore.$patch((state) => {
           state.utils.basemaps.data.basemaps.push(
             {
@@ -431,49 +375,94 @@
             },
           );
         });
-        state.expense.geojson = JSON.parse(
-          localStorage.getItem('expenses') as any,
-        ) as FeatureCollection<Point>;
       });
 
       const onMapClicked = (e: MapMouseEvent): void => {
-        if (!state.expense.popup.shown) {
+        expenseStore.$patch((state) => {
           state.map.marker.coordinates = [e.lngLat.lng, e.lngLat.lat];
+        });
+      };
+
+      const toggle = (type: 'cluster' | 'heatmap' | 'marker') => {
+        switch (type.toLowerCase()) {
+          case 'marker':
+            expenseStore.$patch((state) => {
+              state.map.ui.isMarker = true;
+              state.map.ui.isCluster = false;
+              state.map.ui.isHeatmap = false;
+            });
+            break;
+          case 'cluster':
+            expenseStore.$patch((state) => {
+              state.map.ui.isMarker = false;
+              state.map.ui.isCluster = true;
+              state.map.ui.isHeatmap = false;
+            });
+            break;
+          case 'heatmap':
+            expenseStore.$patch((state) => {
+              state.map.ui.isMarker = false;
+              state.map.ui.isCluster = false;
+              state.map.ui.isHeatmap = true;
+            });
+            break;
+          default:
+            expenseStore.$patch((state) => {
+              state.map.ui.isMarker = true;
+              state.map.ui.isCluster = false;
+              state.map.ui.isHeatmap = false;
+            });
+            break;
         }
       };
 
-      const add = (): void => {
+      const add = async (): Promise<void> => {
         // Build a Feature of Type Point
-        const feature = {
+        const feature: ExpenseFeature = {
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: state.map.marker.coordinates,
+            coordinates: expenseStore.$state.map.marker.coordinates,
           },
           properties: {
-            expense: state.expense.form,
+            expense: expenseStore.$state.form,
             date: Date.now(),
           },
-        } as Feature<Point>;
-        state.expense.geojson.features.push(feature);
-        localStorage.setItem('expenses', JSON.stringify(state.expense.geojson));
-        state.expense.form = {
-          amount: undefined,
-          description: '',
-          type: 'debit',
         };
+        if (expenseStore.$state.geojson.features.length > 0) {
+          expenseStore.$patch((state) => {
+            state.geojson.features.push(feature);
+          });
+        } else {
+          expenseStore.$patch((state) => {
+            state.geojson = {
+              id: uuid().split('-').join(''),
+              type: 'FeatureCollection',
+              features: [feature],
+            };
+          });
+        }
+        await db.put(
+          'expenses',
+          JSON.parse(JSON.stringify(expenseStore.$state.geojson)),
+        );
+        expenseStore.$patch((state) => {
+          state.form = {
+            amount: undefined,
+            description: '',
+            type: 'debit',
+          };
+        });
       };
 
       return {
-        state,
         mapStore,
+        expenseStore,
         // computed:
         getMarkerColor,
-        marker,
-        heatmap,
-        cluster,
         // methods:
         onMapClicked,
+        toggle,
         add,
       };
     },

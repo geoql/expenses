@@ -25,8 +25,10 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.7",
     "click-outside-vue3": "^4.0.1",
+    "idb": "^7.1.1",
     "maplibre-gl": "^2.4.0",
     "pinia": "^2.0.33",
+    "uuid": "^9.0.0",
     "v-mapbox": "^4.0.0"
   },
   "devDependencies": {
@@ -36,6 +38,7 @@
     "@deck.gl/mapbox": "^8.9.1",
     "@nuxt/types": "^2.16.0",
     "@types/geojson": "^7946.0.10",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
