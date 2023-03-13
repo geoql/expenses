@@ -6,7 +6,6 @@
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/geoql/expenses/shipjs-trigger.yml?label=⛴%20Ship.js%20trigger)](https://github.com/geoql/expenses/actions/workflows/shipjs-trigger.yml)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/geoql/expenses/codeql.yml?logo=lgtm&logoWidth=18)](https://github.com/geoql/expenses/actions/workflows/codeql.yml)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/geoql/expenses?sort=semver&logo=github)](https://github.com/geoql/expenses/releases)
-[![GitHub package.json version](https://img.shields.io/github/package-json/v/geoql/expenses)]((https://github.com/geoql/expenses/releases))
 [![DeepScan grade](https://deepscan.io/api/teams/15032/projects/18650/branches/461082/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=15032&pid=18650&bid=461082)
 [![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/geoql/expenses)](https://snyk.io/test/github/geoql/expenses)
 [![GitHub contributors](https://img.shields.io/github/contributors/geoql/expenses)](https://github.com/geoql/expenses/graphs/contributors)
