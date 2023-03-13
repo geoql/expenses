@@ -9,67 +9,15 @@
       @zoomend="onMapZoomEnd"
     >
       <template v-if="store.loaded">
-        <!-- Controls -->
-        <!-- <v-control-attribution
-          v-if="store.$state.map.controls.attribution.shown"
-        >
-          <span>Map Designed By © CARTO | © OpenStreetMap contributors</span>
-        </v-control-attribution>
-        <v-control-geolocate
-          v-if="store.$state.map.controls.geolocate.shown"
-          :options="store.$state.map.controls.geolocate.options"
-        />
-        <v-control-fullscreen
-          v-if="store.$state.map.controls.fullscreen.shown"
-        />
-        <v-control-navigation
-          v-if="store.$state.map.controls.navigation.shown"
-        /> -->
-        <v-control-scale v-if="store.$state.map.controls.scale.shown" />
-        <!-- Mapbox Layers -->
-        <template v-if="store.loaded">
-          <v-marker
-            v-for="(marker, index) in mapbox.markers.data"
-            :key="index"
-            :options="marker.options"
-            :popup-options="marker.popup.options"
-            v-model:coordinates="marker.coordinates"
-          >
-            <template>
-              <div class="p-2 text-black">
-                Popup Content: {{ marker.popup.content }}
-                <img
-                  class="rounded shadow-sm"
-                  src="https://picsum.photos/200"
-                />
-              </div>
-            </template>
-          </v-marker>
-        </template>
-        <v-layer-mapbox-geojson
-          :source-id="'geojson-source'"
-          :source="mapbox.geojson.source"
-          :layer-id="'geojson-layer'"
-          :layer="mapbox.geojson.layer"
-        />
-        <v-layer-mapbox-vector
-          :source-id="'vector-source'"
-          :source="mapbox.vector.source"
-          :layer-id="'vector-layer'"
-          :layer="mapbox.vector.layer"
-        />
-        <v-layer-mapbox-image
-          :source-id="'image-source'"
-          :source="mapbox.image.source"
-          :layer-id="'image-layer'"
-          :layer="mapbox.image.layer"
-        />
+        <!-- <v-control-scale v-if="store.$state.map.controls.scale.shown" /> -->
+        <slot />
       </template>
       <!-- Basemaps -->
       <div
         class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
       >
         <div class="relative flex flex-col space-y-2">
+          <!-- Basemaps -->
           <div
             class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
             title="Basemaps"
@@ -217,19 +165,8 @@
 </template>
 
 <script lang="ts">
-  import type { FeatureCollection } from 'geojson';
-  import type {
-    FillLayerSpecification as FillLayer,
-    ImageSourceSpecification as ImageSourceRaw,
-    LineLayerSpecification as LineLayer,
-    LngLatLike,
-    Map,
-    MapMouseEvent,
-    RasterLayerSpecification as RasterLayer,
-    VectorSourceSpecification as VectorSource,
-  } from 'maplibre-gl';
+  import type { Map, MapMouseEvent } from 'maplibre-gl';
   import { VMarker } from 'v-mapbox';
-  // import { VMarker } from 'v-mapbox';
   import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
@@ -242,111 +179,6 @@
     setup(_, { emit }) {
       const store = useMap();
       let map = markRaw({} as Map);
-      const mapbox = ref({
-        markers: {
-          data: [
-            {
-              options: { color: 'red', draggable: true },
-              coordinates: [73.8567, 18.5204] as LngLatLike,
-              popup: {
-                options: {
-                  closeButton: false,
-                  closeOnClick: true,
-                  closeOnMove: true,
-                },
-                content: 'ABC',
-              },
-            },
-            {
-              options: { color: 'indigo', draggable: true },
-              coordinates: [73.8567, 18.5514] as LngLatLike,
-              popup: {
-                options: {
-                  closeButton: true,
-                  closeOnClick: false,
-                  closeOnMove: false,
-                },
-                content: 'XYZ',
-              },
-            },
-          ],
-        },
-        geojson: {
-          source: {
-            type: 'FeatureCollection',
-            features: [
-              {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [68.5546875, 17.644022027872726],
-                      [70.6640625, 9.795677582829743],
-                      [81.9140625, 5.61598581915534],
-                      [83.3203125, 20.632784250388028],
-                      [68.5546875, 17.644022027872726],
-                    ],
-                  ],
-                },
-              },
-            ],
-          } as FeatureCollection,
-          layer: {
-            type: 'fill',
-            layout: {
-              visibility: 'visible',
-            },
-            paint: {
-              'fill-color': '#0080ff', // blue color fill
-              'fill-opacity': 0.25,
-            },
-          } as FillLayer,
-        },
-        vector: {
-          source: {
-            type: 'vector',
-            tiles: [
-              'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333',
-            ],
-            minzoom: 6,
-            maxzoom: 14,
-          } as VectorSource,
-          layer: {
-            type: 'line',
-            // Source has several layers. We visualize the one with name 'sequence'.
-            'source-layer': 'sequence',
-            layout: {
-              'line-cap': 'round',
-              'line-join': 'round',
-            },
-            paint: {
-              'line-opacity': 0.6,
-              'line-color': 'rgb(53, 175, 109)',
-              'line-width': 2,
-            },
-          } as LineLayer,
-        },
-        image: {
-          source: {
-            type: 'image',
-            url: 'https://docs.mapbox.com/mapbox-gl-js/assets/radar.gif',
-            coordinates: [
-              [-80.425, 46.437],
-              [-71.516, 46.437],
-              [-71.516, 37.936],
-              [-80.425, 37.936],
-            ],
-          } as ImageSourceRaw,
-          layer: {
-            type: 'raster',
-            paint: {
-              'raster-fade-duration': 0,
-            },
-          } as RasterLayer,
-        },
-      });
 
       /**
        * This function syncs the loaded & style-changed
@@ -582,7 +414,6 @@
       return {
         store,
         map,
-        mapbox,
         onMapLoaded,
         onMapMouseMove,
         onMapClicked,
