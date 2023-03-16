@@ -38,7 +38,7 @@ jobs:
       - name: Setup node env 📦
         uses: actions/setup-node@v3.6.0
         with:
-          node-version: ${{ matrix.node }}
+          node-version-file: '.nvmrc'
           check-latest: true
           cache: 'npm'
       - name: Install dependencies 🚀

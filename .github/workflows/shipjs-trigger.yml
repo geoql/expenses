@@ -25,7 +25,7 @@ jobs:
       - name: Setup node environment 📦
         uses: actions/setup-node@v3
         with:
-          node-version-file: 'package.json'
+          node-version-file: '.nvmrc'
           check-latest: true
           cache: 'npm'
 
