@@ -8,7 +8,7 @@
   import { injectStrict, MapKey } from '../../utils';
 
   export default defineComponent({
-    name: 'MglDeckArcLayer',
+    name: 'VLayerDeckArc',
     props: {
       layerId: {
         type: String as PropType<string>,

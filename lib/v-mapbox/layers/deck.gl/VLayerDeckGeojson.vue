@@ -9,7 +9,7 @@
   import { injectStrict, MapKey } from '../../utils';
 
   export default defineComponent({
-    name: 'MglDeckGeojsonLayer',
+    name: 'VLayerDeckGeojson',
     props: {
       layerId: {
         type: String as PropType<string>,

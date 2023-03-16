@@ -5,8 +5,8 @@ import { VControlGeolocate } from '~/lib/v-mapbox';
 import { VControlNavigation } from '~/lib/v-mapbox';
 import { VControlScale } from '~/lib/v-mapbox';
 // Layers – Deck.gl
-import VLayerDeckArc from '~/lib/v-mapbox';
-import VLayerDeckGeojson from '~/lib/v-mapbox';
+import { VLayerDeckArc } from '~/lib/v-mapbox';
+import { VLayerDeckGeojson } from '~/lib/v-mapbox';
 // Layers – Mapbox
 import { VLayerMapboxCanvas } from '~/lib/v-mapbox';
 import { VLayerMapboxGeojson } from '~/lib/v-mapbox';
