@@ -25,7 +25,7 @@ const plugins = [
   require('windicss/plugin/line-clamp'),
   require('windicss/plugin/scroll-snap'),
   require('@windicss/plugin-scrollbar'),
-  require('@windicss/animations'),
+  require('@windicss/plugin-animations'),
   require('windicss/plugin/typography')({
     dark: true,
     modifiers: ['DEFAULT', 'sm', 'lg', 'red'],
