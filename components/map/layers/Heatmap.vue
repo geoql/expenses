@@ -22,7 +22,7 @@
     CircleLayerSpecification,
   } from 'maplibre-gl';
   import type { PropType } from 'vue';
-  import type { ExpenseFeatureCollection } from '~/types/expense';
+  import type { ExpenseFeatureCollection } from '~/@types/expense';
   import { VLayerMapboxGeojson } from '~/lib/v-mapbox';
 
   export default defineComponent({

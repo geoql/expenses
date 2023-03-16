@@ -1,6 +1,6 @@
 import { openDB } from 'idb';
 import type { IDBPDatabase } from 'idb';
-import type { MyDB } from '~/types/expense';
+import type { MyDB } from '~/@types/expense';
 
 /**
  * Composable for using idb

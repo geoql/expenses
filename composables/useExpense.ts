@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { v4 as uuid } from 'uuid';
 import type { PopupOptions } from 'maplibre-gl';
-import type { ExpenseForm, ExpenseFeatureCollection } from '~/types/expense';
+import type { ExpenseForm, ExpenseFeatureCollection } from '~/@types/expense';
 
 /**
  * Expense Store

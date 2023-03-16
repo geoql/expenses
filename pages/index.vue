@@ -300,7 +300,7 @@
 
 <script lang="ts">
   import type { MapMouseEvent } from 'maplibre-gl';
-  import type { ExpenseFeature, MyDB } from '~/types/expense';
+  import type { ExpenseFeature, MyDB } from '~/@types/expense';
   import type { IDBPDatabase } from 'idb';
   import { computed, defineComponent, onMounted } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';

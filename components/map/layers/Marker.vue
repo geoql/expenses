@@ -116,7 +116,7 @@
   import type {
     ExpenseFeature,
     ExpenseFeatureCollection,
-  } from '~/types/expense';
+  } from '~/@types/expense';
   import type { PopupOptions } from 'maplibre-gl';
   import { VMarker } from '~/lib/v-mapbox';
 
