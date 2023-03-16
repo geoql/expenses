@@ -23,7 +23,7 @@
         }"
         @click="updateBasemap(basemap)"
       >
-        <div class="w-1/4">
+        <div class="w-1/6">
           <img
             class="object-cover h-12 rounded-lg"
             :src="`/images/basemaps/${basemap.image}.webp`"
