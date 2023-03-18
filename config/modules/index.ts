@@ -1,4 +1,5 @@
 import type { NuxtConfig } from 'nuxt/schema';
+import { plausible } from './plausible';
 
 const modules: NuxtConfig['modules'] = [
   // https://pinia.esm.dev/ssr/nuxt.html#nuxt-js
@@ -7,6 +8,8 @@ const modules: NuxtConfig['modules'] = [
   'nuxt-windicss',
   // https://vueuse.org/guide/#nuxt
   '@vueuse/nuxt',
+  // https://github.com/nuxt-modules/plausible#setup
+  ['@nuxtjs/plausible', plausible],
 ];
 
 export { modules };
