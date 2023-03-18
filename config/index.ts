@@ -1,12 +1,20 @@
 import type { NuxtConfig } from 'nuxt/schema';
 import { head } from './head';
 
+const app: NuxtConfig['app'] = {
+  head,
+};
+
 const css: NuxtConfig['css'] = [
   'maplibre-gl/dist/maplibre-gl.css',
   'v-mapbox/dist/v-mapbox.css',
   '~/assets/css/global.css',
   '~/assets/css/fonts.css',
 ];
+
+const nitro: NuxtConfig['nitro'] = {
+  preset: 'netlify-builder',
+};
 
 const plugins: NuxtConfig['plugins'] = [
   '~/plugins/v-mapbox.ts',
@@ -27,12 +35,13 @@ const runtimeConfig: NuxtConfig['runtimeConfig'] = {
     appVersion: process.env.npm_package_version,
   },
 };
-const app: NuxtConfig['app'] = {
-  baseURL: '/',
-  head,
-};
 
 const ssr: NuxtConfig['ssr'] = false;
 
+const typescript: NuxtConfig['typescript'] = {
+  strict: true,
+  shim: false,
+};
+
 export { modules } from './modules';
-export { app, css, plugins, runtimeConfig, ssr };
+export { app, css, nitro, plugins, runtimeConfig, ssr, typescript };

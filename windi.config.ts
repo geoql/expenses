@@ -1,8 +1,9 @@
 import colors from 'windicss/colors';
 import { defineConfig } from 'windicss/helpers';
+import defaultTheme from 'windicss/defaultTheme';
 
 const extract = {
-  include: ['**/*.{vue,html,jsx,tsx}'],
+  include: ['**/*.{vue,html,jsx,tsx,md}'],
   exclude: ['node_modules', '.git'],
 };
 
@@ -10,14 +11,31 @@ const theme = {
   extend: {
     colors: {
       ...colors,
-      gray: colors.slate,
+      gray: colors.stone,
       transparent: 'transparent',
     },
     fontFamily: {
-      sans: ['Inter var', ...require('windicss/defaultTheme').fontFamily.sans],
+      sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+    },
+    typography: {
+      DEFAULT: {
+        css: {
+          pre: {
+            backgroundColor: colors.stone[200],
+          },
+        },
+      },
+      DARK: {
+        css: {
+          pre: {
+            backgroundColor: colors.stone[800],
+          },
+        },
+      },
     },
   },
 };
+
 const plugins = [
   require('windicss/plugin/filters'),
   require('windicss/plugin/forms'),
@@ -28,7 +46,8 @@ const plugins = [
   require('@windicss/plugin-animations'),
   require('windicss/plugin/typography')({
     dark: true,
-    modifiers: ['DEFAULT', 'sm', 'lg', 'red'],
+    rtl: true,
+    className: 'prose',
   }),
 ];
 
