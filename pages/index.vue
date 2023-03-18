@@ -350,28 +350,28 @@
               enabled: false,
               image: 'dark',
               source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-standard-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
             },
             {
               type: 'Light Std (AWS)',
               enabled: false,
               image: 'streets',
               source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-standard-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
             },
             {
               type: 'Dark Viz (AWS)',
               enabled: false,
               image: 'dark',
               source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-viz-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
             },
             {
               type: 'Light Viz (AWS)',
               enabled: false,
               image: 'streets',
               source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/od-viz-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
             },
           );
         });
