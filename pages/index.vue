@@ -36,6 +36,7 @@
         <span class="relative z-0 inline-flex rounded-full shadow">
           <button
             type="button"
+            aria-label="Toggle Marker(s)"
             class="relative visible inline-flex items-center px-3 py-1.5 rounded-l-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
               'bg-indigo-800 text-gray-50': expenseStore.$state.map.ui.isMarker,
@@ -60,6 +61,7 @@
           </button>
           <button
             type="button"
+            aria-label="Toggle Cluster(s)"
             class="-ml-px relative visible inline-flex items-center px-3 py-1.5 border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
               'bg-indigo-800 text-gray-50':
@@ -83,6 +85,7 @@
           </button>
           <button
             type="button"
+            aria-label="Toggle Heatmap"
             class="-ml-px relative visible inline-flex items-center px-3 py-1.5 rounded-r-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
             :class="{
               'bg-indigo-800 text-gray-50 ':

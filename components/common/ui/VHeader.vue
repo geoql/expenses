@@ -28,7 +28,7 @@
         <span>
           {{ map.zoom.toFixed(2) }}
         </span>
-        <span class="opacity-50">
+        <span class="opacity-75">
           [{{ map.latitude.toFixed(2) }}, {{ map.longitude.toFixed(2) }}]
         </span>
       </div>
