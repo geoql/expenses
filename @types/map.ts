@@ -1,5 +1,5 @@
-/* eslint-disable camelcase */
 export type Basemap = {
+  id: string;
   type: string;
   enabled: boolean;
   source: string;
@@ -8,6 +8,7 @@ export type Basemap = {
 };
 
 export type Basemaps = {
+  id: string;
   title: 'Basemaps';
   basemaps: Basemap[];
 };

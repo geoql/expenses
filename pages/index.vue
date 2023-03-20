@@ -303,18 +303,15 @@
 
 <script lang="ts">
   import type { MapMouseEvent } from 'maplibre-gl';
-  import type { ExpenseFeature, MyDB } from '~/@types/expense';
   import type { IDBPDatabase } from 'idb';
+  import type { ExpenseFeature } from '~/@types/expense';
+  import type { MyDB } from '~/@types/db';
   import { computed, defineComponent, onMounted } from 'vue';
   import CommonMap from '~/components/map/CommonMap.vue';
   import { VMarker } from '~/lib/v-mapbox';
   import Cluster from '~/components/map/layers/Cluster.vue';
   import Heatmap from '~/components/map/layers/Heatmap.vue';
   import Marker from '~/components/map/layers/Marker.vue';
-  import { useMap } from '~/composables/useMap';
-  import { useExpense } from '~/composables/useExpense';
-  import { useIdb } from '~/composables/useIdb';
-  import { v4 as uuid } from 'uuid';
 
   export default defineComponent({
     name: 'Dashboard',
@@ -331,7 +328,6 @@
       const expenseStore = useExpense();
 
       const isDark = useDark();
-      const runtimeConfig = useRuntimeConfig();
 
       const getMarkerColor = computed(() => {
         return [isDark.value ? 'text-indigo-600' : 'text-indigo-500'];
@@ -345,39 +341,7 @@
             state.geojson = expenses[0];
           });
         }
-        // Popuplate Basemaps
-        mapStore.$patch((state) => {
-          state.utils.basemaps.data.basemaps.push(
-            {
-              type: 'Dark Std (AWS)',
-              enabled: false,
-              image: 'dark',
-              source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
-            },
-            {
-              type: 'Light Std (AWS)',
-              enabled: false,
-              image: 'streets',
-              source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
-            },
-            {
-              type: 'Dark Viz (AWS)',
-              enabled: false,
-              image: 'dark',
-              source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
-            },
-            {
-              type: 'Light Viz (AWS)',
-              enabled: false,
-              image: 'streets',
-              source: 'aws',
-              style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
-            },
-          );
-        });
+        await mapStore.getBasemaps();
       });
 
       const onMapClicked = (e: MapMouseEvent): void => {
@@ -439,7 +403,7 @@
         } else {
           expenseStore.$patch((state) => {
             state.geojson = {
-              id: uuid().split('-').join(''),
+              id: useUuid(),
               type: 'FeatureCollection',
               features: [feature],
             };

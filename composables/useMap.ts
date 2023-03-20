@@ -1,5 +1,6 @@
 import { MapOptions } from 'maplibre-gl';
 import { defineStore } from 'pinia';
+import { Basemaps } from '~/@types/map';
 
 /**
  * Map Store
@@ -69,9 +70,11 @@ export const useMap = defineStore({
       basemaps: {
         shown: false as boolean,
         data: {
+          id: useUuid(),
           title: 'Basemaps',
           basemaps: [
             {
+              id: useUuid(),
               type: 'Dark (Carto)',
               enabled: true,
               image: 'dark',
@@ -80,6 +83,7 @@ export const useMap = defineStore({
                 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
             },
             {
+              id: useUuid(),
               type: 'Light (Carto)',
               enabled: false,
               image: 'streets',
@@ -88,7 +92,7 @@ export const useMap = defineStore({
                 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
             },
           ],
-        },
+        } as Basemaps,
       },
       upload: {
         shown: false as boolean,
@@ -139,6 +143,53 @@ export const useMap = defineStore({
       this.utils.compass.shown = !this.utils.compass.shown;
       this.utils.compass.data.bearing = 0;
       this.utils.compass.shown = false;
+    },
+    async getBasemaps(): Promise<void> {
+      const db = await useIdb();
+      const basemaps = await db.getAll('basemaps');
+      const runtimeConfig = useRuntimeConfig();
+      if (basemaps.length) {
+        this.utils.basemaps.data = basemaps[0];
+      } else {
+        this.utils.basemaps.data.basemaps.push(
+          {
+            id: useUuid(),
+            type: 'Dark Std (AWS)',
+            enabled: false,
+            image: 'dark',
+            source: 'aws',
+            style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+          },
+          {
+            id: useUuid(),
+            type: 'Light Std (AWS)',
+            enabled: false,
+            image: 'streets',
+            source: 'aws',
+            style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-standard-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+          },
+          {
+            id: useUuid(),
+            type: 'Dark Viz (AWS)',
+            enabled: false,
+            image: 'dark',
+            source: 'aws',
+            style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-dark/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+          },
+          {
+            id: useUuid(),
+            type: 'Light Viz (AWS)',
+            enabled: false,
+            image: 'streets',
+            source: 'aws',
+            style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
+          },
+        );
+        db.put(
+          'basemaps',
+          JSON.parse(JSON.stringify(this.utils.basemaps.data)),
+        );
+      }
     },
   },
 });

@@ -1,5 +1,3 @@
-import type { DBSchema } from 'idb';
-
 export type ExpenseForm = {
   amount: number | undefined;
   description: string;
@@ -23,11 +21,3 @@ export type ExpenseFeatureCollection = {
   type: 'FeatureCollection';
   features: ExpenseFeature[];
 };
-
-export interface MyDB extends DBSchema {
-  expenses: {
-    value: ExpenseFeatureCollection;
-    key: string;
-    indexes: { 'by-id': string };
-  };
-}
