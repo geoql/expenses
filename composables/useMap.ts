@@ -91,7 +91,10 @@ export const useMap = defineStore({
       return basemap?.style;
     },
     loaded: (state): boolean => {
-      return state.ui.loaded || state.ui.styleChanged || state.ui.tilesLoaded;
+      return (
+        state.utils.basemaps.data.basemaps.length > 0 &&
+        (state.ui.loaded || state.ui.styleChanged || state.ui.tilesLoaded)
+      );
     },
   },
   actions: {
