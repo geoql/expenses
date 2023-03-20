@@ -27,13 +27,11 @@
       </svg>
     </div>
     <common-map
-      v-if="mapStore.utils.basemaps.data.basemaps.length"
+      v-if="mapStore.utils.basemaps.data.basemaps.length > 0"
       :class="{ 'opacity-50': !mapStore.loaded }"
       @on-clicked="onMapClicked"
     >
-      <div
-        class="absolute top-0 left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
-      >
+      <template #tools-tl>
         <span class="relative z-0 inline-flex rounded-full shadow">
           <button
             type="button"
@@ -110,12 +108,13 @@
             </svg>
           </button>
         </span>
-      </div>
-      <template v-if="mapStore.loaded">
+      </template>
+      <!-- Marker(s) -->
+      <template>
         <v-marker
           :options="expenseStore.$state.map.marker.options"
           :popup-options="expenseStore.$state.map.marker.popup.options"
-          v-model:coordinates="expenseStore.$state.map.marker.coordinates"
+          :coordinates="expenseStore.$state.map.marker.coordinates"
         >
           <template #markers="{ setRef }">
             <svg
@@ -346,6 +345,7 @@
       });
 
       const onMapClicked = (e: MapMouseEvent): void => {
+        console.log('on map clicked: ', e.lngLat.lng, e.lngLat.lat);
         expenseStore.$patch((state) => {
           state.map.marker.coordinates = [e.lngLat.lng, e.lngLat.lat];
         });
