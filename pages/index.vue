@@ -27,6 +27,7 @@
       </svg>
     </div>
     <common-map
+      v-if="mapStore.utils.basemaps.data.basemaps.length"
       :class="{ 'opacity-50': !mapStore.loaded }"
       @on-clicked="onMapClicked"
     >
@@ -334,6 +335,7 @@
       });
 
       onMounted(async () => {
+        await mapStore.getBasemaps();
         db = await useIdb();
         const expenses = await db.getAll('expenses');
         if (expenses.length > 0) {
@@ -341,7 +343,6 @@
             state.geojson = expenses[0];
           });
         }
-        await mapStore.getBasemaps();
       });
 
       const onMapClicked = (e: MapMouseEvent): void => {

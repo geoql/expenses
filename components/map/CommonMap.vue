@@ -1,7 +1,7 @@
 <template>
   <main class="w-full h-full select-none">
     <v-map
-      :options="store.$state.map.options"
+      :options="{ ...store.$state.map.options, style: store.style }"
       @loaded="onMapLoaded"
       @click="onMapClicked"
       @pitchend="onMapPitchEnd"
@@ -355,7 +355,7 @@
        * @param {string} e - String of the new style
        * @returns {void} - Returns void
        */
-      function updateBasemap(e: string): void {
+      async function updateBasemap(e: string): Promise<void> {
         store.$patch((state) => {
           state.utils.basemaps.data.basemaps.forEach((basemap) => {
             if (basemap.style === e) {
@@ -365,6 +365,7 @@
             }
           });
         });
+        await store.setBasemaps();
         map.setStyle(e);
       }
       /**

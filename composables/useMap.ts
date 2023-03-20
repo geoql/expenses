@@ -26,10 +26,7 @@ export const useMap = defineStore({
         zoom: 0 as number,
       },
       options: {
-        // style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
         container: 'map',
-        style:
-          'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
         center: [73.8567, 18.5204] as number[],
         zoom: 11,
         maxZoom: 22,
@@ -72,26 +69,7 @@ export const useMap = defineStore({
         data: {
           id: useUuid(),
           title: 'Basemaps',
-          basemaps: [
-            {
-              id: useUuid(),
-              type: 'Dark (Carto)',
-              enabled: true,
-              image: 'dark',
-              source: 'carto',
-              style:
-                'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-            },
-            {
-              id: useUuid(),
-              type: 'Light (Carto)',
-              enabled: false,
-              image: 'streets',
-              source: 'carto',
-              style:
-                'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-            },
-          ],
+          basemaps: [],
         } as Basemaps,
       },
       upload: {
@@ -106,6 +84,12 @@ export const useMap = defineStore({
     },
   }),
   getters: {
+    style: (state) => {
+      const basemap = state.utils.basemaps.data.basemaps.find(
+        (basemap) => basemap.enabled,
+      );
+      return basemap?.style;
+    },
     loaded: (state): boolean => {
       return state.ui.loaded || state.ui.styleChanged || state.ui.tilesLoaded;
     },
@@ -149,9 +133,28 @@ export const useMap = defineStore({
       const basemaps = await db.getAll('basemaps');
       const runtimeConfig = useRuntimeConfig();
       if (basemaps.length) {
+        // @ts-ignore
         this.utils.basemaps.data = basemaps[0];
       } else {
         this.utils.basemaps.data.basemaps.push(
+          {
+            id: useUuid(),
+            type: 'Dark (Carto)',
+            enabled: true,
+            image: 'dark',
+            source: 'carto',
+            style:
+              'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+          },
+          {
+            id: useUuid(),
+            type: 'Light (Carto)',
+            enabled: false,
+            image: 'streets',
+            source: 'carto',
+            style:
+              'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+          },
           {
             id: useUuid(),
             type: 'Dark Std (AWS)',
@@ -185,11 +188,12 @@ export const useMap = defineStore({
             style: `https://maps.geo.${runtimeConfig.public.map.aws.region}.amazonaws.com/maps/v0/maps/open-data-visualization-light/style-descriptor?key=${runtimeConfig.public.map.aws.key}`,
           },
         );
-        db.put(
-          'basemaps',
-          JSON.parse(JSON.stringify(this.utils.basemaps.data)),
-        );
+        await this.setBasemaps();
       }
+    },
+    async setBasemaps(): Promise<void> {
+      const db = await useIdb();
+      db.put('basemaps', JSON.parse(JSON.stringify(this.utils.basemaps.data)));
     },
   },
 });
