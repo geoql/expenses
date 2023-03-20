@@ -3,8 +3,7 @@
   import type { PropType } from 'vue';
   import { AttributionControl } from 'maplibre-gl';
   import { defineComponent, onMounted, h } from 'vue';
-  import { MapKey } from '../types/symbols';
-  import { injectStrict } from '../utils';
+  import { MapKey, injectStrict } from '../utils';
 
   export default defineComponent({
     name: 'VControlAttribution',

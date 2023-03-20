@@ -3,8 +3,7 @@
   import type { PropType } from 'vue';
   import { ScaleControl } from 'maplibre-gl';
   import { defineComponent, onMounted } from 'vue';
-  import { MapKey } from '../types/symbols';
-  import { injectStrict } from '../utils';
+  import { MapKey, injectStrict } from '../utils';
 
   export default defineComponent({
     name: 'VControlScale',
@@ -12,7 +11,7 @@
       options: {
         type: Object as PropType<ScaleOptions>,
         default: () => ({}),
-        required: true,
+        required: false,
       },
       position: {
         type: String as PropType<
