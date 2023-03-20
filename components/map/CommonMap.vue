@@ -9,172 +9,199 @@
       @zoomend="onMapZoomEnd"
     >
       <template v-if="store.loaded">
-        <!-- <v-control-scale v-if="store.$state.map.controls.scale.shown" /> -->
+        <!-- Map :: Default Controls -->
+        <v-control-scale v-if="store.$state.map.controls.scale.shown" />
+
+        <!-- Map :: Default Slot -->
         <slot />
-      </template>
-      <!-- Basemaps -->
-      <div
-        class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
-      >
-        <div class="relative flex flex-col space-y-2">
-          <!-- Basemaps -->
-          <div
-            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
-            title="Basemaps"
-            :class="{
-              'bg-gray-300 dark:bg-gray-800': store.$state.utils.basemaps.shown,
-            }"
-          >
-            <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
-              <svg
-                class="w-5 h-5 stroke-current fill-none"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                />
-              </svg>
-            </div>
-            <transition
-              enter-active-class="transition duration-100 ease-out"
-              enter-from-class="transform scale-95 translate-x-4 opacity-0"
-              enter-to-class="transform scale-100 opacity-100"
-              leave-active-class="transition duration-75 ease-in translate-x-4"
-              leave-from-class="transform scale-100 opacity-100"
-              leave-to-class="transform scale-95 opacity-0"
+
+        <!-- Map :: Top Left Slot -->
+        <div
+          class="absolute top-0 left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+        >
+          <div class="relative flex flex-col space-y-2">
+            <slot name="tools-tl" class="visible" />
+          </div>
+        </div>
+        <!-- Map :: Top Right Slot -->
+        <div
+          class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+        >
+          <div class="relative flex flex-col space-y-2">
+            <!-- Basemaps -->
+            <div
+              v-click-outside="
+                () => (store.$state.utils.basemaps.shown = false)
+              "
+              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              title="Basemaps"
+              :class="{
+                'bg-gray-300 dark:bg-gray-800':
+                  store.$state.utils.basemaps.shown,
+              }"
             >
-              <div
-                v-if="store.$state.utils.basemaps.shown"
-                class="absolute top-0 right-0 w-48 mr-12 origin-right bg-gray-300 rounded-md shadow-lg sm:w-64 dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
-              >
-                <basemaps
-                  :data="store.$state.utils.basemaps.data"
-                  @update-map-style="updateBasemap"
-                  @close="store.$state.utils.basemaps.shown = false"
-                />
+              <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
+                <svg
+                  class="w-5 h-5 stroke-current fill-none"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                  />
+                </svg>
               </div>
-            </transition>
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 translate-x-4 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in translate-x-4"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <div
+                  v-if="store.$state.utils.basemaps.shown"
+                  class="absolute top-0 right-0 w-48 mr-12 origin-right bg-gray-300 rounded-md shadow-lg sm:w-64 dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
+                >
+                  <basemaps
+                    :data="store.$state.utils.basemaps.data"
+                    @update-map-style="updateBasemap"
+                    @close="store.$state.utils.basemaps.shown = false"
+                  />
+                </div>
+              </transition>
+            </div>
+            <slot name="tools-tr" class="visible" />
           </div>
         </div>
-      </div>
-      <!-- Zoom in, Zoom out, Bearing & Locate Me -->
-      <div
-        class="absolute right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
-      >
-        <div class="relative flex flex-col space-y-2">
-          <!-- Zoom in & out -->
-          <div
-            class="flex flex-col items-center justify-center visible w-10 h-20"
-            title="Zoom In/Out"
-          >
-            <!-- Zoom In -->
-            <div
-              class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-b-0 border-gray-100 rounded-md rounded-b-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
-              title="Zoom In"
-              @click="mapZoomIn"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-            </div>
-            <!-- Zoom Out -->
-            <div
-              class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-t-0 border-gray-100 rounded-md rounded-t-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
-              title="Zoom Out"
-              @click="mapZoomOut"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M20 12H4"
-                />
-              </svg>
-            </div>
+        <!-- Map :: Bottom Left Slot -->
+        <div
+          class="absolute left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
+        >
+          <div class="relative flex flex-col space-y-2">
+            <slot name="tools-bl" class="visible" />
           </div>
-          <!-- Bearing -->
-          <div
-            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
-            title="Locate Me"
-            :class="{
-              'bg-gray-300 dark:bg-gray-800': store.$state.utils.compass.shown,
-            }"
-          >
-            <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 transition-all duration-100 ease-linear transform fill-current"
-                viewBox="0 0 18 18"
-                :style="{
-                  transform:
-                    'rotate(' +
-                    store.$state.utils.compass.data.bearing +
-                    'deg)',
-                }"
+        </div>
+        <!-- Map :: Bottom Right Slot -->
+        <div
+          class="absolute right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
+        >
+          <div class="relative flex flex-col space-y-2">
+            <slot name="tools-br" class="visible" />
+            <!-- Zoom in & out -->
+            <div
+              class="flex flex-col items-center justify-center visible w-10 h-20"
+              title="Zoom In/Out"
+            >
+              <!-- Zoom In -->
+              <div
+                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-b-0 border-gray-100 rounded-md rounded-b-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                title="Zoom In"
+                @click="mapZoomIn"
               >
-                <path
-                  d="M5.5 14.2c-.9.8-1.9 0-1.5-1l4-9c.2-.4.6-.8 1-.8s.8.4 1 .8l4 9c.4 1-.6 1.8-1.5 1l-3.5-3-3.5 3z"
-                />
-              </svg>
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </div>
+              <!-- Zoom Out -->
+              <div
+                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-t-0 border-gray-100 rounded-md rounded-t-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                title="Zoom Out"
+                @click="mapZoomOut"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20 12H4"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
-          <!-- Locate -->
-          <div
-            class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
-            title="Locate Me"
-          >
-            <div class="p-2 cursor-pointer" @click="toggleTool('locate')">
-              <svg
-                class="w-5 h-5 fill-current stroke-current"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 469.333 469.333"
-              >
-                <defs />
-                <path
-                  d="M234.667 149.333c-47.147 0-85.333 38.187-85.333 85.333S187.52 320 234.667 320 320 281.813 320 234.667s-38.187-85.334-85.333-85.334zm190.72 64C415.573 124.373 344.96 53.76 256 43.947V0h-42.667v43.947C124.373 53.76 53.76 124.373 43.947 213.333H0V256h43.947c9.813 88.96 80.427 159.573 169.387 169.387v43.947H256v-43.947C344.96 415.573 415.573 344.96 425.387 256h43.947v-42.667h-43.947zM234.667 384c-82.453 0-149.333-66.88-149.333-149.333s66.88-149.333 149.333-149.333S384 152.213 384 234.667 317.12 384 234.667 384z"
-                />
-              </svg>
+            <!-- Bearing -->
+            <div
+              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              title="Map Bearing"
+              :class="{
+                'bg-gray-300 dark:bg-gray-800':
+                  store.$state.utils.compass.shown,
+              }"
+            >
+              <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-5 h-5 transition-all duration-100 ease-linear transform fill-current"
+                  viewBox="0 0 18 18"
+                  :style="{
+                    transform:
+                      'rotate(' +
+                      store.$state.utils.compass.data.bearing +
+                      'deg)',
+                  }"
+                >
+                  <path
+                    d="M5.5 14.2c-.9.8-1.9 0-1.5-1l4-9c.2-.4.6-.8 1-.8s.8.4 1 .8l4 9c.4 1-.6 1.8-1.5 1l-3.5-3-3.5 3z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <!-- Locate -->
+            <div
+              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              title="Locate Me"
+            >
+              <div class="p-2 cursor-pointer" @click="toggleTool('locate')">
+                <svg
+                  class="w-5 h-5 fill-current stroke-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 469.333 469.333"
+                >
+                  <defs />
+                  <path
+                    d="M234.667 149.333c-47.147 0-85.333 38.187-85.333 85.333S187.52 320 234.667 320 320 281.813 320 234.667s-38.187-85.334-85.333-85.334zm190.72 64C415.573 124.373 344.96 53.76 256 43.947V0h-42.667v43.947C124.373 53.76 53.76 124.373 43.947 213.333H0V256h43.947c9.813 88.96 80.427 159.573 169.387 169.387v43.947H256v-43.947C344.96 415.573 415.573 344.96 425.387 256h43.947v-42.667h-43.947zM234.667 384c-82.453 0-149.333-66.88-149.333-149.333s66.88-149.333 149.333-149.333S384 152.213 384 234.667 317.12 384 234.667 384z"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+
+        <!-- Map :: Layers Slot -->
+        <slot name="layers" />
+      </template>
     </v-map>
   </main>
 </template>
 
 <script lang="ts">
   import type { Map, MapMouseEvent } from 'maplibre-gl';
-  import { VMarker } from 'v-mapbox';
-  import { useMap } from '~/composables/useMap';
   import Basemaps from './_partials/Basemaps.vue';
 
   export default defineComponent({
     name: 'CommonMap',
     components: {
       Basemaps,
-      VMarker,
     },
     setup(_, { emit }) {
       const store = useMap();
