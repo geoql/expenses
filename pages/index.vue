@@ -29,6 +29,7 @@
     <common-map
       v-if="mapStore.utils.basemaps.data.basemaps.length > 0"
       :class="{ 'opacity-50': !mapStore.loaded }"
+      @on-loaded="onMapLoaded"
       @on-clicked="onMapClicked"
     >
       <template #tools-tl>
@@ -109,18 +110,22 @@
           </button>
         </span>
       </template>
-      <!-- Marker(s) -->
-      <template>
-        <v-marker
-          :options="expenseStore.$state.map.marker.options"
-          :popup-options="expenseStore.$state.map.marker.popup.options"
-          :coordinates="expenseStore.$state.map.marker.coordinates"
+      <template #tools-tr>
+        <div
+          class="visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+          title="Upload CSV"
+          :class="{
+            'dark:bg-gray-800 bg-gray-200': mapStore.$state.utils.upload.shown,
+            'hover:dark:bg-gray-800 hover:bg-gray-200':
+              !mapStore.$state.utils.upload.shown,
+          }"
         >
-          <template #markers="{ setRef }">
+          <div
+            class="p-2 cursor-pointer"
+            @click="mapStore.toggleUploadsWidget()"
+          >
             <svg
-              :ref="(el) => setRef(el)"
-              class="w-8 h-8 cursor-pointer"
-              :class="getMarkerColor"
+              class="w-5 h-5 stroke-current"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -130,89 +135,162 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
               />
             </svg>
-          </template>
-          <div class="expense-popup-card">
+          </div>
+          <transition
+            enter-active-class="transition duration-100 ease-out"
+            enter-from-class="transform scale-95 translate-x-4 opacity-0"
+            enter-to-class="transform scale-100 opacity-100"
+            leave-active-class="transition duration-75 ease-in translate-x-4"
+            leave-from-class="transform scale-100 opacity-100"
+            leave-to-class="transform scale-95 opacity-0"
+          >
             <div
-              class="flex flex-col items-start justify-center text-white border border-gray-300 dark:border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-800"
+              v-if="mapStore.$state.utils.upload.shown"
+              class="absolute top-0 right-0 w-64 mr-12 origin-right bg-gray-300 rounded-md shadow-lg dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
             >
-              <div
-                class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-50 text-gray-800"
+              <expense-upload
+                @close="mapStore.$state.utils.upload.shown = false"
+              />
+            </div>
+          </transition>
+        </div>
+      </template>
+      <template #layers>
+        <!-- Expense Layer(s) -->
+        <template>
+          <!-- Marker(s) -->
+          <v-marker
+            :options="expenseStore.$state.map.marker.options"
+            :popup-options="expenseStore.$state.map.marker.popup.options"
+            :coordinates="expenseStore.$state.map.marker.coordinates"
+          >
+            <template #markers="{ setRef }">
+              <svg
+                :ref="(el) => setRef(el)"
+                class="w-8 h-8 cursor-pointer"
+                :class="getMarkerColor"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <div class="capitalize">
-                  {{ expenseStore.$state.form.type }}
-                </div>
-                <button
-                  type="button"
-                  class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
-                  :class="{
-                    'bg-green-600 focus:ring-green-500':
-                      expenseStore.$state.form.type === 'credit',
-                    'bg-red-600 focus:ring-red-500':
-                      expenseStore.$state.form.type === 'debit',
-                  }"
-                  aria-pressed="false"
-                  @click="
-                    expenseStore.$state.form.type === 'credit'
-                      ? (expenseStore.$state.form.type = 'debit')
-                      : (expenseStore.$state.form.type = 'credit')
-                  "
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </template>
+            <div class="expense-popup-card">
+              <div
+                class="flex flex-col items-start justify-center text-white border border-gray-300 dark:border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-800"
+              >
+                <div
+                  class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-50 text-gray-800"
                 >
-                  <span class="sr-only">Use setting</span>
-                  <span
-                    aria-hidden="true"
+                  <div class="capitalize">
+                    {{ expenseStore.$state.form.type }}
+                  </div>
+                  <button
+                    type="button"
+                    class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
                     :class="{
-                      'translate-x-5':
-                        expenseStore.$state.form.type === 'debit',
-                      'translate-x-0':
+                      'bg-green-600 focus:ring-green-500':
                         expenseStore.$state.form.type === 'credit',
+                      'bg-red-600 focus:ring-red-500':
+                        expenseStore.$state.form.type === 'debit',
                     }"
-                    class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
-                  />
-                </button>
-              </div>
-              <form class="grid p-4 space-y-2" @submit.prevent="add">
-                <div class="rounded-md shadow-sm">
-                  <label
-                    for="expense"
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                    aria-pressed="false"
+                    @click="
+                      expenseStore.$state.form.type === 'credit'
+                        ? (expenseStore.$state.form.type = 'debit')
+                        : (expenseStore.$state.form.type = 'credit')
+                    "
                   >
-                    Amount
-                  </label>
-                  <div class="relative mt-1 rounded-md shadow-sm">
-                    <div
-                      class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                    <span class="sr-only">Use setting</span>
+                    <span
+                      aria-hidden="true"
+                      :class="{
+                        'translate-x-5':
+                          expenseStore.$state.form.type === 'debit',
+                        'translate-x-0':
+                          expenseStore.$state.form.type === 'credit',
+                      }"
+                      class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
+                    />
+                  </button>
+                </div>
+                <form class="grid p-4 space-y-2" @submit.prevent="add">
+                  <div class="rounded-md shadow-sm">
+                    <label
+                      for="expense"
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-200"
                     >
-                      <svg
-                        class="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
+                      Amount
+                    </label>
+                    <div class="relative mt-1 rounded-md shadow-sm">
+                      <div
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
                       >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                      </svg>
+                        <svg
+                          class="w-5 h-5 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
+                        </svg>
+                      </div>
+                      <input
+                        id="expense"
+                        v-model.number="expenseStore.$state.form.amount"
+                        type="text"
+                        name="expense"
+                        required="true"
+                        class="block w-full pl-10 rounded-md sm:text-sm border-gray-300 outline-none dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white"
+                        :class="{
+                          'focus:ring-green-500 focus:border-green-500':
+                            expenseStore.$state.form.type === 'credit',
+                          'focus:ring-red-500 focus:border-red-500':
+                            expenseStore.$state.form.type === 'debit',
+                        }"
+                        :placeholder="
+                          expenseStore.$state.form.type === 'credit'
+                            ? 'eg. 100'
+                            : 'eg. 96'
+                        "
+                      />
                     </div>
-                    <input
-                      id="expense"
-                      v-model.number="expenseStore.$state.form.amount"
-                      type="text"
-                      name="expense"
-                      required="true"
-                      class="block w-full pl-10 rounded-md sm:text-sm border-gray-300 outline-none dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white"
+                  </div>
+                  <div class="rounded-md shadow-sm">
+                    <label
+                      for="description"
+                      class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id="description"
+                      v-model="expenseStore.$state.form.description"
+                      name="description"
+                      rows="2"
+                      class="block w-full mt-1 rounded-md outline-none border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white py-2 px-3 sm:text-sm"
                       :class="{
                         'focus:ring-green-500 focus:border-green-500':
                           expenseStore.$state.form.type === 'credit',
@@ -221,80 +299,54 @@
                       }"
                       :placeholder="
                         expenseStore.$state.form.type === 'credit'
-                          ? 'eg. 100'
-                          : 'eg. 96'
+                          ? 'eg. refund Rs. 100'
+                          : 'eg. spent 96 on milk'
                       "
                     />
                   </div>
-                </div>
-                <div class="rounded-md shadow-sm">
-                  <label
-                    for="description"
-                    class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    v-model="expenseStore.$state.form.description"
-                    name="description"
-                    rows="2"
-                    class="block w-full mt-1 rounded-md outline-none border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white py-2 px-3 sm:text-sm"
-                    :class="{
-                      'focus:ring-green-500 focus:border-green-500':
-                        expenseStore.$state.form.type === 'credit',
-                      'focus:ring-red-500 focus:border-red-500':
-                        expenseStore.$state.form.type === 'debit',
-                    }"
-                    :placeholder="
-                      expenseStore.$state.form.type === 'credit'
-                        ? 'eg. refund Rs. 100'
-                        : 'eg. spent 96 on milk'
-                    "
-                  />
-                </div>
-                <div class="rounded-md shadow-sm">
-                  <button
-                    type="submit"
-                    :class="{
-                      'bg-red-600 hover:bg-red-700 focus:ring-red-500':
-                        expenseStore.$state.form.type === 'debit',
-                      'bg-green-600 hover:bg-green-700 focus:ring-green-500':
-                        expenseStore.$state.form.type === 'credit',
-                    }"
-                    class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-                  >
-                    Add
-                  </button>
-                </div>
-              </form>
+                  <div class="rounded-md shadow-sm">
+                    <button
+                      type="submit"
+                      :class="{
+                        'bg-red-600 hover:bg-red-700 focus:ring-red-500':
+                          expenseStore.$state.form.type === 'debit',
+                        'bg-green-600 hover:bg-green-700 focus:ring-green-500':
+                          expenseStore.$state.form.type === 'credit',
+                      }"
+                      class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-          </div>
-        </v-marker>
-        <!-- Marker with previously added data -->
-        <template
-          v-if="
-            expenseStore.$state.geojson !== null &&
-            expenseStore.$state.geojson.features.length > 0
-          "
-        >
-          <expense-marker
-            v-if="expenseStore.isMarker"
-            :data="expenseStore.$state.geojson"
-            :visibility="expenseStore.isMarker"
-            v-model:popup-options="expenseStore.$state.popup.options"
-            v-model:popup-visibility="expenseStore.$state.popup.shown"
-          />
-          <expense-cluster
-            v-if="expenseStore.isCluster"
-            :data="expenseStore.$state.geojson"
-            :visibility="expenseStore.isCluster"
-          />
-          <expense-heatmap
-            v-if="expenseStore.isHeatmap"
-            :data="expenseStore.$state.geojson"
-            :visibility="expenseStore.isHeatmap"
-          />
+          </v-marker>
+          <!-- Marker / Cluster / Heatmap w/ previously added data -->
+          <template
+            v-if="
+              expenseStore.$state.geojson !== null &&
+              expenseStore.$state.geojson.features.length > 0
+            "
+          >
+            <expense-marker
+              v-if="expenseStore.isMarker"
+              :data="expenseStore.$state.geojson"
+              :visibility="expenseStore.isMarker"
+              v-model:popup-options="expenseStore.$state.popup.options"
+              v-model:popup-visibility="expenseStore.$state.popup.shown"
+            />
+            <expense-cluster
+              v-if="expenseStore.isCluster"
+              :data="expenseStore.$state.geojson"
+              :visibility="expenseStore.isCluster"
+            />
+            <expense-heatmap
+              v-if="expenseStore.isHeatmap"
+              :data="expenseStore.$state.geojson"
+              :visibility="expenseStore.isHeatmap"
+            />
+          </template>
         </template>
       </template>
     </common-map>
@@ -302,33 +354,41 @@
 </template>
 
 <script lang="ts">
-  import type { MapMouseEvent } from 'maplibre-gl';
+  import type { Map, MapMouseEvent } from 'maplibre-gl';
   import type { IDBPDatabase } from 'idb';
-  import type { ExpenseFeature } from '~/@types/expense';
+  import type {
+    ExpenseFeature,
+    ExpenseFeatureCollection,
+  } from '~/@types/expense';
   import type { MyDB } from '~/@types/db';
   import { computed, defineComponent, onMounted } from 'vue';
+  import center from '@turf/center';
   import CommonMap from '~/components/map/CommonMap.vue';
   import { VMarker } from '~/lib/v-mapbox';
   import Cluster from '~/components/map/layers/Cluster.vue';
   import Heatmap from '~/components/map/layers/Heatmap.vue';
   import Marker from '~/components/map/layers/Marker.vue';
+  import Upload from '~/components/map/_partials/Upload.vue';
 
   export default defineComponent({
     name: 'Dashboard',
     components: {
       CommonMap,
       VMarker,
+      ExpenseUpload: Upload,
       ExpenseMarker: Marker,
       ExpenseCluster: Cluster,
       ExpenseHeatmap: Heatmap,
     },
     setup() {
       let db: IDBPDatabase<MyDB>;
+      let map = markRaw({} as Map);
       const mapStore = useMap();
       const expenseStore = useExpense();
 
-      const isDark = useDark();
+      const { $worker } = useNuxtApp();
 
+      const isDark = useDark();
       const getMarkerColor = computed(() => {
         return [isDark.value ? 'text-indigo-600' : 'text-indigo-500'];
       });
@@ -342,8 +402,47 @@
             state.geojson = expenses[0];
           });
         }
+        // Fetches the GeoJSON from User Uploaded CSV
+        $worker.receive(
+          'csv',
+          async ({ data }: { data: ExpenseFeatureCollection }) => {
+            if (expenseStore.$state.geojson.features.length > 0) {
+              expenseStore.$patch((state) => {
+                state.geojson.features.concat(data.features);
+              });
+            } else {
+              expenseStore.$patch((state) => {
+                state.geojson = data;
+              });
+            }
+            await db.put(
+              'expenses',
+              JSON.parse(JSON.stringify(expenseStore.$state.geojson)),
+            );
+            expenseStore.$patch((state) => {
+              state.form = {
+                amount: undefined,
+                description: '',
+                type: 'debit',
+              };
+            });
+            const layerCenter = center(data);
+            map.flyTo({
+              center: [
+                layerCenter.geometry.coordinates[0],
+                layerCenter.geometry.coordinates[1],
+              ],
+              zoom: 8,
+              speed: 3,
+              curve: 1,
+            });
+          },
+        );
       });
 
+      const onMapLoaded = (m: Map): void => {
+        map = m;
+      };
       const onMapClicked = (e: MapMouseEvent): void => {
         console.log('on map clicked: ', e.lngLat.lng, e.lngLat.lat);
         expenseStore.$patch((state) => {
@@ -397,6 +496,7 @@
             date: Date.now(),
           },
         };
+        console.log('feature: ', feature);
         if (expenseStore.$state.geojson.features.length > 0) {
           expenseStore.$patch((state) => {
             state.geojson.features.push(feature);
@@ -429,6 +529,7 @@
         // computed:
         getMarkerColor,
         // methods:
+        onMapLoaded,
         onMapClicked,
         toggle,
         add,

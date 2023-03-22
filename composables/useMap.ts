@@ -1,6 +1,6 @@
-import { MapOptions } from 'maplibre-gl';
+import type { MapOptions } from 'maplibre-gl';
+import type { Basemaps } from '~/@types/map';
 import { defineStore } from 'pinia';
-import { Basemaps } from '~/@types/map';
 
 /**
  * Map Store
@@ -125,6 +125,11 @@ export const useMap = defineStore({
     },
     toggleBasemapsWidget(): void {
       this.utils.basemaps.shown = !this.utils.basemaps.shown;
+      this.utils.upload.shown = false;
+    },
+    toggleUploadsWidget(): void {
+      this.utils.upload.shown = !this.utils.upload.shown;
+      this.utils.basemaps.shown = false;
     },
     toggleCompassWidget(): void {
       this.utils.compass.shown = !this.utils.compass.shown;

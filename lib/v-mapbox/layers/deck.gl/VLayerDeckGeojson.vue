@@ -5,7 +5,7 @@
   import { MapboxLayer } from '@deck.gl/mapbox';
   import { FeatureCollection } from 'geojson';
   import type { PropType, Ref } from 'vue';
-  import { defineComponent } from 'vue';
+  import { h, defineComponent } from 'vue';
   import { injectStrict, MapKey } from '../../utils';
 
   export default defineComponent({
@@ -14,7 +14,7 @@
       layerId: {
         type: String as PropType<string>,
         default: 'deck.gl-geojson-layer',
-        required: true,
+        required: false,
       },
       data: {
         type: Object as PropType<FeatureCollection>,

@@ -214,10 +214,18 @@
        * @param {Map} e - Mapbox GL Map object
        * @returns {void}
        */
-      function onMapLoaded(e: Map): void {
+      async function onMapLoaded(e: Map): Promise<void> {
         map = e;
+        syncMap();
+      }
+
+      /**
+       * Sync the map
+       *
+       * @returns {void}
+       */
+      function syncMap(): void {
         const events: string[] = [
-          'idle',
           'moveend',
           'touchend',
           'style.load',
@@ -256,6 +264,7 @@
         store.setStyleChanged(true);
         store.setTilesLoaded(true);
         store.setLoaded(true);
+        emit('on-loaded', map);
         setMapState();
       }
       /**
