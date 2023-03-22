@@ -1,3 +1,35 @@
+# [2.2.0](https://github.com/geoql/expenses/compare/v2.1.0...v2.2.0) (2023-03-22)
+
+
+### Bug Fixes
+
+* add basemaps length check in `loaded` getter ([a8b4ca9](https://github.com/geoql/expenses/commit/a8b4ca9cfaa2d9af054f339db3e06afb78a68f0c))
+* **aws:** basemap add referrer in AWS ([3567de0](https://github.com/geoql/expenses/commit/3567de0ecd4a3534f8628badf7d67d449db20ffa))
+* **deps:** Bump amannn/action-semantic-pull-request from 5.1.0 to 5.2.0 ([c8e1acd](https://github.com/geoql/expenses/commit/c8e1acda99137fa8ebf6bfeb4a5b06201359a523))
+* **deps:** Bump v-mapbox from 4.0.0 to 4.0.2 ([84530ae](https://github.com/geoql/expenses/commit/84530ae7a7d44536cddac2c2e0d949c76ad459ac))
+* **ui:** update `w-1/6` in basemap ([7a1bdfa](https://github.com/geoql/expenses/commit/7a1bdfa43f5c93ce55515a1433f96749dce27559))
+* update `.nvmrc` to use LTS node ([d84abce](https://github.com/geoql/expenses/commit/d84abce23af4b7bac7057dd48d5965ef9abfd02e))
+* update eslint plugin security ([ec72e8d](https://github.com/geoql/expenses/commit/ec72e8d2bc42a478eac3360ca1290aae5b2e86c7))
+* use MapKey from utils instead of types ([e563c1d](https://github.com/geoql/expenses/commit/e563c1db8fa8ae7cf1b9eb79017fcb775a83818c))
+* **windi:** update animations plugins ([3f1b3c0](https://github.com/geoql/expenses/commit/3f1b3c072a1c92cd159f6153b22437061acc4418))
+
+
+### Features
+
+* add ability to bulk upload 🎉 ([d2593f3](https://github.com/geoql/expenses/commit/d2593f399dbee9c1e106f9f323168d027b03dde2))
+* add plausible analytics 🎉 ([023dd07](https://github.com/geoql/expenses/commit/023dd07d4c4bfc9df595cd9bc3b81cd69ccbfbf4))
+* minor housekeeping of theme ([8b6e67b](https://github.com/geoql/expenses/commit/8b6e67bb0b4738cba5016ed98ebde0857e9a409b))
+* persist selected basemap ✨ ([136a5ee](https://github.com/geoql/expenses/commit/136a5ee44b729070eccbb61610c371d79c5a643d))
+* **pwa:** add PWA plugin 🕺 ([b7e7fd6](https://github.com/geoql/expenses/commit/b7e7fd639a6d75a74c9f47d4aa6b484133e12a52))
+* **seo:** add opengraph tags 📁 ([db993b3](https://github.com/geoql/expenses/commit/db993b30497d5f860666a4661396f75260ce4aa0))
+
+
+### Performance Improvements
+
+* **a11y:** add a11y settings to app ([22f0d0b](https://github.com/geoql/expenses/commit/22f0d0b7688ed2bb2b4834b2b2247645027339ff))
+
+
+
 # [2.1.0](https://github.com/geoql/expenses/compare/v2.0.0...v2.1.0) (2023-03-13)
 
 
