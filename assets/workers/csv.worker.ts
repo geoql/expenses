@@ -15,14 +15,6 @@ function snooze(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-addEventListener('message', async (event: MessageEvent) => {
-  const { payload, sleep } = event.data.message;
-  await snooze(sleep);
-  const data = csvParse(payload);
-  const geojson = await transformGeoJSON(data);
-  postMessage(geojson);
-});
-
 /**
  * Transforms a CSV to GeoJSON
  *
@@ -60,3 +52,11 @@ async function transformGeoJSON(
   console.log('built geojson: ', geojson);
   return geojson;
 }
+
+self.addEventListener('message', async (e) => {
+  const message = e.data.message;
+  await snooze(message?.sleep || 0);
+  const data = csvParse(message?.payload);
+  const geojson = await transformGeoJSON(data);
+  self.postMessage(geojson);
+});

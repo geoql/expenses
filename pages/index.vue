@@ -112,7 +112,7 @@
       </template>
       <template #tools-tr>
         <div
-          class="visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+          class="opacity-50 cursor-not-allowed visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
           title="Upload CSV"
           :class="{
             'dark:bg-gray-800 bg-gray-200': mapStore.$state.utils.upload.shown,
@@ -121,7 +121,7 @@
           }"
         >
           <div
-            class="p-2 cursor-pointer"
+            class="p-2 cursor-pointer pointer-events-none"
             @click="mapStore.toggleUploadsWidget()"
           >
             <svg
