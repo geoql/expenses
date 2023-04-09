@@ -23,7 +23,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.7",
+    "@pinia/nuxt": "^0.4.8",
     "@turf/center": "^6.5.0",
     "click-outside-vue3": "^4.0.1",
     "d3-dsv": "^3.0.1",
