@@ -68,7 +68,7 @@
       const { $config } = useNuxtApp();
       const state = reactive({
         date: new Date().getFullYear(),
-        appVersion: $config.appVersion,
+        appVersion: $config.public.appVersion,
       });
       return {
         state,

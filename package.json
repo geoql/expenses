@@ -34,8 +34,8 @@
     "v-mapbox": "^4.0.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.5.1",
-    "@commitlint/config-conventional": "^17.4.4",
+    "@commitlint/cli": "^17.6.0",
+    "@commitlint/config-conventional": "^17.6.0",
     "@deck.gl/layers": "^8.9.7",
     "@deck.gl/mapbox": "^8.9.7",
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
@@ -59,7 +59,7 @@
     "eslint-plugin-vue": "^9.10.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
-    "nuxt": "^3.4.0",
+    "nuxt": "^3.4.1",
     "nuxt-windicss": "^2.6.1",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",
