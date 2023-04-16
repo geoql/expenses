@@ -56,7 +56,7 @@
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-security": "^1.7.1",
-    "eslint-plugin-vue": "^9.10.0",
+    "eslint-plugin-vue": "^9.11.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
     "nuxt": "^3.4.1",
