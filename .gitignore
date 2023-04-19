@@ -95,3 +95,4 @@ test/e2e/videos/*.mp4
 # Nuxt 3
 nuxt.d.ts
 .output
+.netlify
