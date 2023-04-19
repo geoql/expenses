@@ -69,7 +69,8 @@
 <script lang="ts">
   export default defineComponent({
     name: 'ExpenseUpload',
-    setup() {
+    emits: ['data'],
+    setup(_, { emit }) {
       const { $worker } = useNuxtApp();
 
       const file = ref({
@@ -94,11 +95,9 @@
        */
       function uploadFile(file: File) {
         const reader = new FileReader();
-        reader.onload = (e: ProgressEvent<FileReader>) => {
-          $worker.send('csv', {
-            sleep: 0,
-            payload: e.target?.result,
-          });
+        reader.onload = async (e: ProgressEvent<FileReader>) => {
+          const data = await $worker.parseDataFile(e.target?.result as string);
+          emit('data', { data });
         };
         reader.readAsBinaryString(file);
       }

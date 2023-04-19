@@ -112,7 +112,7 @@
       </template>
       <template #tools-tr>
         <div
-          class="opacity-50 cursor-not-allowed visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+          class="visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
           title="Upload CSV"
           :class="{
             'dark:bg-gray-800 bg-gray-200': mapStore.$state.utils.upload.shown,
@@ -121,7 +121,7 @@
           }"
         >
           <div
-            class="p-2 cursor-pointer pointer-events-none"
+            class="p-2 cursor-pointer"
             @click="mapStore.toggleUploadsWidget()"
           >
             <svg
@@ -152,6 +152,7 @@
               class="absolute top-0 right-0 w-64 mr-12 origin-right bg-gray-300 rounded-md shadow-lg dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
             >
               <expense-upload
+                @data="onWorkerData"
                 @close="mapStore.$state.utils.upload.shown = false"
               />
             </div>
@@ -402,43 +403,44 @@
             state.geojson = expenses[0];
           });
         }
-        // Fetches the GeoJSON from User Uploaded CSV
-        $worker.receive(
-          'csv',
-          async ({ data }: { data: ExpenseFeatureCollection }) => {
-            if (expenseStore.$state.geojson.features.length > 0) {
-              expenseStore.$patch((state) => {
-                state.geojson.features.concat(data.features);
-              });
-            } else {
-              expenseStore.$patch((state) => {
-                state.geojson = data;
-              });
-            }
-            await db.put(
-              'expenses',
-              JSON.parse(JSON.stringify(expenseStore.$state.geojson)),
-            );
-            expenseStore.$patch((state) => {
-              state.form = {
-                amount: undefined,
-                description: '',
-                type: 'debit',
-              };
-            });
-            const layerCenter = center(data);
-            map.flyTo({
-              center: [
-                layerCenter.geometry.coordinates[0],
-                layerCenter.geometry.coordinates[1],
-              ],
-              zoom: 8,
-              speed: 3,
-              curve: 1,
-            });
-          },
-        );
       });
+
+      const onWorkerData = async ({
+        data,
+      }: {
+        data: ExpenseFeatureCollection;
+      }) => {
+        if (expenseStore.$state.geojson.features.length > 0) {
+          expenseStore.$patch((state) => {
+            state.geojson.features.concat(data.features);
+          });
+        } else {
+          expenseStore.$patch((state) => {
+            state.geojson = data;
+          });
+        }
+        await db.put(
+          'expenses',
+          JSON.parse(JSON.stringify(expenseStore.$state.geojson)),
+        );
+        expenseStore.$patch((state) => {
+          state.form = {
+            amount: undefined,
+            description: '',
+            type: 'debit',
+          };
+        });
+        const layerCenter = center(data);
+        map.flyTo({
+          center: [
+            layerCenter.geometry.coordinates[0],
+            layerCenter.geometry.coordinates[1],
+          ],
+          zoom: 8,
+          speed: 3,
+          curve: 1,
+        });
+      };
 
       const onMapLoaded = (m: Map): void => {
         map = m;
@@ -529,6 +531,7 @@
         // computed:
         getMarkerColor,
         // methods:
+        onWorkerData,
         onMapLoaded,
         onMapClicked,
         toggle,
