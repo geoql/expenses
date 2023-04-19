@@ -3,17 +3,9 @@ import type {
   ExpenseFeature,
   ExpenseFeatureCollection,
 } from '~/@types/expense';
+import * as Comlink from 'comlink';
 import { csvParse } from 'd3-dsv';
-
-/**
- * Waits for some seconds.
- *
- * @param {number} ms - milliseconds to wait
- * @returns {Promise<void>}
- */
-function snooze(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { v4 as uuid } from 'uuid';
 
 /**
  * Transforms a CSV to GeoJSON
@@ -25,7 +17,7 @@ async function transformGeoJSON(
   payload: DSVRowArray<string>,
 ): Promise<ExpenseFeatureCollection> {
   const geojson = {
-    id: useUuid(),
+    id: uuid().split('-').join(''),
     type: 'FeatureCollection',
     features: [],
   } as ExpenseFeatureCollection;
@@ -49,14 +41,13 @@ async function transformGeoJSON(
       },
     } as unknown as ExpenseFeature);
   }
-  console.log('built geojson: ', geojson);
   return geojson;
 }
 
-self.addEventListener('message', async (e) => {
-  const message = e.data.message;
-  await snooze(message?.sleep || 0);
-  const data = csvParse(message?.payload);
-  const geojson = await transformGeoJSON(data);
-  self.postMessage(geojson);
+Comlink.expose({
+  async parseDataFile(payload: string): Promise<ExpenseFeatureCollection> {
+    const data = csvParse(payload);
+    const geojson = await transformGeoJSON(data);
+    return geojson;
+  },
 });
