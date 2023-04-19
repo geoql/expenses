@@ -19,7 +19,7 @@ const nitro: NuxtConfig['nitro'] = {
 const plugins: NuxtConfig['plugins'] = [
   { src: '~/plugins/v-click-outside.ts', mode: 'client' },
   { src: '~/plugins/v-mapbox.ts', mode: 'client' },
-  { src: '~/plugins/v-web-workers.ts', mode: 'server' },
+  { src: '~/plugins/v-web-workers.ts', mode: 'client' },
 ];
 
 const runtimeConfig: NuxtConfig['runtimeConfig'] = {
