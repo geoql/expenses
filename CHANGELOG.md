@@ -1,3 +1,15 @@
+# [2.3.0](https://github.com/geoql/expenses/compare/v2.2.0...v2.3.0) (2023-04-19)
+
+
+### Bug Fixes
+
+* **deps:** Bump @pinia/nuxt from 0.4.7 to 0.4.8 ([cebf8c6](https://github.com/geoql/expenses/commit/cebf8c6ce0ccd32bdd01cbf4b5bc214caf0d715f))
+* **deps:** Bump dependabot/fetch-metadata from 1.3.6 to 1.4.0 ([bfcaf07](https://github.com/geoql/expenses/commit/bfcaf0734eb7033cdd26eeb03ef13629d9cee894))
+* **deps:** Bump pinia from 2.0.33 to 2.0.34 ([589776f](https://github.com/geoql/expenses/commit/589776f90772f83a92d8b07aae74a2bda20fe6ed))
+* use v-web-worker nuxt plugin ([c360195](https://github.com/geoql/expenses/commit/c360195cda2904593f51b3a303481571849593fc))
+
+
+
 # [2.2.0](https://github.com/geoql/expenses/compare/v2.1.0...v2.2.0) (2023-03-22)
 
 
