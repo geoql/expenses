@@ -79,7 +79,6 @@
 
       /**
        * Update file event
-       *
        * @param {any} e - Event
        */
       function onFileChange(e: unknown) {
@@ -90,7 +89,6 @@
       }
       /**
        * Upload the file
-       *
        * @param {File} file - The file
        */
       function uploadFile(file: File) {

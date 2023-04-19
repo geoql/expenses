@@ -37,7 +37,6 @@
 
       /**
        * Listen to map events
-       *
        * @returns {void}
        */
       function listenMapEvents(): void {

@@ -117,7 +117,7 @@
 
       /**
        * Set marker coordinates
-       *
+       * @param marker
        * @returns {void}
        */
       function setMarkerCoordinates(marker: Marker): void {
@@ -125,7 +125,7 @@
       }
       /**
        * Sets the Cursor to Pointer
-       *
+       * @param marker
        * @returns {void}
        */
       function setCursorPointer(marker: Marker): void {
@@ -134,7 +134,7 @@
 
       /**
        * Add marker to map
-       *
+       * @param marker
        * @returns {void}
        */
       function addToMap(marker: Marker): void {
@@ -143,7 +143,7 @@
       }
       /**
        * Remove marker from map
-       *
+       * @param marker
        * @returns {void}
        */
       function removeFromMap(marker: Marker): void {
@@ -155,7 +155,7 @@
 
       /**
        * Listen to events
-       *
+       * @param marker
        * @returns {void}
        */
       function listenMarkerEvents(marker: Marker): void {

@@ -30,7 +30,6 @@
 
       /**
        * Adds the Attribution Control
-       *
        * @returns {void}
        */
       function addControl(): void {

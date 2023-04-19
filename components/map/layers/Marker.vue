@@ -150,7 +150,6 @@
     setup() {
       /**
        * Gets the coordinates for the marker
-       *
        * @param {ExpenseFeature} m - Marker
        * @returns {[number, number]} - Coordinates
        */
@@ -163,7 +162,6 @@
       /**
        * Gets the color for the svg
        * marker based on the expense type
-       *
        * @param {ExpenseFeature} m - Expense type
        * @returns {Record<string, boolean> | string} - Color object
        */

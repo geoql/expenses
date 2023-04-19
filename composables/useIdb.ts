@@ -4,7 +4,6 @@ import type { MyDB } from '~/@types/db';
 
 /**
  * Composable for using idb
- *
  * @returns {Promise<IDBPDatabase<MyDB>>} - The IndexDB database
  */
 async function useIdb(): Promise<IDBPDatabase<MyDB>> {

@@ -9,7 +9,6 @@ import { v4 as uuid } from 'uuid';
 
 /**
  * Transforms a CSV to GeoJSON
- *
  * @param {DSVRowArray<string>} payload - CSV data parsed by csvParse()
  * @returns {Promise<ExpenseFeature>} - GeoJSON data
  */

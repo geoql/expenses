@@ -210,7 +210,6 @@
       /**
        * This function syncs the loaded & style-changed
        * variables in parent components
-       *
        * @param {Map} e - Mapbox GL Map object
        * @returns {void}
        */
@@ -221,7 +220,6 @@
 
       /**
        * Sync the map
-       *
        * @returns {void}
        */
       function syncMap(): void {
@@ -270,7 +268,6 @@
       /**
        * When user is entered the map
        * canvas
-       *
        * @param {MapMouseEvent | MouseEvent } e - Mapbox Event data
        * @returns {void} void
        */
@@ -285,7 +282,6 @@
       /**
        * This function emits a click event to the
        * parent component
-       *
        * @param {MapMouseEvent} e - Mapbox Event
        * @returns {void}
        */
@@ -299,7 +295,6 @@
       /**
        * When user changes the North direction
        * or changes the pitch
-       *
        * @returns {void} void
        */
       function onMapPitchEnd(): void {
@@ -309,7 +304,6 @@
       /**
        * When the map completes zoom
        * end event
-       *
        * @returns {void} void
        */
       function onMapZoomEnd(): void {
@@ -317,7 +311,6 @@
       }
       /**
        * Zooms the map in by currentZoom + 1
-       *
        * @returns {void}
        */
       function mapZoomIn(): void {
@@ -329,7 +322,6 @@
       }
       /**
        * Zooms the map out by currentZoom - 1
-       *
        * @returns {void}
        */
       function mapZoomOut(): void {
@@ -342,7 +334,6 @@
       /**
        * Eases the map to given pitch
        * and bearing
-       *
        * @param {Record<string,number>} root0 - Pitch & Bearing
        * @param {number} root0.pitch - Pitch
        * @param {number} root0.bearing - Bearing
@@ -362,7 +353,6 @@
       }
       /**
        * Fly the map to the specific location
-       *
        * @param {Record<string, number>} root0 - Lat, Lng & zoom of the location
        * @param {number} root0.lng – Lat
        * @param {number} root0.lat - Lng
@@ -387,7 +377,6 @@
       }
       /**
        * Updates the current map style
-       *
        * @param {string} e - String of the new style
        * @returns {void} - Returns void
        */
@@ -406,7 +395,6 @@
       }
       /**
        * Toggles the tool enabled on the map
-       *
        * @param {string} type - Toggle the tool type
        * @returns {void} void
        */
@@ -437,7 +425,6 @@
       /**
        * Save the current map state
        * in the store
-       *
        * @returns {void} void
        */
       function setMapState(): void {

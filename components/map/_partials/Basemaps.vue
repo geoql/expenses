@@ -49,7 +49,6 @@
     setup(_, { emit }) {
       /**
        * Updates the basemap
-       *
        * @param {Record<string, string>} basemap - The basemap to update
        * @param {boolean} basemap.enabled - Whether the basemap is enabled
        * @param {string} basemap.style - The basemap style
