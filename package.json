@@ -37,8 +37,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
-    "@deck.gl/layers": "^8.9.8",
-    "@deck.gl/mapbox": "^8.9.8",
+    "@deck.gl/layers": "^8.9.9",
+    "@deck.gl/mapbox": "^8.9.9",
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@nuxtjs/plausible": "^0.2.0",
     "@types/d3-dsv": "^3.0.1",
@@ -53,14 +53,14 @@
     "@windicss/plugin-scrollbar": "^1.2.3",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-jsdoc": "^43.0.6",
+    "eslint-plugin-jsdoc": "^43.0.7",
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-security": "^1.7.1",
     "eslint-plugin-vue": "^9.11.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
-    "nuxt": "^3.4.1",
+    "nuxt": "^3.4.2",
     "nuxt-windicss": "^2.6.1",
     "prettier": "^2.8.7",
     "sass": "^1.62.0",
@@ -68,18 +68,7 @@
     "stylelint": "^15.5.0",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-prettier": "^3.0.0",
-    "typescript": "^5.0.4",
-    "vite": "4.3.0-beta.8"
-  },
-  "overrides": {
-    "vite": "4.3.0-beta.8"
-  },
-  "resolutions": {
-    "vite": "4.3.0-beta.8"
-  },
-  "repository": {
-    "url": "git+https://github.com/geoql/expenses.git",
-    "type": "git"
+    "typescript": "^5.0.4"
   },
   "author": {
     "name": "Vinayak Kulkarni",
