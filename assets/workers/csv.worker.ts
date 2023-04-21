@@ -1,19 +1,19 @@
-import type { DSVRowArray } from 'd3-dsv';
 import type {
   ExpenseFeature,
   ExpenseFeatureCollection,
+  CSVParse,
 } from '~/@types/expense';
 import * as Comlink from 'comlink';
-import { csvParse } from 'd3-dsv';
+import { parse } from 'papaparse';
 import { v4 as uuid } from 'uuid';
 
 /**
  * Transforms a CSV to GeoJSON
- * @param {DSVRowArray<string>} payload - CSV data parsed by csvParse()
+ * @param {CSVParse[]} payload - CSV data parsed by csvParse()
  * @returns {Promise<ExpenseFeature>} - GeoJSON data
  */
 async function transformGeoJSON(
-  payload: DSVRowArray<string>,
+  payload: CSVParse[],
 ): Promise<ExpenseFeatureCollection> {
   const geojson = {
     id: uuid().split('-').join(''),
@@ -45,8 +45,10 @@ async function transformGeoJSON(
 
 Comlink.expose({
   async parseDataFile(payload: string): Promise<ExpenseFeatureCollection> {
-    const data = csvParse(payload);
-    const geojson = await transformGeoJSON(data);
+    const { data } = parse(payload, {
+      header: true,
+    });
+    const geojson = await transformGeoJSON(data as CSVParse[]);
     return geojson;
   },
 });

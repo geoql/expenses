@@ -21,3 +21,12 @@ export type ExpenseFeatureCollection = {
   type: 'FeatureCollection';
   features: ExpenseFeature[];
 };
+
+export type CSVParse = {
+  amount: string;
+  description: string;
+  type: string;
+  lng: string;
+  lat: string;
+  date: string;
+};
