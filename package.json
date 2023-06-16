@@ -38,7 +38,7 @@
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "@deck.gl/layers": "^8.9.19",
-    "@deck.gl/mapbox": "^8.9.18",
+    "@deck.gl/mapbox": "^8.9.19",
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@nuxtjs/plausible": "^0.2.1",
     "@types/geojson": "^7946.0.10",
