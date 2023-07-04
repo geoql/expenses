@@ -1,9 +1,9 @@
 <template>
   <main
-    class="w-screen h-screen text-gray-900 transition-colors duration-150 bg-gray-100 dark:text-gray-100 dark:bg-gray-900"
+    class="h-screen w-screen bg-gray-100 text-gray-900 transition-colors duration-150 dark:bg-gray-900 dark:text-gray-100"
   >
     <v-header />
-    <nuxt-page class="-my-10 py-10" />
+    <nuxt-page class="py-10 -my-10" />
     <v-footer />
   </main>
 </template>
