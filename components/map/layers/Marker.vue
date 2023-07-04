@@ -11,7 +11,7 @@
         <template #markers="{ setRef }">
           <svg
             :ref="(el) => setRef(el)"
-            class="w-6 h-6 cursor-pointer"
+            class="h-6 w-6 cursor-pointer"
             :class="getExpenseMarkerColor(marker)"
             fill="none"
             stroke="currentColor"
@@ -34,10 +34,10 @@
         </template>
         <!-- Form -->
         <div
-          class="flex flex-col items-start justify-center text-white border border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-700 to-gray-800"
+          class="flex flex-col items-start justify-center border border-gray-700 rounded-md from-gray-700 to-gray-800 bg-gradient-to-tr text-white shadow-lg"
         >
           <div
-            class="flex items-center justify-between w-full px-3 py-1 border-b border-gray-600"
+            class="w-full flex items-center justify-between border-b border-gray-600 px-3 py-1"
           >
             <div v-if="marker.properties" class="capitalize">
               {{ marker.properties.expense.type }}
@@ -62,7 +62,7 @@
             >
               <div class="w-auto text-sm">
                 <svg
-                  class="w-5 h-5"
+                  class="h-5 w-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -76,7 +76,7 @@
                   />
                 </svg>
               </div>
-              <div class="w-24 text-base break-all">
+              <div class="w-24 break-all text-base">
                 {{ marker.properties.expense.amount }}
               </div>
             </div>
@@ -86,7 +86,7 @@
             >
               <div class="w-auto text-sm">
                 <svg
-                  class="w-5 h-5"
+                  class="h-5 w-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -100,7 +100,7 @@
                   />
                 </svg>
               </div>
-              <div class="text-base break-words w-36">
+              <div class="w-36 break-words text-base">
                 {{ marker.properties.expense.description }}
               </div>
             </div>

@@ -5,15 +5,15 @@
     aria-orientation="vertical"
     aria-labelledby="options-menu"
   >
-    <div class="w-full min-w-max">
+    <div class="min-w-max w-full">
       <div class="rounded p-2">
-        <p class="text-xl pb-4">Upload CSV</p>
+        <p class="pb-4 text-xl">Upload CSV</p>
         <div
-          class="flex justify-center max-w-lg px-6 pt-5 pb-6 shadow-md border-2 border-gray-600 border-dashed rounded-md dark:border-gray-200"
+          class="max-w-lg flex justify-center border-2 border-gray-600 rounded-md border-dashed px-6 pb-6 pt-5 shadow-md dark:border-gray-200"
         >
-          <div v-if="file.name === null" class="space-y-1 text-center">
+          <div v-if="file.name === null" class="text-center space-y-1">
             <svg
-              class="w-12 h-12 mx-auto"
+              class="mx-auto h-12 w-12"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -26,10 +26,10 @@
                 d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
               />
             </svg>
-            <div class="flex items-center justify-center flex-col text-sm">
+            <div class="flex flex-col items-center justify-center text-sm">
               <label
                 for="file-upload"
-                class="relative font-medium text-blue-600 rounded-md cursor-pointer hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                class="relative cursor-pointer rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
               >
                 <span>Upload a file</span>
                 <!-- Accept only csv -->
@@ -37,7 +37,7 @@
                   id="file-upload"
                   name="file-upload"
                   type="file"
-                  class="hidden sr-only"
+                  class="sr-only hidden"
                   accept=".csv,.tsv"
                   @change="onFileChange"
                 />
@@ -53,10 +53,10 @@
             </p>
           </div>
         </div>
-        <p class="font-semibold pt-4">
+        <p class="pt-4 font-semibold">
           <a
             href="/demo.csv"
-            class="rounded-full bg-white py-1.5 px-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            class="rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
           >
             Download Sample File
           </a>

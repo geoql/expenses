@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-2 space-y-2 h-60 overflow-y-auto scrollbar-thin scroll-smooth dark:scrollbar-track-gray-800 dark:scrollbar-thumb-gray-300"
+    class="scrollbar-thin dark:scrollbar-track-gray-800 dark:scrollbar-thumb-gray-300 h-60 overflow-y-auto scroll-smooth p-2 space-y-2"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="options-menu"
@@ -11,7 +11,7 @@
       class="select-none"
     >
       <div
-        class="flex items-center border-l border-l-2 justify-between p-2 rounded shadow cursor-pointer hover:shadow-md"
+        class="flex cursor-pointer items-center justify-between border-l border-l-2 rounded p-2 shadow hover:shadow-md"
         :class="{
           'text-white bg-gradient-to-l from-purple-600 to-purple-800':
             basemap.enabled,
@@ -25,11 +25,11 @@
       >
         <div class="w-1/6">
           <img
-            class="object-cover h-12 rounded-lg"
+            class="h-12 rounded-lg object-cover"
             :src="`/images/basemaps/${basemap.image}.webp`"
           />
         </div>
-        <div class="w-auto prose-sm">
+        <div class="prose-sm w-auto">
           {{ basemap.type }}
         </div>
       </div>

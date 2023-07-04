@@ -1,12 +1,12 @@
 <template>
-  <div class="flex items-center justify-center w-full h-full select-none">
+  <div class="h-full w-full flex select-none items-center justify-center">
     <!-- Loading indicator -->
     <div
       v-if="!mapStore.loaded"
-      class="fixed z-10 flex items-center justify-center w-full h-full opacity-75"
+      class="fixed z-10 h-full w-full flex items-center justify-center opacity-75"
     >
       <svg
-        class="w-6 h-6 dark:text-white text-gray-900 animate-spin"
+        class="h-6 w-6 animate-spin text-gray-900 dark:text-white"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -37,7 +37,7 @@
           <button
             type="button"
             aria-label="Toggle Marker(s)"
-            class="relative visible inline-flex items-center px-3 py-1.5 rounded-l-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
+            class="visible relative inline-flex items-center border border-gray-300 border-opacity-25 rounded-l-full bg-opacity-75 px-3 py-1.5 text-sm font-medium focus:z-10 focus:border-indigo-500 dark:bg-opacity-50 focus:outline-none active:ring-0 focus:ring-0 focus:ring-indigo-500"
             :class="{
               'bg-indigo-800 text-gray-50': expenseStore.$state.map.ui.isMarker,
               'text-gray-800 bg-white dark:text-white dark:bg-gray-800':
@@ -45,9 +45,9 @@
             }"
             @click="toggle('marker')"
           >
-            <span class="sm:block hidden">Marker(s)</span>
+            <span class="hidden sm:block">Marker(s)</span>
             <svg
-              class="fill-current h-4 sm:hidden block"
+              class="block h-4 fill-current sm:hidden"
               xmlns="http://www.w3.org/2000/svg"
               xml:space="preserve"
               viewBox="0 0 490 490"
@@ -62,7 +62,7 @@
           <button
             type="button"
             aria-label="Toggle Cluster(s)"
-            class="-ml-px relative visible inline-flex items-center px-3 py-1.5 border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
+            class="visible relative inline-flex items-center border border-gray-300 border-opacity-25 bg-opacity-75 px-3 py-1.5 text-sm font-medium focus:z-10 -ml-px focus:border-indigo-500 dark:bg-opacity-50 focus:outline-none active:ring-0 focus:ring-0 focus:ring-indigo-500"
             :class="{
               'bg-indigo-800 text-gray-50':
                 expenseStore.$state.map.ui.isCluster,
@@ -71,9 +71,9 @@
             }"
             @click="toggle('cluster')"
           >
-            <span class="sm:block hidden">Cluster(s)</span>
+            <span class="hidden sm:block">Cluster(s)</span>
             <svg
-              class="h-4 fill-current sm:hidden block"
+              class="block h-4 fill-current sm:hidden"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
             >
@@ -86,7 +86,7 @@
           <button
             type="button"
             aria-label="Toggle Heatmap"
-            class="-ml-px relative visible inline-flex items-center px-3 py-1.5 rounded-r-full border border-gray-300 border-opacity-25 bg-opacity-75 dark:bg-opacity-50 text-sm font-medium focus:z-10 focus:outline-none focus:ring-0 focus:ring-indigo-500 focus:border-indigo-500 active:ring-0"
+            class="visible relative inline-flex items-center border border-gray-300 border-opacity-25 rounded-r-full bg-opacity-75 px-3 py-1.5 text-sm font-medium focus:z-10 -ml-px focus:border-indigo-500 dark:bg-opacity-50 focus:outline-none active:ring-0 focus:ring-0 focus:ring-indigo-500"
             :class="{
               'bg-indigo-800 text-gray-50 ':
                 expenseStore.$state.map.ui.isHeatmap,
@@ -95,9 +95,9 @@
             }"
             @click="toggle('heatmap')"
           >
-            <span class="sm:block hidden">Heatmap</span>
+            <span class="hidden sm:block">Heatmap</span>
             <svg
-              class="h-4 fill-current sm:hidden block"
+              class="block h-4 fill-current sm:hidden"
               xmlns="http://www.w3.org/2000/svg"
               xml:space="preserve"
               viewBox="0 0 32 32"
@@ -112,7 +112,7 @@
       </template>
       <template #tools-tr>
         <div
-          class="visible relative w-10 h-10 z-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+          class="visible relative z-10 h-10 w-10 border border-gray-100 rounded-md bg-gray-200 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
           title="Upload CSV"
           :class="{
             'dark:bg-gray-800 bg-gray-200': mapStore.$state.utils.upload.shown,
@@ -121,11 +121,11 @@
           }"
         >
           <div
-            class="p-2 cursor-pointer"
+            class="cursor-pointer p-2"
             @click="mapStore.toggleUploadsWidget()"
           >
             <svg
-              class="w-5 h-5 stroke-current"
+              class="h-5 w-5 stroke-current"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -149,7 +149,7 @@
           >
             <div
               v-if="mapStore.$state.utils.upload.shown"
-              class="absolute top-0 right-0 w-64 mr-12 origin-right bg-gray-300 rounded-md shadow-lg dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
+              class="absolute right-0 top-0 mr-12 w-64 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 dark:bg-gray-700"
             >
               <expense-upload
                 @data="onWorkerData"
@@ -171,7 +171,7 @@
             <template #markers="{ setRef }">
               <svg
                 :ref="(el) => setRef(el)"
-                class="w-8 h-8 cursor-pointer"
+                class="h-8 w-8 cursor-pointer"
                 :class="getMarkerColor"
                 fill="none"
                 stroke="currentColor"
@@ -194,17 +194,17 @@
             </template>
             <div class="expense-popup-card">
               <div
-                class="flex flex-col items-start justify-center text-white border border-gray-300 dark:border-gray-700 rounded-md shadow-lg bg-gradient-to-tr from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-800"
+                class="flex flex-col items-start justify-center border border-gray-300 rounded-md from-gray-200 to-gray-100 bg-gradient-to-tr text-white shadow-lg dark:border-gray-700 dark:from-gray-700 dark:to-gray-800"
               >
                 <div
-                  class="flex items-center justify-between w-full px-4 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-50 text-gray-800"
+                  class="w-full flex items-center justify-between border-b border-gray-300 px-4 py-2 text-gray-800 dark:border-gray-600 dark:text-gray-50"
                 >
                   <div class="capitalize">
                     {{ expenseStore.$state.form.type }}
                   </div>
                   <button
                     type="button"
-                    class="relative inline-flex flex-shrink-0 h-6 transition-colors duration-200 ease-in-out border-2 border-transparent rounded-full cursor-pointer w-11 focus:outline-none focus:ring-1 focus:ring-offset-1"
+                    class="relative h-6 w-11 inline-flex flex-shrink-0 cursor-pointer border-2 border-transparent rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-1 focus:ring-offset-1"
                     :class="{
                       'bg-green-600 focus:ring-green-500':
                         expenseStore.$state.form.type === 'credit',
@@ -227,7 +227,7 @@
                         'translate-x-0':
                           expenseStore.$state.form.type === 'credit',
                       }"
-                      class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow pointer-events-none ring-0"
+                      class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
                     />
                   </button>
                 </div>
@@ -241,10 +241,10 @@
                     </label>
                     <div class="relative mt-1 rounded-md shadow-sm">
                       <div
-                        class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                        class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
                       >
                         <svg
-                          class="w-5 h-5 text-gray-400"
+                          class="h-5 w-5 text-gray-400"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -264,7 +264,7 @@
                         type="text"
                         name="expense"
                         required="true"
-                        class="block w-full pl-10 rounded-md sm:text-sm border-gray-300 outline-none dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white"
+                        class="block w-full border-gray-300 rounded-md bg-white pl-10 text-gray-900 outline-none dark:border-gray-400 dark:bg-gray-600 sm:text-sm dark:text-gray-50"
                         :class="{
                           'focus:ring-green-500 focus:border-green-500':
                             expenseStore.$state.form.type === 'credit',
@@ -291,7 +291,7 @@
                       v-model="expenseStore.$state.form.description"
                       name="description"
                       rows="2"
-                      class="block w-full mt-1 rounded-md outline-none border-gray-300 dark:border-gray-400 dark:bg-gray-600 dark:text-gray-50 text-gray-900 bg-white py-2 px-3 sm:text-sm"
+                      class="mt-1 block w-full border-gray-300 rounded-md bg-white px-3 py-2 text-gray-900 outline-none dark:border-gray-400 dark:bg-gray-600 sm:text-sm dark:text-gray-50"
                       :class="{
                         'focus:ring-green-500 focus:border-green-500':
                           expenseStore.$state.form.type === 'credit',
@@ -314,7 +314,7 @@
                         'bg-green-600 hover:bg-green-700 focus:ring-green-500':
                           expenseStore.$state.form.type === 'credit',
                       }"
-                      class="inline-flex items-center justify-center w-full px-4 py-1 text-sm font-medium text-white transition-colors duration-200 ease-in-out border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
+                      class="w-full inline-flex items-center justify-center border border-transparent rounded-md px-4 py-1 text-sm font-medium text-white shadow-sm transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2"
                     >
                       Add
                     </button>

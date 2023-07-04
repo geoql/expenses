@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-between w-full h-10 px-4 border-t border-gray-300 dark:border-gray-700"
+    class="h-10 w-full flex items-center justify-between border-t border-gray-300 px-4 dark:border-gray-700"
   >
     <p class="text-sm">
       Made with <span class="animate-pulse">❤️</span> by
@@ -8,7 +8,7 @@
       {{ state.date }}
     </p>
     <div
-      class="flex items-center justify-center space-x-2 md:space-x-3 lg:space-x-4"
+      class="flex items-center justify-center space-x-2 lg:space-x-4 md:space-x-3"
     >
       <span class="text-sm font-light opacity-75">
         (v{{ state.appVersion }})

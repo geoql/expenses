@@ -1,11 +1,11 @@
 <template>
   <div
-    class="flex items-center justify-between w-full h-10 px-4 border-b border-gray-300 shadow dark:border-gray-700"
+    class="h-10 w-full flex items-center justify-between border-b border-gray-300 px-4 shadow dark:border-gray-700"
   >
     <div title="Dashboard" class="visible">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="w-8 h-8 transition-colors duration-300 cursor-pointer fill-current"
+        class="h-8 w-8 cursor-pointer fill-current transition-colors duration-300"
         data-name="Layer 1"
         viewBox="0 0 512 512"
         :class="[isDark ? 'text-white' : 'text-gray-900']"
@@ -36,7 +36,7 @@
         <svg
           v-if="!isDark"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5 cursor-pointer outline-none"
+          class="h-5 w-5 cursor-pointer outline-none"
           viewBox="0 0 24 24"
           @click="toggleDark()"
         >
@@ -48,7 +48,7 @@
         <svg
           v-if="isDark"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5 cursor-pointer outline-none"
+          class="h-5 w-5 cursor-pointer outline-none"
           viewBox="0 0 512 512"
           @click="toggleDark()"
         >

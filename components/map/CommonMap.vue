@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full h-full select-none">
+  <main class="h-full w-full select-none">
     <v-map
       :options="{ ...store.$state.map.options, style: store.style }"
       @loaded="onMapLoaded"
@@ -17,7 +17,7 @@
 
         <!-- Map :: Top Left Slot -->
         <div
-          class="absolute top-0 left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+          class="invisible absolute left-0 top-0 z-10 m-2 rounded-md bg-opacity-50 text-gray-800 dark:text-white"
         >
           <div class="relative flex flex-col space-y-2">
             <slot name="tools-tl" class="visible" />
@@ -25,7 +25,7 @@
         </div>
         <!-- Map :: Top Right Slot -->
         <div
-          class="absolute top-0 right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md dark:text-white"
+          class="invisible absolute right-0 top-0 z-10 m-2 rounded-md bg-opacity-50 text-gray-800 dark:text-white"
         >
           <div class="relative flex flex-col space-y-2">
             <!-- Basemaps -->
@@ -33,16 +33,16 @@
               v-click-outside="
                 () => (store.$state.utils.basemaps.shown = false)
               "
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="visible relative h-10 w-10 border border-gray-100 rounded-md bg-gray-200 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
               title="Basemaps"
               :class="{
                 'bg-gray-300 dark:bg-gray-800':
                   store.$state.utils.basemaps.shown,
               }"
             >
-              <div class="p-2 cursor-pointer" @click="toggleTool('basemaps')">
+              <div class="cursor-pointer p-2" @click="toggleTool('basemaps')">
                 <svg
-                  class="w-5 h-5 stroke-current fill-none"
+                  class="h-5 w-5 fill-none stroke-current"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -64,7 +64,7 @@
               >
                 <div
                   v-if="store.$state.utils.basemaps.shown"
-                  class="absolute top-0 right-0 w-48 mr-12 origin-right bg-gray-300 rounded-md shadow-lg sm:w-64 dark:bg-gray-700 ring-1 ring-white ring-opacity-5"
+                  class="absolute right-0 top-0 mr-12 w-48 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 sm:w-64 dark:bg-gray-700"
                 >
                   <basemaps
                     :data="store.$state.utils.basemaps.data"
@@ -79,7 +79,7 @@
         </div>
         <!-- Map :: Bottom Left Slot -->
         <div
-          class="absolute left-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
+          class="invisible absolute bottom-12 left-0 z-10 m-2 rounded-md bg-opacity-50 text-gray-800 sm:bottom-7 dark:text-white"
         >
           <div class="relative flex flex-col space-y-2">
             <slot name="tools-bl" class="visible" />
@@ -87,23 +87,23 @@
         </div>
         <!-- Map :: Bottom Right Slot -->
         <div
-          class="absolute right-0 z-10 invisible m-2 text-gray-800 bg-opacity-50 rounded-md bottom-12 sm:bottom-7 dark:text-white"
+          class="invisible absolute bottom-12 right-0 z-10 m-2 rounded-md bg-opacity-50 text-gray-800 sm:bottom-7 dark:text-white"
         >
           <div class="relative flex flex-col space-y-2">
             <slot name="tools-br" class="visible" />
             <!-- Zoom in & out -->
             <div
-              class="flex flex-col items-center justify-center visible w-10 h-20"
+              class="visible h-20 w-10 flex flex-col items-center justify-center"
               title="Zoom In/Out"
             >
               <!-- Zoom In -->
               <div
-                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-b-0 border-gray-100 rounded-md rounded-b-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                class="h-10 w-10 cursor-pointer border border-b-0 border-gray-100 rounded-md rounded-b-none bg-gray-200 p-2 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
                 title="Zoom In"
                 @click="mapZoomIn"
               >
                 <svg
-                  class="w-5 h-5"
+                  class="h-5 w-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -119,12 +119,12 @@
               </div>
               <!-- Zoom Out -->
               <div
-                class="w-10 h-10 p-2 text-sm text-gray-600 bg-gray-200 border border-t-0 border-gray-100 rounded-md rounded-t-none cursor-pointer hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+                class="h-10 w-10 cursor-pointer border border-t-0 border-gray-100 rounded-md rounded-t-none bg-gray-200 p-2 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
                 title="Zoom Out"
                 @click="mapZoomOut"
               >
                 <svg
-                  class="w-5 h-5"
+                  class="h-5 w-5"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -141,17 +141,17 @@
             </div>
             <!-- Bearing -->
             <div
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="visible relative h-10 w-10 border border-gray-100 rounded-md bg-gray-200 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
               title="Map Bearing"
               :class="{
                 'bg-gray-300 dark:bg-gray-800':
                   store.$state.utils.compass.shown,
               }"
             >
-              <div class="p-2 cursor-pointer" @click="toggleTool('compass')">
+              <div class="cursor-pointer p-2" @click="toggleTool('compass')">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 transition-all duration-100 ease-linear transform fill-current"
+                  class="h-5 w-5 transform fill-current transition-all duration-100 ease-linear"
                   viewBox="0 0 18 18"
                   :style="{
                     transform:
@@ -168,12 +168,12 @@
             </div>
             <!-- Locate -->
             <div
-              class="relative visible w-10 h-10 text-sm text-gray-600 bg-gray-200 border border-gray-100 rounded-md hover:bg-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800"
+              class="visible relative h-10 w-10 border border-gray-100 rounded-md bg-gray-200 text-sm text-gray-600 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-300 dark:text-white dark:hover:bg-gray-800"
               title="Locate Me"
             >
-              <div class="p-2 cursor-pointer" @click="toggleTool('locate')">
+              <div class="cursor-pointer p-2" @click="toggleTool('locate')">
                 <svg
-                  class="w-5 h-5 fill-current stroke-current"
+                  class="h-5 w-5 fill-current stroke-current"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 469.333 469.333"
                 >
