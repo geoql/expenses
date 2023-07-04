@@ -5,6 +5,8 @@ const app: NuxtConfig['app'] = {
   head,
 };
 
+const components: NuxtConfig['components'] = false;
+
 const css: NuxtConfig['css'] = [
   'maplibre-gl/dist/maplibre-gl.css',
   'v-mapbox/dist/v-mapbox.css',
@@ -13,7 +15,7 @@ const css: NuxtConfig['css'] = [
 ];
 
 const nitro: NuxtConfig['nitro'] = {
-  preset: 'netlify-builder',
+  preset: 'netlify',
 };
 
 const plugins: NuxtConfig['plugins'] = [
@@ -21,6 +23,11 @@ const plugins: NuxtConfig['plugins'] = [
   { src: '~/plugins/v-mapbox.ts', mode: 'client' },
   { src: '~/plugins/v-web-workers.ts', mode: 'client' },
 ];
+
+const routeRules: NuxtConfig['routeRules'] = {
+  // Homepage pre-rendered at build time
+  '/': { prerender: true },
+};
 
 const runtimeConfig: NuxtConfig['runtimeConfig'] = {
   public: {
@@ -45,4 +52,14 @@ const typescript: NuxtConfig['typescript'] = {
 };
 
 export { modules } from './modules';
-export { app, css, nitro, plugins, runtimeConfig, ssr, typescript };
+export {
+  app,
+  components,
+  css,
+  nitro,
+  plugins,
+  routeRules,
+  runtimeConfig,
+  ssr,
+  typescript,
+};

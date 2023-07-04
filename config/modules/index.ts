@@ -1,7 +1,7 @@
 import type { NuxtConfig } from 'nuxt/schema';
 import { plausible } from './plausible';
 import { pwa } from './pwa';
-import { windicss } from './windicss';
+import { unocss } from './unocss';
 
 const modules: NuxtConfig['modules'] = [
   // https://pinia.esm.dev/ssr/nuxt.html#nuxt-js
@@ -12,8 +12,8 @@ const modules: NuxtConfig['modules'] = [
   ['@kevinmarrec/nuxt-pwa', pwa],
   // https://github.com/nuxt-modules/plausible#setup
   ['@nuxtjs/plausible', plausible],
-  // https://windicss.org/guide/
-  ['nuxt-windicss', windicss],
+  // https://unocss.dev/integrations/nuxt
+  ['@unocss/nuxt', unocss],
 ];
 
 export { modules };
