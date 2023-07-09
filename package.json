@@ -46,7 +46,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
-    "@unocss/eslint-config": "^0.53.4",
+    "@unocss/eslint-config": "^0.53.5",
     "@unocss/nuxt": "^0.53.4",
     "@vinayakkulkarni/prettier-config-vue": "^1.0.0",
     "@vueuse/core": "^10.2.1",
