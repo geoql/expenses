@@ -9,7 +9,7 @@
         data-name="Layer 1"
         viewBox="0 0 512 512"
         :class="[isDark ? 'text-white' : 'text-gray-900']"
-        @click="$router.push({ name: 'index' })"
+        @click="router.push({ name: 'index' })"
       >
         <defs />
         <path
@@ -26,10 +26,11 @@
     <div class="flex items-center space-x-2">
       <div class="text-sm">
         <span>
-          {{ map.zoom.toFixed(2) }}
+          {{ map.map.state.zoom.toFixed(2) }}
         </span>
         <span class="opacity-75">
-          [{{ map.latitude.toFixed(2) }}, {{ map.longitude.toFixed(2) }}]
+          [{{ map.map.state.latitude.toFixed(2) }},
+          {{ map.map.state.longitude.toFixed(2) }}]
         </span>
       </div>
       <div tile="Theme Picker" class="visible">
@@ -62,23 +63,10 @@
   </div>
 </template>
 
-<script lang="ts">
-  import { useDark, useToggle } from '@vueuse/core';
-  import { useMap } from '~/composables/useMap';
+<script setup lang="ts">
+  const isDark = useDark();
+  const toggleDark = useToggle(isDark);
 
-  export default defineComponent({
-    name: 'VHeader',
-    setup() {
-      const isDark = useDark();
-      const map = useMap();
-
-      const toggleDark = useToggle(isDark);
-
-      return {
-        isDark,
-        map: map.$state.map.state,
-        toggleDark,
-      };
-    },
-  });
+  const router = useRouter();
+  const map = useMap();
 </script>

@@ -151,7 +151,7 @@
             v-if="mapStore.$state.utils.upload.shown"
             class="absolute right-0 top-0 mr-12 w-64 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 dark:bg-gray-700"
           >
-            <expense-upload
+            <ExpenseUpload
               @data="onWorkerData"
               @close="mapStore.$state.utils.upload.shown = false"
             />

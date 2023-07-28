@@ -59,20 +59,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
   import { useNuxtApp } from '#app';
-  import { defineComponent, reactive } from 'vue';
-  export default defineComponent({
-    name: 'VFooter',
-    setup() {
-      const { $config } = useNuxtApp();
-      const state = reactive({
-        date: new Date().getFullYear(),
-        appVersion: $config.public.appVersion,
-      });
-      return {
-        state,
-      };
-    },
+  const { $config } = useNuxtApp();
+  const state = reactive({
+    date: new Date().getFullYear(),
+    appVersion: $config.public.appVersion,
   });
 </script>

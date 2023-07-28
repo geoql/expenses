@@ -2,20 +2,20 @@
   <section :id="`marker-${Date.now()}`" class="absolute">
     <slot :set-ref="setSlotRef" name="markers" />
     <template v-if="isMarkerAvailable">
-      <v-popup
+      <VPopup
         :marker="marker"
         :options="popupOptions"
         :coordinates="coordinates"
       >
         <slot />
-      </v-popup>
+      </VPopup>
     </template>
   </section>
 </template>
 <script lang="ts">
   import type { LngLatLike, MarkerOptions, PopupOptions } from 'maplibre-gl';
-  import { Marker } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
+  import { Marker } from 'maplibre-gl';
   import { defineComponent, onMounted, onBeforeUnmount, ref, watch } from 'vue';
   import { markerDOMEvents, markerMapEvents } from '../constants/events';
   import VPopup from '../popups/VPopup.vue';
@@ -34,12 +34,12 @@
       },
       options: {
         type: Object as PropType<MarkerOptions>,
-        default: () => ({} as MarkerOptions),
+        default: () => ({}) as MarkerOptions,
         required: false,
       },
       popupOptions: {
         type: Object as PropType<PopupOptions>,
-        default: () => ({} as PopupOptions),
+        default: () => ({}) as PopupOptions,
         required: false,
       },
       cursor: {
