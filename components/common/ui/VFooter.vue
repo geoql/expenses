@@ -63,7 +63,7 @@
   import { useNuxtApp } from '#app';
   import { defineComponent, reactive } from 'vue';
   export default defineComponent({
-    name: 'Footer',
+    name: 'VFooter',
     setup() {
       const { $config } = useNuxtApp();
       const state = reactive({

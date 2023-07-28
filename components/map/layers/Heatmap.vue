@@ -1,12 +1,12 @@
 <template>
   <section v-if="data.features.length">
-    <v-layer-mapbox-geojson
+    <VLayerMapboxGeojson
       :source-id="'expenses-heatmap-source-0'"
       v-model:source="heatmap.source"
       v-model:layer-id="heatmap.circleLayer.id"
       v-model:layer="heatmap.circleLayer"
     />
-    <v-layer-mapbox-geojson
+    <VLayerMapboxGeojson
       :source-id="'expenses-heatmap-source-1'"
       v-model:source="heatmap.source"
       v-model:layer-id="heatmap.pointLayer.id"

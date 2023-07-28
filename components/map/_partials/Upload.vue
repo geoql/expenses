@@ -68,7 +68,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'ExpenseUpload',
+    name: 'VUpload',
     emits: ['data'],
     setup(_, { emit }) {
       const { $worker } = useNuxtApp();

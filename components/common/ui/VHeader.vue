@@ -67,7 +67,7 @@
   import { useMap } from '~/composables/useMap';
 
   export default defineComponent({
-    name: 'Header',
+    name: 'VHeader',
     setup() {
       const isDark = useDark();
       const map = useMap();

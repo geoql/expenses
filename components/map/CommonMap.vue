@@ -1,6 +1,6 @@
 <template>
   <main class="h-full w-full select-none">
-    <v-map
+    <VMap
       :options="{ ...store.$state.map.options, style: store.style }"
       @loaded="onMapLoaded"
       @click="onMapClicked"
@@ -10,7 +10,7 @@
     >
       <template v-if="store.loaded">
         <!-- Map :: Default Controls -->
-        <v-control-scale v-if="store.$state.map.controls.scale.shown" />
+        <VControlScale v-if="store.$state.map.controls.scale.shown" />
 
         <!-- Map :: Default Slot -->
         <slot />
@@ -54,25 +54,16 @@
                   />
                 </svg>
               </div>
-              <transition
-                enter-active-class="transition duration-100 ease-out"
-                enter-from-class="transform scale-95 translate-x-4 opacity-0"
-                enter-to-class="transform scale-100 opacity-100"
-                leave-active-class="transition duration-75 ease-in translate-x-4"
-                leave-from-class="transform scale-100 opacity-100"
-                leave-to-class="transform scale-95 opacity-0"
+              <div
+                v-if="store.$state.utils.basemaps.shown"
+                class="absolute right-0 top-0 mr-12 w-48 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 sm:w-64 dark:bg-gray-700"
               >
-                <div
-                  v-if="store.$state.utils.basemaps.shown"
-                  class="absolute right-0 top-0 mr-12 w-48 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 sm:w-64 dark:bg-gray-700"
-                >
-                  <basemaps
-                    :data="store.$state.utils.basemaps.data"
-                    @update-map-style="updateBasemap"
-                    @close="store.$state.utils.basemaps.shown = false"
-                  />
-                </div>
-              </transition>
+                <basemaps
+                  :data="store.$state.utils.basemaps.data"
+                  @update-map-style="updateBasemap"
+                  @close="store.$state.utils.basemaps.shown = false"
+                />
+              </div>
             </div>
             <slot name="tools-tr" class="visible" />
           </div>
@@ -190,7 +181,7 @@
         <!-- Map :: Layers Slot -->
         <slot name="layers" />
       </template>
-    </v-map>
+    </VMap>
   </main>
 </template>
 

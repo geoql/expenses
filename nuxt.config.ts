@@ -1,3 +1,4 @@
+import type { NuxtConfig } from 'nuxt/schema';
 import {
   app,
   components,
@@ -15,6 +16,14 @@ export default {
   app,
   components,
   css,
+  devtools: { enabled: true },
+  experimental: {
+    typescriptBundlerResolution: true,
+    externalVue: true,
+  },
+  vue: {
+    runtimeCompiler: true,
+  },
   ssr,
   modules,
   nitro,
@@ -22,4 +31,4 @@ export default {
   routeRules,
   runtimeConfig,
   typescript,
-};
+} satisfies NuxtConfig;

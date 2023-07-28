@@ -26,7 +26,7 @@
         />
       </svg>
     </div>
-    <common-map
+    <CommonMap
       v-if="mapStore.utils.basemaps.data.basemaps.length > 0"
       :class="{ 'opacity-50': !mapStore.loaded }"
       @on-loaded="onMapLoaded"
@@ -139,31 +139,31 @@
               />
             </svg>
           </div>
-          <transition
+          <!-- <Transition
             enter-active-class="transition duration-100 ease-out"
             enter-from-class="transform scale-95 translate-x-4 opacity-0"
             enter-to-class="transform scale-100 opacity-100"
             leave-active-class="transition duration-75 ease-in translate-x-4"
             leave-from-class="transform scale-100 opacity-100"
             leave-to-class="transform scale-95 opacity-0"
+          > -->
+          <div
+            v-if="mapStore.$state.utils.upload.shown"
+            class="absolute right-0 top-0 mr-12 w-64 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 dark:bg-gray-700"
           >
-            <div
-              v-if="mapStore.$state.utils.upload.shown"
-              class="absolute right-0 top-0 mr-12 w-64 origin-right rounded-md bg-gray-300 shadow-lg ring-1 ring-white ring-opacity-5 dark:bg-gray-700"
-            >
-              <expense-upload
-                @data="onWorkerData"
-                @close="mapStore.$state.utils.upload.shown = false"
-              />
-            </div>
-          </transition>
+            <expense-upload
+              @data="onWorkerData"
+              @close="mapStore.$state.utils.upload.shown = false"
+            />
+          </div>
+          <!-- </Transition> -->
         </div>
       </template>
       <template #layers>
         <!-- Expense Layer(s) -->
         <template>
           <!-- Marker(s) -->
-          <v-marker
+          <VMarker
             :options="expenseStore.$state.map.marker.options"
             :popup-options="expenseStore.$state.map.marker.popup.options"
             :coordinates="expenseStore.$state.map.marker.coordinates"
@@ -322,7 +322,7 @@
                 </form>
               </div>
             </div>
-          </v-marker>
+          </VMarker>
           <!-- Marker / Cluster / Heatmap w/ previously added data -->
           <template
             v-if="
@@ -330,19 +330,19 @@
               expenseStore.$state.geojson.features.length > 0
             "
           >
-            <expense-marker
+            <ExpenseMarker
               v-if="expenseStore.isMarker"
               :data="expenseStore.$state.geojson"
               :visibility="expenseStore.isMarker"
               v-model:popup-options="expenseStore.$state.popup.options"
               v-model:popup-visibility="expenseStore.$state.popup.shown"
             />
-            <expense-cluster
+            <ExpenseCluster
               v-if="expenseStore.isCluster"
               :data="expenseStore.$state.geojson"
               :visibility="expenseStore.isCluster"
             />
-            <expense-heatmap
+            <ExpenseHeatmap
               v-if="expenseStore.isHeatmap"
               :data="expenseStore.$state.geojson"
               :visibility="expenseStore.isHeatmap"
@@ -350,7 +350,7 @@
           </template>
         </template>
       </template>
-    </common-map>
+    </CommonMap>
   </div>
 </template>
 
@@ -372,7 +372,7 @@
   import Upload from '~/components/map/_partials/Upload.vue';
 
   export default defineComponent({
-    name: 'Dashboard',
+    name: 'ExpensesDashboard',
     components: {
       CommonMap,
       VMarker,
@@ -386,8 +386,6 @@
       let map = markRaw({} as Map);
       const mapStore = useMap();
       const expenseStore = useExpense();
-
-      const { $worker } = useNuxtApp();
 
       const isDark = useDark();
       const getMarkerColor = computed(() => {

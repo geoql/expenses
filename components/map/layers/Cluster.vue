@@ -1,12 +1,12 @@
 <template>
   <section v-if="data.features.length">
-    <v-layer-mapbox-geojson
+    <VLayerMapboxGeojson
       :source="cluster.source"
       :source-id="'expenses-cluster-source-0'"
       v-model:layer="cluster.circleLayer"
       :layer-id="cluster.circleLayer.id"
     />
-    <v-layer-mapbox-geojson
+    <VLayerMapboxGeojson
       :source="cluster.source"
       :source-id="'expenses-cluster-source-1'"
       v-model:layer="cluster.countLayer"

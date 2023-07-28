@@ -1,7 +1,7 @@
 <template>
   <section v-if="data.features.length">
     <template v-for="(marker, idx) in data.features">
-      <v-marker
+      <VMarker
         v-if="visibility"
         :key="idx"
         :coordinates="getExpenseMarkerCoordinates(marker)"
@@ -106,7 +106,7 @@
             </div>
           </div>
         </div>
-      </v-marker>
+      </VMarker>
     </template>
   </section>
 </template>

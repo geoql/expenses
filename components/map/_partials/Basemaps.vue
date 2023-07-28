@@ -39,7 +39,7 @@
 
 <script lang="ts">
   export default defineComponent({
-    name: 'Basemaps',
+    name: 'VBasemaps',
     props: {
       data: {
         type: Object,
