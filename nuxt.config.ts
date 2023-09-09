@@ -1,4 +1,3 @@
-import type { NuxtConfig } from 'nuxt/schema';
 import {
   app,
   components,
@@ -12,7 +11,7 @@ import {
   typescript,
 } from './config';
 
-export default {
+export default defineNuxtConfig({
   app,
   components,
   css,
@@ -31,4 +30,4 @@ export default {
   routeRules,
   runtimeConfig,
   typescript,
-} satisfies NuxtConfig;
+});
