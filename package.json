@@ -40,7 +40,7 @@
     "@deck.gl/layers": "^8.9.22",
     "@deck.gl/mapbox": "^8.9.34",
     "@nuxt/devtools": "^0.7.1",
-    "@nuxtjs/plausible": "^0.2.1",
+    "@nuxtjs/plausible": "^0.2.4",
     "@types/geojson": "^7946.0.10",
     "@types/papaparse": "^5.3.7",
     "@types/uuid": "^9.0.2",
