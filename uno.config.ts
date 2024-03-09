@@ -3,11 +3,12 @@ import {
   presetAttributify,
   presetIcons,
   presetTypography,
+  presetWind,
   presetUno,
-  presetWebFonts,
   transformerDirectives,
-  transformerVariantGroup,
 } from 'unocss';
+import { presetScrollbar } from 'unocss-preset-scrollbar';
+import { presetForms } from '@julr/unocss-preset-forms';
 
 export default defineConfig({
   content: {
@@ -24,16 +25,12 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
+    presetWind({ dark: 'class' }),
     presetAttributify(),
     presetIcons(),
     presetTypography(),
-    presetWebFonts({
-      provider: 'google',
-      fonts: {
-        sans: 'Inter var',
-        mono: ['Fira Code', 'Fira Mono:400,700'],
-      },
-    }),
+    presetScrollbar(),
+    presetForms(),
   ],
-  transformers: [transformerDirectives(), transformerVariantGroup()],
+  transformers: [transformerDirectives()],
 });

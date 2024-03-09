@@ -1,19 +1,21 @@
 // Controls
-import VControlAttribution from './controls/VControlAttribution.vue';
-import VControlFullscreen from './controls/VControlFullscreen.vue';
-import VControlGeolocate from './controls/VControlGeolocate.vue';
-import VControlNavigation from './controls/VControlNavigation.vue';
-import VControlScale from './controls/VControlScale.vue';
-// Layers – Deck.gl
-import VLayerDeckArc from './layers/deck.gl/VLayerDeckArc.vue';
-import VLayerDeckGeojson from './layers/deck.gl/VLayerDeckGeojson.vue';
+import {
+  VControlAttribution,
+  VControlFullscreen,
+  VControlGeolocate,
+  VControlNavigation,
+  VControlScale,
+} from './controls';
 // Layers – Mapbox
-import VLayerMapboxCanvas from './layers/mapbox/VLayerMapboxCanvas.vue';
-import VLayerMapboxGeojson from './layers/mapbox/VLayerMapboxGeojson.vue';
-import VLayerMapboxImage from './layers/mapbox/VLayerMapboxImage.vue';
-import VLayerMapboxRaster from './layers/mapbox/VLayerMapboxRaster.vue';
-import VLayerMapboxVector from './layers/mapbox/VLayerMapboxVector.vue';
-import VLayerMapboxVideo from './layers/mapbox/VLayerMapboxVideo.vue';
+import {
+  VLayerMaplibreCanvas,
+  VLayerMaplibreGeojson,
+  VLayerMaplibreImage,
+  VLayerMaplibreRaster,
+  VLayerMaplibreVector,
+  VLayerMaplibreVideo,
+} from './layers';
+
 // Map
 import VMap from './map/VMap.vue';
 // Marker
@@ -28,14 +30,12 @@ export {
   // Popup
   VPopup,
   // Layers
-  VLayerMapboxCanvas,
-  VLayerMapboxGeojson,
-  VLayerMapboxImage,
-  VLayerMapboxRaster,
-  VLayerMapboxVector,
-  VLayerMapboxVideo,
-  VLayerDeckArc,
-  VLayerDeckGeojson,
+  VLayerMaplibreCanvas,
+  VLayerMaplibreGeojson,
+  VLayerMaplibreImage,
+  VLayerMaplibreRaster,
+  VLayerMaplibreVector,
+  VLayerMaplibreVideo,
   // Controls
   VControlAttribution,
   VControlFullscreen,

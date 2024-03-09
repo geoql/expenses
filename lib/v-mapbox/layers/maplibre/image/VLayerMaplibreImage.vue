@@ -1,27 +1,32 @@
 <script lang="ts">
-  // @ts-ignore
-  import { GeoJsonLayer } from '@deck.gl/layers';
-  // @ts-ignore
-  import { MapboxLayer } from '@deck.gl/mapbox';
-  import { FeatureCollection } from 'geojson';
+  import type {
+    LayerSpecification as AnyLayer,
+    ImageSourceSpecification as ImageSourceRaw,
+  } from 'maplibre-gl';
   import type { PropType, Ref } from 'vue';
-  import { h, defineComponent } from 'vue';
-  import { injectStrict, MapKey } from '../../utils';
+  import { defineComponent, onMounted, ref, watch } from 'vue';
+  import { injectStrict, MapKey } from '../../../utils';
 
   export default defineComponent({
-    name: 'VLayerDeckGeojson',
+    name: 'VLayerMapboxImage',
     props: {
-      layerId: {
+      sourceId: {
         type: String as PropType<string>,
-        default: 'deck.gl-geojson-layer',
-        required: false,
-      },
-      data: {
-        type: Object as PropType<FeatureCollection>,
+        default: 'maplibre.gl-image-source',
         required: true,
       },
-      options: {
-        type: Object,
+      layerId: {
+        type: String as PropType<string>,
+        default: 'maplibre.gl-image-layer',
+        required: true,
+      },
+      source: {
+        type: Object as PropType<ImageSourceRaw>,
+        required: true,
+      },
+      layer: {
+        type: Object as PropType<AnyLayer>,
+        default: () => ({}),
         required: true,
       },
       before: {
@@ -34,12 +39,11 @@
       let map = injectStrict(MapKey);
       let loaded: Ref<boolean> = ref(false);
 
-      const layer = new MapboxLayer({
-        ...props.options,
+      const layer = {
+        ...props.layer,
         id: props.layerId,
-        data: props.data,
-        type: GeoJsonLayer,
-      });
+        source: props.sourceId,
+      };
 
       map.value.on('style.load', () => {
         // https://github.com/mapbox/mapbox-gl-js/issues/2268#issuecomment-401979967
@@ -72,8 +76,13 @@
        * @returns {void}
        */
       function addLayer(): void {
+        map.value.addSource(props.sourceId, props.source);
         map.value.addLayer(layer, props.before);
       }
     },
   });
 </script>
+
+<template>
+  <slot />
+</template>

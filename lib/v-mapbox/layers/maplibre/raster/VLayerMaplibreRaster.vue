@@ -1,32 +1,28 @@
-<template>
-  <div>
-    <slot />
-  </div>
-</template>
 <script lang="ts">
+  import type { FeatureCollection } from 'geojson';
   import type {
     LayerSpecification as AnyLayer,
-    ImageSourceSpecification as ImageSourceRaw,
+    GeoJSONSourceSpecification as GeoJSONSourceRaw,
   } from 'maplibre-gl';
-  import type { PropType, Ref } from 'vue';
   import { defineComponent, onMounted, ref, watch } from 'vue';
-  import { injectStrict, MapKey } from '../../utils';
+  import type { PropType, Ref } from 'vue';
+  import { injectStrict, MapKey } from '../../../utils';
 
   export default defineComponent({
-    name: 'VLayerMapboxImage',
+    name: 'VLayerMapboxRaster',
     props: {
       sourceId: {
         type: String as PropType<string>,
-        default: 'maplibre.gl-image-source',
+        default: 'maplibre.gl-raster-source',
         required: true,
       },
       layerId: {
         type: String as PropType<string>,
-        default: 'maplibre.gl-image-layer',
+        default: 'maplibre.gl-raster-layer',
         required: true,
       },
       source: {
-        type: Object as PropType<ImageSourceRaw>,
+        type: Object as PropType<FeatureCollection>,
         required: true,
       },
       layer: {
@@ -48,6 +44,10 @@
         ...props.layer,
         id: props.layerId,
         source: props.sourceId,
+      };
+      const source: GeoJSONSourceRaw = {
+        type: 'geojson',
+        data: props.source,
       };
 
       map.value.on('style.load', () => {
@@ -81,9 +81,13 @@
        * @returns {void}
        */
       function addLayer(): void {
-        map.value.addSource(props.sourceId, props.source);
+        map.value.addSource(props.sourceId, source);
         map.value.addLayer(layer, props.before);
       }
     },
   });
 </script>
+
+<template>
+  <slot />
+</template>
