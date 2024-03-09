@@ -2,6 +2,9 @@ import type { NuxtAppConfig } from 'nuxt/schema';
 
 const head: NuxtAppConfig['head'] = {
   title: 'Map My Expenses :: Dashboard',
+  htmlAttrs: {
+    lang: 'en',
+  },
   meta: [
     {
       charset: 'utf-8',
