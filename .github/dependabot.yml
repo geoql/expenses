@@ -7,6 +7,16 @@ updates:
       interval: daily
       time: '00:00'
       timezone: Asia/Calcutta
+    groups:
+      npm-development:
+        dependency-type: development
+        update-types:
+          - minor
+          - patch
+      npm-production:
+        dependency-type: production
+        update-types:
+          - patch
     reviewers:
       - vinayakkulkarni
     assignees:
@@ -21,6 +31,11 @@ updates:
       interval: daily
       time: '00:00'
       timezone: Asia/Calcutta
+    groups:
+      actions-minor:
+        update-types:
+          - minor
+          - patch
     reviewers:
       - vinayakkulkarni
     assignees:
