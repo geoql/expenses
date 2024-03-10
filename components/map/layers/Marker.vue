@@ -118,13 +118,9 @@
     ExpenseFeatureCollection,
   } from '~/@types/expense';
   import type { PopupOptions } from 'maplibre-gl';
-  import { VMarker } from '~/lib/v-mapbox';
 
   export default defineComponent({
     name: 'ExpenseMarker',
-    components: {
-      VMarker,
-    },
     props: {
       data: {
         type: Object as PropType<ExpenseFeatureCollection>,
