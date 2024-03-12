@@ -35,8 +35,8 @@
     "v-mapbox": "^5.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.0.3",
-    "@commitlint/config-conventional": "^19.0.3",
+    "@commitlint/cli": "^19.1.0",
+    "@commitlint/config-conventional": "^19.1.0",
     "@deck.gl/layers": "^8.9.35",
     "@deck.gl/mapbox": "^8.9.35",
     "@julr/unocss-preset-forms": "^0.1.0",
