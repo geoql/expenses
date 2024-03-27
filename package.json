@@ -38,7 +38,7 @@
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
     "@deck.gl/layers": "^8.9.35",
-    "@deck.gl/mapbox": "^8.9.35",
+    "@deck.gl/mapbox": "^9.0.1",
     "@julr/unocss-preset-forms": "^0.1.0",
     "@nuxt/devtools": "^1.1.4",
     "@nuxtjs/plausible": "^0.2.4",
