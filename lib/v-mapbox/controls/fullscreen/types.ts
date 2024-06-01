@@ -1,1 +1,1 @@
-export type { ControlPosition, FullscreenOptions } from 'maplibre-gl';
+export type { FullscreenControlOptions, ControlPosition } from 'maplibre-gl';

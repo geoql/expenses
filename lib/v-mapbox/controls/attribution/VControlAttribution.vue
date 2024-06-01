@@ -1,17 +1,17 @@
 <script setup lang="ts">
-  import type { AttributionOptions, ControlPosition } from './types';
   import { AttributionControl } from 'maplibre-gl';
   import { onMounted } from 'vue';
   import { MapKey, injectStrict } from '../../utils';
+  import type { AttributionControlOptions, ControlPosition } from './types';
 
-  const defaultOptions: AttributionOptions = {
+  const defaultOptions: AttributionControlOptions = {
     compact: false,
     customAttribution: undefined,
   };
 
   const props = withDefaults(
     defineProps<{
-      options?: AttributionOptions;
+      options?: AttributionControlOptions;
       position?: ControlPosition;
     }>(),
     {
@@ -22,7 +22,7 @@
 
   const slots = useSlots();
 
-  let map = injectStrict(MapKey);
+  const map = injectStrict(MapKey);
 
   onMounted(() => {
     addControl();
@@ -36,7 +36,7 @@
       };
     }
     if (slots && slots.default?.()) {
-      options.customAttribution = slots.default()[0]
+      options.customAttribution = slots.default()[0]!
         .children as unknown as string;
     }
     const control = new AttributionControl(options);
@@ -45,5 +45,5 @@
 </script>
 
 <template>
-  <slot />
+  <slot></slot>
 </template>

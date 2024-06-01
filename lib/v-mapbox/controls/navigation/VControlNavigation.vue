@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import type { ControlPosition, NavigationOptions } from './types';
   import { NavigationControl } from 'maplibre-gl';
   import { onMounted, inject } from 'vue';
   import { MapKey } from '../../utils';
+  import type { ControlPosition, NavigationOptions } from './types';
 
   const defaultOptions: NavigationOptions = {
     showCompass: true,

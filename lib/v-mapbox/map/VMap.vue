@@ -1,13 +1,8 @@
-<template>
-  <div :id="`${options?.container}`" class="v-map-container">
-    <slot />
-  </div>
-</template>
 <script setup lang="ts">
+  import { Map } from 'maplibre-gl';
+  import { onMounted, provide, ref, shallowRef } from 'vue';
   import type { MapOptions, MapEventType } from 'maplibre-gl';
   import type { Ref } from 'vue';
-  import { Map } from 'maplibre-gl';
-  import { defineComponent, onMounted, provide, ref, shallowRef } from 'vue';
   import { mapEvents } from '../constants/events';
   import { MapKey } from '../utils/symbols';
 
@@ -16,14 +11,14 @@
       options: MapOptions;
     }>(),
     {
-      options: { container: 'map' },
+      options: () => ({ container: 'map' }) as MapOptions,
     },
   );
   const emit = defineEmits(['loaded', ...mapEvents]);
 
-  let map: Ref<Map> = shallowRef({} as Map);
-  let loaded: Ref<boolean> = ref(false);
-  let events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
+  const map: Ref<Map> = shallowRef({} as Map);
+  const loaded: Ref<boolean> = ref(false);
+  const events: Ref<Array<keyof MapEventType>> = ref(mapEvents);
 
   onMounted(() => {
     map.value = new Map(props.options);
@@ -47,6 +42,12 @@
     });
   };
 </script>
+
+<template>
+  <div :id="`${options?.container}`" class="v-map-container">
+    <slot></slot>
+  </div>
+</template>
 
 <style scoped>
   canvas {

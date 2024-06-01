@@ -23,8 +23,8 @@
       before: '',
     },
   );
-  let map = injectStrict(MapKey);
-  let loaded: Ref<boolean> = ref(false);
+  const map = injectStrict(MapKey);
+  const loaded: Ref<boolean> = ref(false);
 
   const layer = {
     ...props.layer,
@@ -62,5 +62,5 @@
 </script>
 
 <template>
-  <slot />
+  <slot></slot>
 </template>
