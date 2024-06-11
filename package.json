@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
-    "@turf/center": "^6.5.0",
+    "@turf/center": "^7.0.0",
     "click-outside-vue3": "^4.0.1",
     "comlink": "^4.4.1",
     "idb": "^8.0.0",
