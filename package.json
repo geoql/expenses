@@ -31,7 +31,7 @@
     "maplibre-gl": "^4.3.2",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.7",
-    "uuid": "^9.0.1",
+    "uuid": "^10.0.0",
     "v-mapbox": "^5.0.0"
   },
   "devDependencies": {
